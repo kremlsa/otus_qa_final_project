@@ -7,9 +7,9 @@ import io.cucumber.java.ru.Дано;
 import io.cucumber.java.ru.И;
 import io.cucumber.java.ru.Когда;
 import io.cucumber.java.ru.То;
-import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.testng.Assert;
 
 public class EventSteps extends BaseStep{
 
@@ -34,12 +34,12 @@ public class EventSteps extends BaseStep{
 
     @То("На странице отображаются карточки предстоящих мероприятий")
     public void isCardApperance(){
-        Assertions.assertTrue(epamEventsPage.isCardApperance());
+        Assert.assertTrue(epamEventsPage.isCardApperance());
     }
 
     @И("Количество карточек равно счетчику на кнопке Upcoming Events")
     public void checkNumberOfCards(){
-        Assertions.assertTrue(epamEventsPage.isCounterCorrect());
+        Assert.assertTrue(epamEventsPage.isCounterCorrect());
     }
 
     @И("В карточке указана информация о мероприятии:")
@@ -50,22 +50,22 @@ public class EventSteps extends BaseStep{
 
     @И("город проведения")
     public void checkPlace() {
-        Assertions.assertTrue(epamEventsPage.checkPlace());
+        Assert.assertTrue(epamEventsPage.checkPlace());
     }
 
     @И("язык")
     public void checkLanguage() {
-        Assertions.assertTrue(epamEventsPage.checkLang());
+        Assert.assertTrue(epamEventsPage.checkLang());
     }
 
     @И("название мероприятия")
     public void checkEvent() {
-        Assertions.assertTrue(epamEventsPage.checkEvent());
+        Assert.assertTrue(epamEventsPage.checkEvent());
     }
 
     @И("дата мероприятия")
     public void checkDate() {
-        Assertions.assertTrue(epamEventsPage.checkDate());
+        Assert.assertTrue(epamEventsPage.checkDate());
     }
 
     @И("информация о регистрации")
