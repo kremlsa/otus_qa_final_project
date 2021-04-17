@@ -12,6 +12,7 @@ import org.springframework.test.annotation.DirtiesContext;
 @PropertySource("classpath:config.properties")
 @PropertySource("classpath:mainPage.properties")
 @PropertySource("classpath:eventsPage.properties")
+@PropertySource("classpath:talkPage.properties")
 @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
 
 public class Cfg {

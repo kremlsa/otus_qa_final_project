@@ -3,6 +3,7 @@ package finalProject.stepdefs;
 import finalProject.common.BaseClass;
 import finalProject.pages.EpamEventsPage;
 import finalProject.pages.EpamMainPage;
+import finalProject.pages.EpamTalkPage;
 import io.cucumber.java.ru.Дано;
 import io.cucumber.java.ru.И;
 import io.cucumber.java.ru.Когда;
@@ -17,11 +18,13 @@ public class EventSteps {
     private EpamMainPage epamMainPage;
     @Autowired
     private EpamEventsPage epamEventsPage;
+    @Autowired
+    private EpamTalkPage epamTalkPage;
 
     WebDriver driver = BaseClass.getDriver();
 
     @Дано("Пользователь переходит на вкладку events")
-    public void openPage() {
+    public void openUpcomingEvents() {
         epamMainPage.initWebDriver(driver);
         epamMainPage.open()
                     .openEvents();
@@ -82,5 +85,22 @@ public class EventSteps {
 
     @И("Важно проверить порядок отображаемых блоков с информацией в карточке мероприятия")
     public void важноПроверитьПорядокОтображаемыхБлоковСИнформациейВКарточкеМероприятия() {
+    }
+
+    @Дано("Пользователь переходит на вкладку Talks Library")
+    public void openTalksLibrary() {
+        epamMainPage.initWebDriver(driver);
+        epamMainPage.open()
+                .openTalks();
+    }
+
+    @Когда("Пользователь вводит ключевое слово QA в поле поиска")
+    public void fillSearch() {
+        epamTalkPage.fillSearch();
+    }
+
+    @То("На странице отображаются доклады, содержащие в названии ключевое слово поиска")
+    public void isTalksDisplayed() {
+        Assert.assertTrue(epamTalkPage.checkTalkTitle());
     }
 }

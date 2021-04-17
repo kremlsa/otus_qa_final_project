@@ -10,6 +10,9 @@ public class EpamMainPage extends BasePage{
     @Value("${mainPage.CSSNavEvents}")
     private String navigationEvents;
 
+    @Value("${mainPage.CSSNavTalks}")
+    private String navigationTalks;
+
     @Value("${mainPage.url}")
     private String url;
 
@@ -23,4 +26,12 @@ public class EpamMainPage extends BasePage{
         By navigationEventSelector = By.cssSelector(navigationEvents);
         driver.findElement(navigationEventSelector).click();
     }
+
+    public void openTalks() {
+        System.out.println(navigationTalks);
+        By navigationEventSelector = By.cssSelector(navigationTalks);
+        driver.findElement(navigationEventSelector).click();
+    }
+
+
 }
