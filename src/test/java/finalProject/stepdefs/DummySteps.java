@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.testng.Assert;
 
 
-public class DummySteps extends BaseStep{
+public class DummySteps {
 
     @Value("${dummy}")
     private String dummyValue;

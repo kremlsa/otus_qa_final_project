@@ -7,8 +7,12 @@ import org.testng.annotations.Test;
 
 @Test
 @CucumberOptions(
-        features = {"src/test/resources/features"},
-        glue = {"finalProject.stepdefs"}
+        features = "src/test/resources/features",
+        plugin = {
+                "io.qameta.allure.cucumber5jvm.AllureCucumber5Jvm",
+                "progress",
+                "summary"
+        }
 )
 public class RunCucumberTest extends AbstractTestNGCucumberTests {
 }

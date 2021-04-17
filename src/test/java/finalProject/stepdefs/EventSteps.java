@@ -11,7 +11,7 @@ import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.Assert;
 
-public class EventSteps extends BaseStep{
+public class EventSteps {
 
     @Autowired
     private EpamMainPage epamMainPage;
