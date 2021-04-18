@@ -2,7 +2,9 @@ package finalProject.pages;
 
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.springframework.stereotype.Component;
 import finalProject.common.BaseClass;
 
@@ -32,10 +34,15 @@ public class BasePage {
         return driver.findElement(selector).isDisplayed();
     }
 
-
     //Получить title страницы
     public String getTitle() {
         return driver.getTitle();
+    }
+
+    //
+    public void scrollAndClick(WebElement element) {
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
     }
 
 }

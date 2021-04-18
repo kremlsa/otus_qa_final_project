@@ -1,6 +1,8 @@
 package finalProject.pages;
 
+import finalProject.common.UniLoc;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -29,16 +31,6 @@ public class EpamTalkPage extends BasePage {
 
     @Value("${talkPage.XPathSpanLanguage}")
     private String spanLanguage;
-
-    @Value("${talkPage.XPathLabelTesting}")
-    private String labelTesting;
-
-    @Value("${talkPage.XPathLabelBelarus}")
-    private String labelBelarus;
-
-    @Value("${talkPage.XPathLabelEnglish}")
-    private String labelEnglish;
-
 
     private final String query = "QA";
 
@@ -72,13 +64,17 @@ public class EpamTalkPage extends BasePage {
 
     public void filterTesting(String category) {
         driver.findElement(By.xpath(spanCategory)).click();
+        scrollAndClick(driver.findElement(UniLoc.xpathLocator(UniLoc.LABELCONTAINS, category)));
     }
 
     public void filterLocation(String location) {
+
         driver.findElement(By.xpath(spanLocation)).click();
+        scrollAndClick(driver.findElement(UniLoc.xpathLocator(UniLoc.LABELCONTAINS, location)));
     }
 
     public void filterLanguage(String language) {
         driver.findElement(By.xpath(spanLanguage)).click();
+        scrollAndClick(driver.findElement(UniLoc.xpathLocator(UniLoc.LABELCONTAINS, language)));
     }
 }
