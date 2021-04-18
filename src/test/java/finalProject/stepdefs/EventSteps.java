@@ -103,4 +103,28 @@ public class EventSteps {
     public void isTalksDisplayed() {
         Assert.assertTrue(epamTalkPage.checkTalkTitle());
     }
+
+    @И("Пользователь нажимает на More Filters")
+    public void clickMoreFilters() {
+        epamTalkPage.clickMoreFilters();
+    }
+
+    @Когда("Пользователь выбирает: Category – {string}")
+    public void selectCategoryTesting(String category) {
+        epamTalkPage.filterTesting(category);
+    }
+
+    @И("Location – {string}")
+    public void selectlocationBelarus(String location) {
+        epamTalkPage.filterLocation(location);
+    }
+
+    @И("Language – {string} На вкладке фильтров")
+    public void selectLanguageEnglish(String language) {
+        epamTalkPage.filterLanguage(language);
+    }
+
+    @То("На странице отображаются карточки соответствующие правилам выбранных фильтров")
+    public void isFilterWorks() {
+    }
 }

@@ -18,6 +18,28 @@ public class EpamTalkPage extends BasePage {
     @Value("${talkPage.XPathSpanTalkTitle}")
     private String talkTitle;
 
+    @Value("${talkPage.XPathSpanFilters}")
+    private String moreFilters;
+
+    @Value("${talkPage.XPathSpanLocation}")
+    private String spanLocation;
+
+    @Value("${talkPage.XPathSpanCategory}")
+    private String spanCategory;
+
+    @Value("${talkPage.XPathSpanLanguage}")
+    private String spanLanguage;
+
+    @Value("${talkPage.XPathLabelTesting}")
+    private String labelTesting;
+
+    @Value("${talkPage.XPathLabelBelarus}")
+    private String labelBelarus;
+
+    @Value("${talkPage.XPathLabelEnglish}")
+    private String labelEnglish;
+
+
     private final String query = "QA";
 
 
@@ -41,5 +63,22 @@ public class EpamTalkPage extends BasePage {
         return true;
     }
 
+    //TO DO:
+    //Вынести клик в базовый класс
+    public void clickMoreFilters() {
+        driver.findElement(By.xpath(moreFilters)).click();
+    }
 
+
+    public void filterTesting(String category) {
+        driver.findElement(By.xpath(spanCategory)).click();
+    }
+
+    public void filterLocation(String location) {
+        driver.findElement(By.xpath(spanLocation)).click();
+    }
+
+    public void filterLanguage(String language) {
+        driver.findElement(By.xpath(spanLanguage)).click();
+    }
 }

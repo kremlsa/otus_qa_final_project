@@ -5,6 +5,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.test.annotation.DirtiesContext;
 
+/**
+ * Класс конфигурации SpringBoot
+ *
+ * @author Alexander Kremlev
+ * @version 1.0
+ */
 @Configuration
 @ComponentScan("finalProject.pages")
 @ComponentScan("finalProject.common")
