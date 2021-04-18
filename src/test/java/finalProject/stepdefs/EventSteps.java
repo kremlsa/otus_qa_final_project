@@ -126,5 +126,6 @@ public class EventSteps {
 
     @То("На странице отображаются карточки соответствующие правилам выбранных фильтров")
     public void isFilterWorks() {
+        Assert.assertTrue(epamTalkPage.isFilterWorks());
     }
 }

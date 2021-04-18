@@ -5,7 +5,8 @@ import org.openqa.selenium.By;
 
 public enum UniLoc {
 
-    LABELCONTAINS("//label[contains(text(),'%s')]"),
+    LABELDATA("//label[@data-value='%s']"),
+    DIVCLASS("//div[@class='%s']"),
     DEFAULT("Not Found!!!");
 
     String locator;

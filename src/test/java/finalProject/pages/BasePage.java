@@ -5,6 +5,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.stereotype.Component;
 import finalProject.common.BaseClass;
 
@@ -41,8 +43,10 @@ public class BasePage {
 
     //
     public void scrollAndClick(WebElement element) {
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
+        //((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
+        new WebDriverWait(driver, 5)
+                .until(ExpectedConditions.elementToBeClickable(element));
+
         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
     }
-
 }
