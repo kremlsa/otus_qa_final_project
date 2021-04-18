@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -33,6 +34,7 @@ public class EpamEventsPage extends BasePage{
     @Value("${eventsPage.XPathCardSpeakers}")
     private String cardSpeakers;
     private List<WebElement> cards;
+    private List<EventCard> eventCards = new ArrayList<>();
 
     public void openUpcomingEvents() {
         System.out.println(upcomingEvents);
@@ -61,6 +63,41 @@ public class EpamEventsPage extends BasePage{
     public void getAllCards() {
         cards = driver.findElements(By.cssSelector(cardBody));
         logger.info("find " + cards.size() + " card(s)");
+        for (WebElement card : cards) {
+            EventCard eventCard = new EventCard();
+            try {
+                eventCard.setPlace(card.findElement(By.xpath(cardPlace)).getText());
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("Place not found");
+            }
+            try {
+                eventCard.setEventName(card.findElement(By.xpath(cardEvent)).getText());
+            } catch (Exception e) {
+                System.out.println("Name not found");
+            }
+            try {
+                eventCard.setDate(card.findElement(By.xpath(cardDate)).getText());
+            } catch (Exception e) {
+                System.out.println("Date not found");
+            }
+            try {
+                eventCard.setRegistration(card.findElement(By.xpath(cardReg)).getText());
+            } catch (Exception e) {
+                System.out.println("Reg not found");
+            }
+            try {
+                List<WebElement> speakerElements = card.findElements(By.xpath(cardSpeakers));
+                for (WebElement el : speakerElements) {
+                    eventCard.addSpeakers(Speaker.parseSpeaker(el));
+                }
+            } catch (Exception e) {
+                System.out.println("Speakers not found");
+            }
+            eventCards.add(eventCard);
+            System.out.println(eventCard.getDate() + " - " + eventCard.getEventName() + " - " + eventCard.getPlace()
+            + " - " + eventCard.getRegistration() + " - " + eventCard.getSpeakers());
+        }
     }
 
     public boolean checkPlace() {
