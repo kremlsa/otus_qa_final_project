@@ -106,10 +106,9 @@ public class EpamTalkPage extends BasePage {
         List<WebElement> elements = driver.findElements(By.xpath(cardLink));
         for (WebElement element : elements) {
             try {
-                System.out.println("*************" + element.getAttribute("href"));
                 urls.add(element.getAttribute("href"));
             } catch (Exception e) {
-                System.out.println("*************");
+                //do nothing
             }
         }
 
