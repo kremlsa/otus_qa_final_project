@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.beans.PropertyEditorSupport;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
@@ -46,6 +47,8 @@ public class EpamEventsPage extends BasePage{
     private final List<EventCard> eventCards = new ArrayList<>();
 
     public void openUpcomingEvents() {
+        //Запоминаем текущие элементы из списка тем
+        List<WebElement> elements = driver.findElements(By.cssSelector(cardBody));
         //локатор для ссылки на раздел
         By upcomingEventsSelector = By.xpath(upcomingEvents + "/..");
         //Локатор для определения активности раздела
@@ -56,6 +59,8 @@ public class EpamEventsPage extends BasePage{
                 .contains("active")) {
             driver.findElement(upcomingEventsSelector).click();
         }
+        //ждём пока прогрузится новый список тем
+        waitWhileDisappear(elements, 5);
     }
 
     public boolean isCardApperance() {
@@ -221,6 +226,8 @@ public class EpamEventsPage extends BasePage{
     }
 
     public void openPastEvents() {
+        //Запоминаем текущие элементы из списка тем
+        List<WebElement> elements = driver.findElements(By.cssSelector(cardBody));
         //локатор для ссылки на раздел
         By upcomingEventsSelector = By.xpath(pastEvents + "/..");
         //Локатор для определения активности раздела
@@ -231,12 +238,8 @@ public class EpamEventsPage extends BasePage{
                 .contains("active")) {
             driver.findElement(upcomingEventsSelector).click();
         }
-
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        //ждём пока прогрузится новый список тем
+        waitWhileDisappear(elements, 5);
     }
 
     public void selectFilterValue(String filter, String value) {
@@ -248,12 +251,7 @@ public class EpamEventsPage extends BasePage{
         //Логируем
         logger.info("Настроен фильтр " + filter + " со значением " + value);
         //ждём пока прогрузится новый список тем
-        try {
-            new WebDriverWait(driver, 5)
-                    .until(ExpectedConditions.invisibilityOf(elements.get(elements.size() - 1)));
-        } catch (Exception e) {
-            //do nothing
-        }
+        waitWhileDisappear(elements, 5);
     }
 
     public boolean isDateInCardLessCurrentDate() {
@@ -275,4 +273,30 @@ public class EpamEventsPage extends BasePage{
         }
         return true;
     }
+
+    public void openAnyCard() {
+        WebElement element = driver.findElement(By.cssSelector(cardBody));
+        logger.info("Открываем карточку " + element.findElement(By.xpath(cardEvent)).getText());
+        element.click();
+    }
+
+    /*public boolean checkUpcomingDate() {
+        //Просматриваем все карточки
+        for (EventCard card : eventCards) {
+            //Парсим дату
+            LocalDate date = Utils.parseDate(card.getDate());
+            //Проверяем что дата в карточке после текущей но не более недели
+            if (date.isBefore(LocalDate.now().with(DayOfWeek.SATURDAY).plusDays(1L)) || date.isBefore(LocalDate.now())) {
+                //Логируем
+                logger.warn(Utils.ANSI_RED + "Карточка " + card.getEventName() + " с датой "
+                        + date + " находится вне пределах недели от текущей даты " + LocalDate.now());
+                return false;
+            } else {
+                //Логируем
+                logger.info(Utils.ANSI_GREEN + "Карточка " + card.getEventName() + " с датой " + date
+                        + " в пределах недели от текущей дат " + LocalDate.now());
+            }
+        }
+        return true;
+    }*/
 }

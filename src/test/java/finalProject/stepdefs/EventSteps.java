@@ -110,4 +110,32 @@ public class EventSteps {
         Assert.assertTrue(epamEventsPage.isDateInCardLessCurrentDate());
     }
 
+    @Когда("Пользователь нажимает на любую карточку")
+    public void openAnyCard() {
+        epamEventsPage.openAnyCard();
+    }
+
+    @То("Происходит переход на страницу с подробной информацией о мероприятии")
+    public void isCardOpen() {
+        
+    }
+
+    @И("На странице с информацией о мероприятии отображается шапка с кнопкой для регистрации")
+    public void isHeaderPresent() {
+        
+    }
+
+    @И("программа мероприятия")
+    public void программаМероприятия() {
+        
+    }
+
+    @И("карта")
+    public void карта() {
+    }
+
+    @То("В блоке This week даты проведения мероприятий больше или равны текущей дате и находятся в пределах текущей недели")
+    public void isDateInWeekAfter() {
+
+    }
 }

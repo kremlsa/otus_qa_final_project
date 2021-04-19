@@ -10,6 +10,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.stereotype.Component;
 import finalProject.common.BaseClass;
 
+import java.util.List;
+
 @Component
 public class BasePage {
 
@@ -49,4 +51,14 @@ public class BasePage {
 
         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
     }
+
+    public void waitWhileDisappear(List<WebElement> elements, int timeout) {
+        try {
+            new WebDriverWait(driver, timeout)
+                    .until(ExpectedConditions.invisibilityOf(elements.get(elements.size() - 1)));
+        } catch (Exception e) {
+            //do nothing
+        }
+    }
+
 }

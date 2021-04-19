@@ -52,8 +52,7 @@ public class EpamTalkPage extends BasePage {
         driver.findElement(By.cssSelector(searchField))
                 .sendKeys(query, Keys.ENTER);
         //ждём пока прогрузится новый список тем
-        new WebDriverWait(driver, 5)
-                .until(ExpectedConditions.invisibilityOf(elements.get(elements.size() - 1)));
+        waitWhileDisappear(elements, 5);
     }
 
     public boolean checkTalkTitle() {
@@ -101,12 +100,7 @@ public class EpamTalkPage extends BasePage {
         //Выбираем язык
         scrollAndClick(driver.findElement(UniLoc.xpathLocator(UniLoc.LABELDATA, language)));
         //ждём пока прогрузится новый список тем
-        try {
-            new WebDriverWait(driver, 5)
-                    .until(ExpectedConditions.invisibilityOf(elements.get(elements.size() - 1)));
-        } catch (Exception e) {
-            //do nothing
-        }
+        waitWhileDisappear(elements, 5);
     }
 
     public boolean isFilterWorks() {
