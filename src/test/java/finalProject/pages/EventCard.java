@@ -8,7 +8,7 @@ public class EventCard {
     private String eventName = "Not defined";
     private String date = "Not defined";
     private String registration = "Not defined";
-    private ArrayList<Speaker> speakers = new ArrayList<>();
+    private final ArrayList<Speaker> speakers = new ArrayList<>();
 
     public String getPlace() {
         return place;

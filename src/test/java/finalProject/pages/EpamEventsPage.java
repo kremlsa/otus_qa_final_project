@@ -22,9 +22,6 @@ import java.util.Locale;
 @Component
 public class EpamEventsPage extends BasePage{
 
-    public static final String ANSI_GREEN = "\u001B[32m";
-    public static final String ANSI_RESET = "\u001B[0m";
-
     @Value("${eventsPage.XPathUpcomingEvents}")
     private String upcomingEvents;
     @Value("${eventsPage.XPathPastEvents}")
@@ -46,12 +43,14 @@ public class EpamEventsPage extends BasePage{
     @Value("${eventsPage.XPathCardSpeakers}")
     private String cardSpeakers;
     private List<WebElement> cards;
-    private List<EventCard> eventCards = new ArrayList<>();
+    private final List<EventCard> eventCards = new ArrayList<>();
 
     public void openUpcomingEvents() {
-        System.out.println(upcomingEvents);
+        //локатор для ссылки на раздел
         By upcomingEventsSelector = By.xpath(upcomingEvents + "/..");
+        //Локатор для определения активности раздела
         By upcomingEventsSelectorTop = By.xpath(upcomingEvents + "/..");
+        //Если раздел не активен, то перейти в него
         if (!driver.findElement(upcomingEventsSelectorTop)
                 .getAttribute("class")
                 .contains("active")) {
@@ -64,12 +63,20 @@ public class EpamEventsPage extends BasePage{
     }
 
     public boolean isCounterCorrect(String buttonName) {
+        //Карточек найдено
         int cardsFind = driver.findElements(By.cssSelector(cardBody)).size();
+        //Карточек в счётчике
         int cardsInCounter = Integer.parseInt(driver
                 .findElement(UniLoc.xpathLocator(UniLoc.EVENTCOUNTER, buttonName))
                 .getText().trim());
-        logger.info("Cards found " + cardsFind + " cards in counter " + cardsInCounter);
-        return cardsFind == cardsInCounter;
+        //Сравниваем карточки найденные и счётчик
+        if (cardsFind == cardsInCounter) {
+            logger.info(Utils.ANSI_GREEN + "Найдено карточек - " + cardsFind + ", карточек в счётчике " + cardsInCounter);
+            return true;
+        } else {
+            logger.warn(Utils.ANSI_RED + "Найдено карточек - " + cardsFind + ", карточек в счётчике " + cardsInCounter);
+            return false;
+        }
     }
 
     public void getAllCards() {
@@ -118,7 +125,7 @@ public class EpamEventsPage extends BasePage{
             try {
                 String place = card.findElement(By.xpath(cardPlace))
                         .getText();
-                logger.info("place for card number " + counter + " is " + ANSI_GREEN + place);
+                logger.info("place for card number " + counter + " is " + Utils.ANSI_GREEN + place);
             } catch (NotFoundException e) {
                 logger.info("place for card number " + counter + " not found");
                 isOk = false;
@@ -135,7 +142,7 @@ public class EpamEventsPage extends BasePage{
             try {
                 String lang = card.findElement(By.xpath(cardLang))
                         .getText();
-                logger.info("language for card number " + counter + " is " + ANSI_GREEN + lang);
+                logger.info("language for card number " + counter + " is " + Utils.ANSI_GREEN + lang);
             } catch (NotFoundException e) {
                 logger.info("language for card number " + counter + " not found");
                 isOk = false;
@@ -152,7 +159,7 @@ public class EpamEventsPage extends BasePage{
             try {
                 String event = card.findElement(By.xpath(cardEvent))
                         .getText();
-                logger.info("event for card number " + counter + " is " + ANSI_GREEN + event);
+                logger.info("event for card number " + counter + " is " + Utils.ANSI_GREEN + event);
             } catch (NotFoundException e) {
                 logger.info("event for card number " + counter + " not found");
                 isOk = false;
@@ -169,7 +176,7 @@ public class EpamEventsPage extends BasePage{
             try {
                 String date = card.findElement(By.xpath(cardDate))
                         .getText();
-                logger.info("date for card number " + counter + " is " + ANSI_GREEN + date);
+                logger.info("date for card number " + counter + " is " + Utils.ANSI_GREEN + date);
             } catch (NotFoundException e) {
                 logger.info("date for card number " + counter + " not found");
                 isOk = false;
@@ -186,7 +193,7 @@ public class EpamEventsPage extends BasePage{
             try {
                 String reg = card.findElement(By.xpath(cardReg))
                         .getText();
-                logger.info("registration for card number " + counter + " is " + ANSI_GREEN + reg);
+                logger.info("registration for card number " + counter + " is " + Utils.ANSI_GREEN + reg);
             } catch (NotFoundException e) {
                 logger.info("registration for card number " + counter + " not found");
                 isOk = false;
@@ -203,7 +210,7 @@ public class EpamEventsPage extends BasePage{
             try {
                 String speakers = card.findElement(By.xpath(cardReg))
                         .getText();
-                logger.info("speakers for card number " + counter + " is " + ANSI_GREEN + speakers);
+                logger.info("speakers for card number " + counter + " is " + Utils.ANSI_GREEN + speakers);
             } catch (NotFoundException e) {
                 logger.info("speakers for card number " + counter + " not found");
                 isOk = false;
@@ -214,13 +221,17 @@ public class EpamEventsPage extends BasePage{
     }
 
     public void openPastEvents() {
+        //локатор для ссылки на раздел
         By upcomingEventsSelector = By.xpath(pastEvents + "/..");
+        //Локатор для определения активности раздела
         By upcomingEventsSelectorTop = By.xpath(pastEvents + "/..");
+        //Если раздел не активен, то перейти в него
         if (!driver.findElement(upcomingEventsSelectorTop)
                 .getAttribute("class")
                 .contains("active")) {
             driver.findElement(upcomingEventsSelector).click();
         }
+
         try {
             Thread.sleep(3000);
         } catch (InterruptedException e) {
@@ -231,8 +242,11 @@ public class EpamEventsPage extends BasePage{
     public void selectFilterValue(String filter, String value) {
         //Запоминаем текущие элементы из списка тем
         List<WebElement> elements = driver.findElements(By.cssSelector(cardBody));
+        //Настраиваем элементы фильтра
         driver.findElement(UniLoc.xpathLocator(UniLoc.SPAN, filter)).click();
         driver.findElement(UniLoc.xpathLocator(UniLoc.LABELDATA, value)).click();
+        //Логируем
+        logger.info("Настроен фильтр " + filter + " со значением " + value);
         //ждём пока прогрузится новый список тем
         try {
             new WebDriverWait(driver, 5)
@@ -243,14 +257,21 @@ public class EpamEventsPage extends BasePage{
     }
 
     public boolean isDateInCardLessCurrentDate() {
-
+        //Просматриваем все карточки
         for (EventCard card : eventCards) {
-            String[] parseDate = card.getDate().split(" ");
-            int year = Integer.parseInt(parseDate[parseDate.length - 1]);
-            int month = Utils.parseMonth(parseDate[parseDate.length - 2]);
-            int day = Integer.parseInt(parseDate[parseDate.length - 3]);
-            LocalDate date = LocalDate.of(year, month, day);
-            if (date.isAfter(LocalDate.now())) return false;
+            //Парсим дату
+            LocalDate date = Utils.parseDate(card.getDate());
+            //Проверяем что дата в карточке до текущей
+            if (date.isAfter(LocalDate.now())) {
+                //Логируем
+                logger.warn(Utils.ANSI_RED + "Карточка " + card.getEventName() + " с датой "
+                        + date + " после текущей " + LocalDate.now());
+                return false;
+            } else {
+                //Логируем
+                logger.info(Utils.ANSI_GREEN + "Карточка " + card.getEventName() + " с датой " + date
+                + " до текущей " + LocalDate.now());
+            }
         }
         return true;
     }
