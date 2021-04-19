@@ -92,17 +92,26 @@ public class EpamTalkPage extends BasePage {
     }
 
     public void filterLanguage(String language) {
+        //Запоминаем текущие элементы из списка тем
+        List<WebElement> elements = driver.findElements(By.xpath(talkTitle));
         //Открываем список
         driver.findElement(By.xpath(spanLanguage)).click();
         //Устанавливаем эталонное значение
         etalone.setLanguage(language);
         //Выбираем язык
         scrollAndClick(driver.findElement(UniLoc.xpathLocator(UniLoc.LABELDATA, language)));
+        //ждём пока прогрузится новый список тем
+        try {
+            new WebDriverWait(driver, 5)
+                    .until(ExpectedConditions.invisibilityOf(elements.get(elements.size() - 1)));
+        } catch (Exception e) {
+            //do nothing
+        }
     }
 
     public boolean isFilterWorks() {
-        List<String> urls = new ArrayList<>();
 
+        List<String> urls = new ArrayList<>();
         List<WebElement> elements = driver.findElements(By.xpath(cardLink));
         for (WebElement element : elements) {
             try {

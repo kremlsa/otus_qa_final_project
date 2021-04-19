@@ -1,6 +1,7 @@
 package finalProject.stepdefs;
 
 import finalProject.common.BaseClass;
+import finalProject.common.UniLoc;
 import finalProject.pages.EpamEventsPage;
 import finalProject.pages.EpamMainPage;
 import finalProject.pages.EpamTalkPage;
@@ -18,8 +19,7 @@ public class EventSteps {
     private EpamMainPage epamMainPage;
     @Autowired
     private EpamEventsPage epamEventsPage;
-    @Autowired
-    private EpamTalkPage epamTalkPage;
+
 
     WebDriver driver = BaseClass.getDriver();
 
@@ -35,14 +35,14 @@ public class EventSteps {
         epamEventsPage.openUpcomingEvents();
     }
 
-    @То("На странице отображаются карточки предстоящих мероприятий")
+    @То("На странице отображаются карточки мероприятий")
     public void isCardApperance(){
         Assert.assertTrue(epamEventsPage.isCardApperance());
     }
 
-    @И("Количество карточек равно счетчику на кнопке Upcoming Events")
-    public void checkNumberOfCards(){
-        Assert.assertTrue(epamEventsPage.isCounterCorrect());
+    @И("Количество карточек равно счетчику на кнопке {string}")
+    public void checkNumberOfCards(String buttonName){
+        Assert.assertTrue(epamEventsPage.isCounterCorrect(buttonName));
     }
 
     @И("В карточке указана информация о мероприятии:")
@@ -94,38 +94,20 @@ public class EventSteps {
                 .openTalks();
     }
 
-    @Когда("Пользователь вводит ключевое слово QA в поле поиска")
-    public void fillSearch() {
-        epamTalkPage.fillSearch();
+    @Когда("Пользователь нажимает на Past Events")
+    public void clickPastEvents() {
+        epamEventsPage.openPastEvents();
     }
 
-    @То("На странице отображаются доклады, содержащие в названии ключевое слово поиска")
-    public void isTalksDisplayed() {
-        Assert.assertTrue(epamTalkPage.checkTalkTitle());
+    @И("Пользователь нажимает на {string} в блоке фильтров и выбирает {string} в выпадающем списке")
+    public void selectFilterValue(String filter, String value) {
+        epamEventsPage.selectFilterValue(filter, value);
     }
 
-    @И("Пользователь нажимает на More Filters")
-    public void clickMoreFilters() {
-        epamTalkPage.clickMoreFilters();
+    @И("Даты проведенных мероприятий меньше текущей даты")
+    public void isDateLessCurrentDate() {
+        epamEventsPage.getAllCards();
+        Assert.assertTrue(epamEventsPage.isDateInCardLessCurrentDate());
     }
 
-    @Когда("Пользователь выбирает: Category – {string}")
-    public void selectCategoryTesting(String category) {
-        epamTalkPage.filterTesting(category);
-    }
-
-    @И("Location – {string}")
-    public void selectlocationBelarus(String location) {
-        epamTalkPage.filterLocation(location);
-    }
-
-    @И("Language – {string} На вкладке фильтров")
-    public void selectLanguageEnglish(String language) {
-        epamTalkPage.filterLanguage(language);
-    }
-
-    @То("На странице отображаются карточки соответствующие правилам выбранных фильтров")
-    public void isFilterWorks() {
-        Assert.assertTrue(epamTalkPage.isFilterWorks());
-    }
 }
