@@ -20,22 +20,19 @@ public class EpamMainPage extends BasePage{
     private String url;
 
     public EpamMainPage open() {
-        //driver.get(url); --- Delete
         Selenide.open(url);
+        logger.info("Открываем раздел - " + Selenide.title());
         return this;
     }
 
     public void openEvents() {
-        System.out.println(navigationEvents);
-        By navigationEventSelector = By.cssSelector(navigationEvents);
-        driver.findElement(navigationEventSelector).click();
+        $(navigationEvents).click();
+        logger.info("Открываем раздел - " + Selenide.title());
     }
 
     public EpamMainPage openTalks() {
-        //System.out.println(navigationTalks); --- Delete
-        //By navigationEventSelector = By.cssSelector(navigationTalks); --- Delete
-        //driver.findElement(navigationEventSelector).click(); --- Delete
         $(navigationTalks).click();
+        logger.info("Открываем раздел - " + Selenide.title());
         return this;
     }
 

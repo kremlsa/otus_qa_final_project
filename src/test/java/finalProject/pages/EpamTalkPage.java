@@ -1,9 +1,11 @@
 package finalProject.pages;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import finalProject.common.TalkCard;
 import finalProject.common.UniLoc;
+import finalProject.common.Utils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
@@ -46,23 +48,34 @@ public class EpamTalkPage extends BasePage {
     @Value("${talkPage.HrefCard}")
     private String cardLink;
 
-    private final String query = "QA";
+    private String query = "";
     private final TalkCard etalone = new TalkCard();
 
-    public void fillSearch() {
-        //Запоминаем текущие элементы из списка тем
-        SelenideElement firstelement = $$x(talkTitle).first();
+    public void fillSearch(String query) {
+        this.query = query;
+        //Запоминаем текущий элемент из списка тем и значение
+        SelenideElement element = $x(talkTitle);
+        String elementText = element.getText();
         //Заполняем поле ввода
         $(searchField).sendKeys(query, Keys.ENTER);
+        logger.info("Выполняем поисковый запрос с параметром  - " + query);
         //ждём пока прогрузится новый список тем
-        firstelement.should(Condition.disappear);
+        element.waitUntil(Condition.not(Condition.matchesText(elementText)), 5000);
     }
 
     public boolean checkTalkTitle() {
-        System.out.println("test");
+        //Проверяем темы докладов
         for (SelenideElement element : $$x(talkTitle)) {
-            System.out.println(element.getText());
-            if (!element.getText().contains(query)) return false;
+            if (!element.getText().contains(query)) {
+                //Логируем
+                logger.warn(Utils.ANSI_RED + "Доклад - " + element.getText()
+                        + " не содержит поисковый запрос - " + query);
+                return false;
+            } else {
+                //Логируем
+                logger.info(Utils.ANSI_GREEN + "Доклад - " + element.getText()
+                        + " содержит поисковый запрос - " + query);
+            }
         }
         return true;
     }

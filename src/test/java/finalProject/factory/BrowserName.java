@@ -5,7 +5,7 @@ public enum BrowserName {
     CHROME("chrome"),
     FIREFOX("firefox"),
     OPERA("opera"),
-    DEFAULT("firefox");
+    DEFAULT("chrome");
 
     String browserName;
 
@@ -25,7 +25,7 @@ public enum BrowserName {
             }
         }
 
-        // Возвращаем браузер по умолчанию Firefox если не нашлось подходящего кандидата
+        // Возвращаем браузер по умолчанию Chrome если не нашлось подходящего кандидата
         return DEFAULT;
     }
 }

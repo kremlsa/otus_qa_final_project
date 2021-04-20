@@ -12,9 +12,9 @@ public class TalksStep {
     @Autowired
     private EpamTalkPage epamTalkPage;
 
-    @Когда("Пользователь вводит ключевое слово QA в поле поиска")
-    public void fillSearch() {
-        epamTalkPage.fillSearch();
+    @Когда("Пользователь вводит ключевое слово {string} в поле поиска")
+    public void fillSearch(String query) {
+        epamTalkPage.fillSearch(query);
     }
 
     @То("На странице отображаются доклады, содержащие в названии ключевое слово поиска")

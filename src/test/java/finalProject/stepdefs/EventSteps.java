@@ -89,7 +89,6 @@ public class EventSteps {
 
     @Дано("Пользователь переходит на вкладку Talks Library")
     public void openTalksLibrary() {
-        //epamMainPage.initWebDriver(driver);
         epamMainPage.open()
                 .openTalks();
     }
