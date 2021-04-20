@@ -34,4 +34,14 @@ public enum UniLoc {
         }
         return By.xpath(DEFAULT.locator);
     }
+
+    //Возвращаем параметризированную строку XPath
+    public static String xpathString(UniLoc name, String parameter) {
+        for (UniLoc value: values()) {
+            if (value.equals(name)) {
+                return String.format(value.locator, parameter);
+            }
+        }
+        return DEFAULT.locator;
+    }
 }

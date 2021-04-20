@@ -1,5 +1,6 @@
 package finalProject.pages;
 
+import com.codeborne.selenide.SelenideElement;
 import finalProject.common.TalkCard;
 import finalProject.common.UniLoc;
 import org.openqa.selenium.By;
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.codeborne.selenide.Selenide.*;
 
 @Component
 public class EpamTalkPage extends BasePage {
@@ -66,48 +69,64 @@ public class EpamTalkPage extends BasePage {
 
     //TO DO:
     //Вынести клик в базовый класс
-    public void clickMoreFilters() {
-        driver.findElement(By.xpath(moreFilters)).click();
+    public EpamTalkPage clickMoreFilters() {
+        //driver.findElement(By.xpath(moreFilters)).click(); --- Delete
+        $x(moreFilters).click();
+        return this;
     }
 
 
     public void filterTesting(String category) {
         //Открываем список
-        driver.findElement(By.xpath(spanCategory)).click();
+        //driver.findElement(By.xpath(spanCategory)).click(); --- Delete
+        $x(spanCategory).click();
         //Устанавливаем эталонное значение
         etalone.setCategory(category);
         //Выбираем категорию
-        scrollAndClick(driver.findElement(UniLoc.xpathLocator(UniLoc.LABELDATA, category)));
+        //scrollAndClick(driver.findElement(UniLoc.xpathLocator(UniLoc.LABELDATA, category)));
+        $x(UniLoc.xpathString(UniLoc.LABELDATA, category)).click();
 
     }
 
     public void filterLocation(String location) {
         //Открываем список
-        driver.findElement(By.xpath(spanLocation)).click();
+        //driver.findElement(By.xpath(spanLocation)).click(); ---Delete
+        $x(spanLocation).click();
         //Устанавливаем эталонное значение
         etalone.setLocation(location);
         //Выбираем локацию
-        scrollAndClick(driver.findElement(UniLoc.xpathLocator(UniLoc.LABELDATA, location)));
+        //scrollAndClick(driver.findElement(UniLoc.xpathLocator(UniLoc.LABELDATA, location))); --- Delete
+        $x(UniLoc.xpathString(UniLoc.LABELDATA, location)).click();
     }
 
     public void filterLanguage(String language) {
         //Запоминаем текущие элементы из списка тем
-        List<WebElement> elements = driver.findElements(By.xpath(talkTitle));
+        //List<WebElement> elements = driver.findElements(By.xpath(talkTitle));
         //Открываем список
-        driver.findElement(By.xpath(spanLanguage)).click();
+        //driver.findElement(By.xpath(spanLanguage)).click();
+        $x(spanLanguage).click();
         //Устанавливаем эталонное значение
         etalone.setLanguage(language);
         //Выбираем язык
-        scrollAndClick(driver.findElement(UniLoc.xpathLocator(UniLoc.LABELDATA, language)));
+        //scrollAndClick(driver.findElement(UniLoc.xpathLocator(UniLoc.LABELDATA, language)));
+        $x(UniLoc.xpathString(UniLoc.LABELDATA, language)).click();
         //ждём пока прогрузится новый список тем
-        waitWhileDisappear(elements, 5);
+        //waitWhileDisappear(elements, 5);
     }
 
     public boolean isFilterWorks() {
 
         List<String> urls = new ArrayList<>();
-        List<WebElement> elements = driver.findElements(By.xpath(cardLink));
+        /*List<WebElement> elements = driver.findElements(By.xpath(cardLink));
         for (WebElement element : elements) {
+            try {
+                urls.add(element.getAttribute("href"));
+            } catch (Exception e) {
+                //do nothing
+            }
+        }*/
+        List<SelenideElement> elements = $$x(cardLink);
+        for (SelenideElement element : elements) {
             try {
                 urls.add(element.getAttribute("href"));
             } catch (Exception e) {

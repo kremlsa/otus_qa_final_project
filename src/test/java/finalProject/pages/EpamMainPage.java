@@ -1,8 +1,11 @@
 package finalProject.pages;
 
+import com.codeborne.selenide.Selenide;
 import org.openqa.selenium.By;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+
+import static com.codeborne.selenide.Selenide.$;
 
 @Component
 public class EpamMainPage extends BasePage{
@@ -17,7 +20,8 @@ public class EpamMainPage extends BasePage{
     private String url;
 
     public EpamMainPage open() {
-        driver.get(url);
+        //driver.get(url); --- Delete
+        Selenide.open(url);
         return this;
     }
 
@@ -27,10 +31,12 @@ public class EpamMainPage extends BasePage{
         driver.findElement(navigationEventSelector).click();
     }
 
-    public void openTalks() {
-        System.out.println(navigationTalks);
-        By navigationEventSelector = By.cssSelector(navigationTalks);
-        driver.findElement(navigationEventSelector).click();
+    public EpamMainPage openTalks() {
+        //System.out.println(navigationTalks); --- Delete
+        //By navigationEventSelector = By.cssSelector(navigationTalks); --- Delete
+        //driver.findElement(navigationEventSelector).click(); --- Delete
+        $(navigationTalks).click();
+        return this;
     }
 
 
