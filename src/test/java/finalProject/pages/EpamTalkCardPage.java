@@ -2,9 +2,6 @@ package finalProject.pages;
 
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
-import finalProject.common.TalkCard;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -23,12 +20,13 @@ public class EpamTalkCardPage extends BasePage{
     @Value("${talkCardPage.divTopics}")
     private String topics;
 
+    @Value("${talkCardPage.hEvent}")
+    private String event;
+
     public TalkCard parseCard(String targetUrl) {
         TalkCard testCard = new TalkCard();
-        //openURL(targetUrl);
         Selenide.open(targetUrl);
-        //testCard.setLocation(driver.findElement(By.xpath(location)).getText());
-        //testCard.setLanguage(driver.findElement(By.xpath(language)).getText());
+        testCard.setEvent($x(event).getText());
         testCard.setLocation($x(location).getText());
         testCard.setLanguage($x(language).getText());
         String topicName = "";
@@ -36,7 +34,6 @@ public class EpamTalkCardPage extends BasePage{
             topicName += element.getText() + " ";
         }
         testCard.setCategory(topicName);
-        System.out.println(testCard.getCategory() + "---" + testCard.getLocation() + "---" + testCard.getLanguage());
         return testCard;
     }
 }

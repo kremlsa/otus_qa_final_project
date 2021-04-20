@@ -1,13 +1,17 @@
 package finalProject.pages;
 
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.SelenideElement;
 import finalProject.common.UniLoc;
 import finalProject.common.Utils;
 import io.cucumber.java.lv.Un;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +23,8 @@ import java.time.format.DateTimeFormatterBuilder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+import static com.codeborne.selenide.Selenide.*;
 
 @Component
 public class EpamEventsPage extends BasePage{
@@ -43,8 +49,13 @@ public class EpamEventsPage extends BasePage{
     private String cardReg;
     @Value("${eventsPage.XPathCardSpeakers}")
     private String cardSpeakers;
-    private List<WebElement> cards;
+    @Value("${eventsPage.XPathEventTitle}")
+    private String eventTitle;
+    private List<SelenideElement> cards;
     private final List<EventCard> eventCards = new ArrayList<>();
+
+    @Autowired
+    EventCard eventCard;
 
     public void openUpcomingEvents() {
         //Запоминаем текущие элементы из списка тем
@@ -64,15 +75,14 @@ public class EpamEventsPage extends BasePage{
     }
 
     public boolean isCardApperance() {
-        return elementIsPresent(By.cssSelector(cardBody));
+        return $(cardBody).exists();
     }
 
     public boolean isCounterCorrect(String buttonName) {
         //Карточек найдено
-        int cardsFind = driver.findElements(By.cssSelector(cardBody)).size();
+        int cardsFind = $$(cardBody).size();
         //Карточек в счётчике
-        int cardsInCounter = Integer.parseInt(driver
-                .findElement(UniLoc.xpathLocator(UniLoc.EVENTCOUNTER, buttonName))
+        int cardsInCounter = Integer.parseInt($x(UniLoc.xpathString(UniLoc.EVENTCOUNTER, buttonName))
                 .getText().trim());
         //Сравниваем карточки найденные и счётчик
         if (cardsFind == cardsInCounter) {
@@ -85,41 +95,10 @@ public class EpamEventsPage extends BasePage{
     }
 
     public void getAllCards() {
-        cards = driver.findElements(By.cssSelector(cardBody));
+        cards = $$(cardBody);
         logger.info("find " + cards.size() + " card(s)");
-        for (WebElement card : cards) {
-            EventCard eventCard = new EventCard();
-            try {
-                eventCard.setPlace(card.findElement(By.xpath(cardPlace)).getText());
-            } catch (Exception e) {
-                System.out.println("Place not found");
-            }
-            try {
-                eventCard.setEventName(card.findElement(By.xpath(cardEvent)).getText());
-            } catch (Exception e) {
-                System.out.println("Name not found");
-            }
-            try {
-                eventCard.setDate(card.findElement(By.xpath(cardDate)).getText());
-            } catch (Exception e) {
-                System.out.println("Date not found");
-            }
-            try {
-                eventCard.setRegistration(card.findElement(By.xpath(cardReg)).getText());
-            } catch (Exception e) {
-                System.out.println("Reg not found");
-            }
-            try {
-                List<WebElement> speakerElements = card.findElements(By.xpath(cardSpeakers));
-                for (WebElement el : speakerElements) {
-                    eventCard.addSpeakers(Speaker.parseSpeaker(el));
-                }
-            } catch (Exception e) {
-                System.out.println("Speakers not found");
-            }
-            eventCards.add(eventCard);
-            System.out.println(eventCard.getDate() + " - " + eventCard.getEventName() + " - " + eventCard.getPlace()
-            + " - " + eventCard.getRegistration() + " - " + eventCard.getSpeakers());
+        for (SelenideElement card : cards) {
+            eventCards.add(eventCard.parse(card));
         }
     }
 
@@ -226,32 +205,33 @@ public class EpamEventsPage extends BasePage{
     }
 
     public void openPastEvents() {
-        //Запоминаем текущие элементы из списка тем
-        List<WebElement> elements = driver.findElements(By.cssSelector(cardBody));
-        //локатор для ссылки на раздел
-        By upcomingEventsSelector = By.xpath(pastEvents + "/..");
-        //Локатор для определения активности раздела
-        By upcomingEventsSelectorTop = By.xpath(pastEvents + "/..");
+        //Запоминаем текущий элемент из списка тем и значение
+        SelenideElement element = $x(eventTitle);
+        String elementText = element.getText();
         //Если раздел не активен, то перейти в него
-        if (!driver.findElement(upcomingEventsSelectorTop)
+        if (!$x(pastEvents + "/..")
                 .getAttribute("class")
                 .contains("active")) {
-            driver.findElement(upcomingEventsSelector).click();
+            $x(pastEvents + "/..").click();
         }
+        //Логируем
+        logger.info("Переход в раздел Past Events");
         //ждём пока прогрузится новый список тем
-        waitWhileDisappear(elements, 5);
+        element.waitUntil(Condition.not(Condition.matchesText(elementText)), 5000);
+
     }
 
     public void selectFilterValue(String filter, String value) {
-        //Запоминаем текущие элементы из списка тем
-        List<WebElement> elements = driver.findElements(By.cssSelector(cardBody));
+        //Запоминаем текущий элемент из списка тем и значение
+        SelenideElement element = $x(eventTitle);
+        String elementText = element.getText();
         //Настраиваем элементы фильтра
-        driver.findElement(UniLoc.xpathLocator(UniLoc.SPAN, filter)).click();
-        driver.findElement(UniLoc.xpathLocator(UniLoc.LABELDATA, value)).click();
+        $x(UniLoc.xpathString(UniLoc.SPAN, filter)).click();
+        $x(UniLoc.xpathString(UniLoc.LABELDATA, value)).click();
         //Логируем
         logger.info("Настроен фильтр " + filter + " со значением " + value);
         //ждём пока прогрузится новый список тем
-        waitWhileDisappear(elements, 5);
+        element.waitUntil(Condition.not(Condition.matchesText(elementText)), 5000);
     }
 
     public boolean isDateInCardLessCurrentDate() {

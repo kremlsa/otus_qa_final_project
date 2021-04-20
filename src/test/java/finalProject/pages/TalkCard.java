@@ -1,4 +1,4 @@
-package finalProject.common;
+package finalProject.pages;
 
 
 import org.openqa.selenium.WebElement;
@@ -7,6 +7,15 @@ public class TalkCard {
     private String location = "Not defined";
     private String language = "Not defined";
     private String category = "Not defined";
+    private String event = "Not defined";
+
+    public String getEvent() {
+        return event;
+    }
+
+    public void setEvent(String event) {
+        this.event = event;
+    }
 
     public String getLocation() {
         return location;

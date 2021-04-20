@@ -29,7 +29,7 @@ public class TalksStep {
 
     @Когда("Пользователь выбирает: Category – {string}")
     public void selectCategoryTesting(String category) {
-        epamTalkPage.filterTesting(category);
+        epamTalkPage.filterCategory(category);
     }
 
     @И("Location – {string}")

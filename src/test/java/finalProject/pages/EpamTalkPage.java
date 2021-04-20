@@ -1,17 +1,10 @@
 package finalProject.pages;
 
 import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
-import finalProject.common.TalkCard;
 import finalProject.common.UniLoc;
 import finalProject.common.Utils;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -80,21 +73,23 @@ public class EpamTalkPage extends BasePage {
         return true;
     }
 
-    //TO DO:
-    //Вынести клик в базовый класс
     public EpamTalkPage clickMoreFilters() {
         $x(moreFilters).click();
+        //Логируем
+        logger.info("Выбираем больше вариантов фильтрации - More Filters");
         return this;
     }
 
 
-    public void filterTesting(String category) {
+    public void filterCategory(String category) {
         //Открываем список
         $x(spanCategory).click();
         //Устанавливаем эталонное значение
         etalone.setCategory(category);
         //Выбираем категорию
         $x(UniLoc.xpathString(UniLoc.LABELDATA, category)).click();
+        //Логируем
+        logger.info("Выбираем значение фильтра Category " + category);
 
     }
 
@@ -105,6 +100,8 @@ public class EpamTalkPage extends BasePage {
         etalone.setLocation(location);
         //Выбираем локацию
         $x(UniLoc.xpathString(UniLoc.LABELDATA, location)).click();
+        //Логируем
+        logger.info("Выбираем значение фильтра Location " + location);
     }
 
     public void filterLanguage(String language) {
@@ -114,24 +111,55 @@ public class EpamTalkPage extends BasePage {
         etalone.setLanguage(language);
         //Выбираем язык
         $x(UniLoc.xpathString(UniLoc.LABELDATA, language)).click();
+        //Логируем
+        logger.info("Выбираем значение фильтра Language " + language);
         //ждём пока прогрузится новый список тем (появится тэг)
         $x(spanLanguage).click();
         $x(UniLoc.xpathString(UniLoc.TAG, language)).should(Condition.exist);
     }
 
     public boolean isFilterWorks() {
-
+        //Список ссылок для проверки результатов фильтрации
         List<String> urls = new ArrayList<>();
+        //Список карточек по результатам фильтрации
         List<SelenideElement> elements = $$x(cardLink);
+        //Составляем список ссылок
         for (SelenideElement element : elements) {
             urls.add(element.getAttribute("href"));
         }
-
+        //Проверяем результаты через вспомогательный объект и логируем
         for (String url : urls) {
             TalkCard testCard = epamTalkCardPage.parseCard(url);
-            if (!testCard.getCategory().contains(etalone.getCategory())) return false;
-            if (!testCard.getLocation().contains(etalone.getLocation())) return false;
-            if (!testCard.getLanguage().contains(etalone.getLanguage())) return false;
+            if (!testCard.getCategory().contains(etalone.getCategory())) {
+                logger.warn(Utils.ANSI_RED + "категория " + testCard.getCategory()
+                        + " в карточке " + testCard.getEvent()
+                    + " не совпадает с заданной " + etalone.getCategory());
+                return false;
+            } else {
+                logger.info(Utils.ANSI_GREEN + "категория " + testCard.getCategory()
+                        + " в карточке " + testCard.getEvent()
+                        + " совпадает с заданной " + etalone.getCategory());
+            }
+            if (!testCard.getLocation().contains(etalone.getLocation())) {
+                logger.warn(Utils.ANSI_RED + "локация " + testCard.getLocation()
+                        + " в карточке " + testCard.getEvent()
+                        + " не совпадает с заданной " + etalone.getLocation());
+                return false;
+            } else {
+                logger.info(Utils.ANSI_GREEN + "локация " + testCard.getLocation()
+                        + " в карточке " + testCard.getEvent()
+                        + " совпадает с заданной " + etalone.getLocation());
+            }
+            if (!testCard.getLanguage().contains(etalone.getLanguage())) {
+                logger.warn(Utils.ANSI_RED + "язык " + testCard.getLanguage()
+                        + " в карточке " + testCard.getEvent()
+                        + " не совпадает с заданной " + etalone.getLanguage());
+                return false;
+            } else {
+                logger.info(Utils.ANSI_GREEN + "язык " + testCard.getLanguage()
+                        + " в карточке " + testCard.getEvent()
+                        + " совпадает с заданной " + etalone.getLanguage());
+            }
         }
         return true;
     }
