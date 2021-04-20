@@ -36,7 +36,7 @@ public class EpamTalkCardPage extends BasePage{
             topicName += element.getText() + " ";
         }
         testCard.setCategory(topicName);
-        System.out.println(testCard.getCategory() + " " + testCard.getLocation() + " " + testCard.getLanguage());
+        System.out.println(testCard.getCategory() + "---" + testCard.getLocation() + "---" + testCard.getLanguage());
         return testCard;
     }
 }

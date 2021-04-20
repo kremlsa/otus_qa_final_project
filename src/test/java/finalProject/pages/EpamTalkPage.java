@@ -1,5 +1,6 @@
 package finalProject.pages;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import finalProject.common.TalkCard;
 import finalProject.common.UniLoc;
@@ -50,17 +51,16 @@ public class EpamTalkPage extends BasePage {
 
     public void fillSearch() {
         //Запоминаем текущие элементы из списка тем
-        List<WebElement> elements = driver.findElements(By.xpath(talkTitle));
+        SelenideElement firstelement = $$x(talkTitle).first();
         //Заполняем поле ввода
-        driver.findElement(By.cssSelector(searchField))
-                .sendKeys(query, Keys.ENTER);
+        $(searchField).sendKeys(query, Keys.ENTER);
         //ждём пока прогрузится новый список тем
-        waitWhileDisappear(elements, 5);
+        firstelement.should(Condition.disappear);
     }
 
     public boolean checkTalkTitle() {
-        //Если тема элемента не содержат искомую фразу то возвращаем false
-        for (WebElement element : driver.findElements(By.xpath(talkTitle))) {
+        System.out.println("test");
+        for (SelenideElement element : $$x(talkTitle)) {
             System.out.println(element.getText());
             if (!element.getText().contains(query)) return false;
         }
@@ -70,7 +70,6 @@ public class EpamTalkPage extends BasePage {
     //TO DO:
     //Вынести клик в базовый класс
     public EpamTalkPage clickMoreFilters() {
-        //driver.findElement(By.xpath(moreFilters)).click(); --- Delete
         $x(moreFilters).click();
         return this;
     }
@@ -78,60 +77,41 @@ public class EpamTalkPage extends BasePage {
 
     public void filterTesting(String category) {
         //Открываем список
-        //driver.findElement(By.xpath(spanCategory)).click(); --- Delete
         $x(spanCategory).click();
         //Устанавливаем эталонное значение
         etalone.setCategory(category);
         //Выбираем категорию
-        //scrollAndClick(driver.findElement(UniLoc.xpathLocator(UniLoc.LABELDATA, category)));
         $x(UniLoc.xpathString(UniLoc.LABELDATA, category)).click();
 
     }
 
     public void filterLocation(String location) {
         //Открываем список
-        //driver.findElement(By.xpath(spanLocation)).click(); ---Delete
         $x(spanLocation).click();
         //Устанавливаем эталонное значение
         etalone.setLocation(location);
         //Выбираем локацию
-        //scrollAndClick(driver.findElement(UniLoc.xpathLocator(UniLoc.LABELDATA, location))); --- Delete
         $x(UniLoc.xpathString(UniLoc.LABELDATA, location)).click();
     }
 
     public void filterLanguage(String language) {
-        //Запоминаем текущие элементы из списка тем
-        //List<WebElement> elements = driver.findElements(By.xpath(talkTitle));
         //Открываем список
-        //driver.findElement(By.xpath(spanLanguage)).click();
         $x(spanLanguage).click();
         //Устанавливаем эталонное значение
         etalone.setLanguage(language);
         //Выбираем язык
-        //scrollAndClick(driver.findElement(UniLoc.xpathLocator(UniLoc.LABELDATA, language)));
         $x(UniLoc.xpathString(UniLoc.LABELDATA, language)).click();
-        //ждём пока прогрузится новый список тем
-        //waitWhileDisappear(elements, 5);
+        //ждём пока прогрузится новый список тем (появится тэг)
+        $x(spanLanguage).click();
+        $x(UniLoc.xpathString(UniLoc.TAG, language)).should(Condition.exist);
     }
 
     public boolean isFilterWorks() {
 
         List<String> urls = new ArrayList<>();
-        /*List<WebElement> elements = driver.findElements(By.xpath(cardLink));
-        for (WebElement element : elements) {
-            try {
-                urls.add(element.getAttribute("href"));
-            } catch (Exception e) {
-                //do nothing
-            }
-        }*/
         List<SelenideElement> elements = $$x(cardLink);
         for (SelenideElement element : elements) {
-            try {
-                urls.add(element.getAttribute("href"));
-            } catch (Exception e) {
-                //do nothing
-            }
+            urls.add(element.getAttribute("href"));
         }
 
         for (String url : urls) {
