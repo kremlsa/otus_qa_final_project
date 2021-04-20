@@ -53,7 +53,8 @@ public class EpamEventsPage extends BasePage{
     @Value("${eventsPage.XPathEventTitle}")
     private String eventTitle;
     private List<SelenideElement> cards;
-    private final List<EventCard> eventCards = new ArrayList<>();
+    private List<EventCard> eventCards = new ArrayList<>();
+    private List<String> cardErrors = new ArrayList<>();
 
     @Autowired
     EventCard eventCard;
@@ -99,110 +100,82 @@ public class EpamEventsPage extends BasePage{
         cards = $$(cardBody);
         logger.info("find " + cards.size() + " card(s)");
         for (SelenideElement card : cards) {
-            eventCards.add(eventCard.parse(card));
+            eventCards.add(eventCard.parse(card.toWebElement()));
         }
     }
 
-    public boolean checkPlace() {
-        boolean isOk = true;
-        int counter = 1;
-        for(WebElement card : cards) {
-            try {
-                String place = card.findElement(By.xpath(cardPlace))
-                        .getText();
-                logger.info("place for card number " + counter + " is " + Utils.ANSI_GREEN + place);
-            } catch (NotFoundException e) {
-                logger.info("place for card number " + counter + " not found");
-                isOk = false;
+    public void checkPlace() {
+        for(EventCard card : eventCards) {
+            if (card.getPlace().equals("Not defined")) {
+
+                logger.info(Utils.ANSI_RED + "Город проведения для карточки " + card.getCardLink()
+                        + " - " + card.getPlace());
+            } else {
+                logger.info(Utils.ANSI_GREEN + "Город проведения для карточки " + card.getCardLink()
+                        + " - " + card.getPlace());
             }
-            counter++;
         }
-        return isOk;
     }
 
-    public boolean checkLang() {
-        boolean isOk = true;
-        int counter = 1;
-        for(WebElement card : cards) {
-            try {
-                String lang = card.findElement(By.xpath(cardLang))
-                        .getText();
-                logger.info("language for card number " + counter + " is " + Utils.ANSI_GREEN + lang);
-            } catch (NotFoundException e) {
-                logger.info("language for card number " + counter + " not found");
-                isOk = false;
+    public void checkLang() {
+        for(EventCard card : eventCards) {
+            if (card.getLang().equals("Not defined")) {
+                logger.info(Utils.ANSI_RED + "Язык для карточки " + card.getCardLink()
+                        + " - " + card.getLang());
+            } else {
+                logger.info(Utils.ANSI_GREEN + "Язык для карточки  " + card.getCardLink()
+                        + " - " + card.getLang());
             }
-            counter++;
         }
-        return isOk;
     }
 
-    public boolean checkEvent() {
-        boolean isOk = true;
-        int counter = 1;
-        for(WebElement card : cards) {
-            try {
-                String event = card.findElement(By.xpath(cardEvent))
-                        .getText();
-                logger.info("event for card number " + counter + " is " + Utils.ANSI_GREEN + event);
-            } catch (NotFoundException e) {
-                logger.info("event for card number " + counter + " not found");
-                isOk = false;
+    public void checkEvent() {
+        for(EventCard card : eventCards) {
+            if (card.getEventName().equals("Not defined")) {
+                logger.info(Utils.ANSI_RED + "event for card " + card.getCardLink()
+                        + " - " + card.getEventName());
+            } else {
+                logger.info(Utils.ANSI_GREEN + "event for card " + card.getCardLink()
+                        + " - " + card.getEventName());
             }
-            counter++;
         }
-        return isOk;
     }
 
-    public boolean checkDate() {
-        boolean isOk = true;
-        int counter = 1;
-        for(WebElement card : cards) {
-            try {
-                String date = card.findElement(By.xpath(cardDate))
-                        .getText();
-                logger.info("date for card number " + counter + " is " + Utils.ANSI_GREEN + date);
-            } catch (NotFoundException e) {
-                logger.info("date for card number " + counter + " not found");
-                isOk = false;
+    public void checkDate() {
+        for(EventCard card : eventCards) {
+            if (card.getDate().equals("Not defined")) {
+                logger.info(Utils.ANSI_RED + "Дата для карточки " + card.getCardLink()
+                        + " - " + card.getDate());
+            } else {
+                logger.info(Utils.ANSI_GREEN + "Дата для карточки  " + card.getCardLink()
+                        + " - " + card.getDate());
             }
-            counter++;
         }
-        return isOk;
     }
 
-    public boolean checkReg() {
-        boolean isOk = true;
-        int counter = 1;
-        for(WebElement card : cards) {
-            try {
-                String reg = card.findElement(By.xpath(cardReg))
-                        .getText();
-                logger.info("registration for card number " + counter + " is " + Utils.ANSI_GREEN + reg);
-            } catch (NotFoundException e) {
-                logger.info("registration for card number " + counter + " not found");
-                isOk = false;
+    public void checkReg() {
+        for(EventCard card : eventCards) {
+            if (card.getRegistration().equals("Not defined")) {
+                cardErrors.add(card.getCardLink());
+                logger.info(Utils.ANSI_RED + "регистрация для карточки " + card.getCardLink()
+                        + " - " + card.getRegistration());
+            } else {
+                logger.info(Utils.ANSI_GREEN + "регистрация для карточки  " + card.getCardLink()
+                        + " - " + card.getRegistration());
             }
-            counter++;
         }
-        return isOk;
     }
 
-    public boolean checkSpeakers() {
-        boolean isOk = true;
-        int counter = 1;
-        for(WebElement card : cards) {
-            try {
-                String speakers = card.findElement(By.xpath(cardReg))
-                        .getText();
-                logger.info("speakers for card number " + counter + " is " + Utils.ANSI_GREEN + speakers);
-            } catch (NotFoundException e) {
-                logger.info("speakers for card number " + counter + " not found");
-                isOk = false;
+    public void checkSpeakers() {
+        for(EventCard card : eventCards) {
+            if (card.getSpeakers().equals("Not defined")) {
+                logger.info(Utils.ANSI_RED + "Спикеры для карточки " + card.getCardLink()
+                        + " - " + card.getSpeakers());
+            } else {
+                logger.info(Utils.ANSI_GREEN + "Спикеры для карточки  " + card.getCardLink()
+                        + " - " + card.getSpeakers());
             }
-            counter++;
         }
-        return isOk;
     }
 
     public void openPastEvents() {
@@ -257,9 +230,19 @@ public class EpamEventsPage extends BasePage{
     }
 
     public void openAnyCard() {
-        WebElement element = driver.findElement(By.cssSelector(cardBody));
-        logger.info("Открываем карточку " + element.findElement(By.xpath(cardEvent)).getText());
+        SelenideElement element = $(cardBody);
+        String elementText = element.$("h1").getText();
         element.click();
+        logger.info("Открываем карточку " + elementText);
+    }
+
+    public boolean isFieldFill() {
+        if (cardErrors.size() > 0) {
+            logger.info(Utils.ANSI_RED + "Карточки заполнены с ошибками");
+            return false;
+        } else {
+            return true;
+        }
     }
 
     /*public boolean checkUpcomingDate() {

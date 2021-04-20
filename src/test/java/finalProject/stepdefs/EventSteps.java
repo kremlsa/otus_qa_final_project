@@ -25,7 +25,7 @@ public class EventSteps {
 
     @Дано("Пользователь переходит на вкладку events")
     public void openUpcomingEvents() {
-        epamMainPage.initWebDriver(driver);
+        //epamMainPage.initWebDriver(driver);
         epamMainPage.open()
                     .openEvents();
     }
@@ -53,35 +53,39 @@ public class EventSteps {
 
     @И("город проведения")
     public void checkPlace() {
-        Assert.assertTrue(epamEventsPage.checkPlace());
+        epamEventsPage.checkPlace();
     }
 
     @И("язык")
     public void checkLanguage() {
-        Assert.assertTrue(epamEventsPage.checkLang());
+        epamEventsPage.checkLang();
     }
 
     @И("название мероприятия")
     public void checkEvent() {
-        Assert.assertTrue(epamEventsPage.checkEvent());
+        epamEventsPage.checkEvent();
     }
 
     @И("дата мероприятия")
     public void checkDate() {
-        Assert.assertTrue(epamEventsPage.checkDate());
+        epamEventsPage.checkDate();
     }
 
     @И("информация о регистрации")
     public void checkRegistry() {
-        //Assertions.assertTrue(epamEventsPage.checkReg());
         epamEventsPage.checkReg();
     }
 
     @И("список спикеров")
     public void checkSpeakers() {
-        //Assertions.assertTrue(epamEventsPage.checkSpeakers());
         epamEventsPage.checkSpeakers();
     }
+
+    @И("все элементы присутствуют")
+    public void isFieldFill() {
+        Assert.assertTrue(epamEventsPage.isFieldFill());
+    }
+
 
     @И("Важно проверить порядок отображаемых блоков с информацией в карточке мероприятия")
     public void важноПроверитьПорядокОтображаемыхБлоковСИнформациейВКарточкеМероприятия() {
