@@ -2,6 +2,7 @@ package finalProject.pages;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.ex.TimeoutException;
 import finalProject.common.UniLoc;
 import finalProject.common.Utils;
 import io.cucumber.java.lv.Un;
@@ -58,26 +59,26 @@ public class EpamEventsPage extends BasePage{
     EventCard eventCard;
 
     public void openUpcomingEvents() {
-        //Запоминаем текущие элементы из списка тем
-        List<WebElement> elements = driver.findElements(By.cssSelector(cardBody));
-        //локатор для ссылки на раздел
-        By upcomingEventsSelector = By.xpath(upcomingEvents + "/..");
-        //Локатор для определения активности раздела
-        By upcomingEventsSelectorTop = By.xpath(upcomingEvents + "/..");
+        //Запоминаем текущий элемент из списка тем и значение
+        SelenideElement element = $x(eventTitle);
+        String elementText = element.getText();
         //Если раздел не активен, то перейти в него
-        if (!driver.findElement(upcomingEventsSelectorTop)
+        if (!$x(upcomingEvents + "/..")
                 .getAttribute("class")
                 .contains("active")) {
-            driver.findElement(upcomingEventsSelector).click();
+            $x(upcomingEvents + "/..").click();
+            //ждём пока прогрузится новый список тем
+            element.waitUntil(Condition.not(Condition.matchesText(elementText)), 5000);
         }
-        //ждём пока прогрузится новый список тем
-        waitWhileDisappear(elements, 5);
+        //Логируем
+        logger.info("Переход в раздел Upcoming Events");
     }
 
     public boolean isCardApperance() {
         return $(cardBody).exists();
     }
 
+    //Сделать регистронезависимый поиск для локатора
     public boolean isCounterCorrect(String buttonName) {
         //Карточек найдено
         int cardsFind = $$(cardBody).size();
@@ -213,11 +214,12 @@ public class EpamEventsPage extends BasePage{
                 .getAttribute("class")
                 .contains("active")) {
             $x(pastEvents + "/..").click();
+            //ждём пока прогрузится новый список тем
+            element.waitUntil(Condition.not(Condition.matchesText(elementText)), 5000);
         }
         //Логируем
         logger.info("Переход в раздел Past Events");
-        //ждём пока прогрузится новый список тем
-        element.waitUntil(Condition.not(Condition.matchesText(elementText)), 5000);
+
 
     }
 
