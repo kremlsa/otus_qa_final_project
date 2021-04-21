@@ -1,8 +1,5 @@
 package finalProject.pages;
 
-
-import org.openqa.selenium.WebElement;
-
 public class TalkCard {
     private String location = "Not defined";
     private String language = "Not defined";

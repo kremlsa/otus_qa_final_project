@@ -1,7 +1,6 @@
 package finalProject.pages;
 
 import com.codeborne.selenide.Selenide;
-import org.openqa.selenium.By;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
