@@ -98,7 +98,10 @@ public class EpamEventsPage extends BasePage{
 
     public void getAllCards() {
         cards = $$(cardBody);
-        logger.info("find " + cards.size() + " card(s)");
+        logger.info("Найдено " + cards.size() + " карточек мероприятий");
+        //Чистим карточки от предыдущих тестов
+        eventCards = new ArrayList<>();
+        //Парсим карточки событий
         for (SelenideElement card : cards) {
             eventCards.add(eventCard.parse(card.toWebElement()));
         }
@@ -107,7 +110,6 @@ public class EpamEventsPage extends BasePage{
     public void checkPlace() {
         for(EventCard card : eventCards) {
             if (card.getPlace().equals("Not defined")) {
-
                 logger.info(Utils.ANSI_RED + "Город проведения для карточки " + card.getCardLink()
                         + " - " + card.getPlace());
             } else {
