@@ -1,15 +1,12 @@
 package finalProject.stepdefs;
 
 import finalProject.common.BaseClass;
-import finalProject.common.UniLoc;
 import finalProject.pages.EpamEventsPage;
 import finalProject.pages.EpamMainPage;
-import finalProject.pages.EpamTalkPage;
 import io.cucumber.java.ru.Дано;
 import io.cucumber.java.ru.И;
 import io.cucumber.java.ru.Когда;
 import io.cucumber.java.ru.То;
-import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.Assert;
 
@@ -20,12 +17,8 @@ public class EventSteps {
     @Autowired
     private EpamEventsPage epamEventsPage;
 
-
-    WebDriver driver = BaseClass.getDriver();
-
     @Дано("Пользователь переходит на вкладку events")
     public void openUpcomingEvents() {
-        //epamMainPage.initWebDriver(driver);
         epamMainPage.open()
                     .openEvents();
     }
