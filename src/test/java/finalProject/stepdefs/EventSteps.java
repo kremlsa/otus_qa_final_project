@@ -1,6 +1,7 @@
 package finalProject.stepdefs;
 
 import finalProject.common.BaseClass;
+import finalProject.common.Utils;
 import finalProject.pages.EpamEventsPage;
 import finalProject.pages.EpamMainPage;
 import io.cucumber.java.ru.Дано;
@@ -133,5 +134,10 @@ public class EventSteps {
     @То("В блоке This week даты проведения мероприятий больше или равны текущей дате и находятся в пределах текущей недели")
     public void isDateInWeekAfter() {
 
+    }
+
+    @И("Запускаем сценарий {string}")
+    public void startScenario(String scenarioName) {
+        BaseClass.getLogger().info(Utils.ANSI_PURPLE + "Запускаем сценарий - " + scenarioName);
     }
 }

@@ -54,7 +54,7 @@ public class Hooks {
 
     public void setBrowserConfiguration() {
         //Настройка ожиданий
-        Configuration.timeout = 10000;
+        Configuration.timeout = 12000;
         //Настройка размера браузера из параметров maven, по умолчанию из конфиг файла
         Configuration.browserSize =  Optional.ofNullable(System.getProperty("browserSize")).orElse(browserSize);
         //Настройка удалённого запуска из параметров maven, по умолчанию из конфиг файла
