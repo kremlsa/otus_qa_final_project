@@ -75,7 +75,7 @@ public class Hooks {
             capabilities.setVersion("89.0");
             // применяем желаемые настройки удаленного исполнения автотестов
             Configuration.browserCapabilities = capabilities;
-            Configuration.headless = true;
+            //Configuration.headless = true;
         }
         //Указываем браузер
         Configuration.browser = browserName.getBrowserName();
