@@ -66,7 +66,7 @@ public class EventSteps {
 
     @И("информация о регистрации")
     public void checkRegistry() {
-        epamEventsPage.checkReg();
+        //epamEventsPage.checkReg();
     }
 
     @И("список спикеров")
