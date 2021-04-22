@@ -72,8 +72,7 @@ public class Hooks {
             DesiredCapabilities capabilities = DesiredCapabilities.chrome();
             capabilities.setCapability("chrome.switches", Collections.singletonList("--ignore-certificate-errors"));
             capabilities.setBrowserName("chrome");
-            capabilities.setVersion("89.0");
-            capabilities.setCapability("enableVideo", true);
+            capabilities.setVersion("88.0");
             // применяем желаемые настройки удаленного исполнения автотестов
             Configuration.browserCapabilities = capabilities;
             //Configuration.headless = true;
