@@ -1,5 +1,6 @@
 package finalProject.pages;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,8 +27,9 @@ public class EpamTalkCardPage extends BasePage{
     public TalkCard parseCard(String targetUrl) {
         TalkCard testCard = new TalkCard();
         Selenide.open(targetUrl);
-        //testCard.setEvent($x(event).getText());
-        testCard.setEvent(Selenide.title());
+        $x(event).waitWhile(Condition.exist, 15);
+        testCard.setEvent($x(event).getText());
+        //testCard.setEvent(Selenide.title());
         testCard.setLocation($x(location).getText());
         testCard.setLanguage($x(language).getText());
         String topicName = "";
