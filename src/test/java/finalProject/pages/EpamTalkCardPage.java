@@ -27,6 +27,7 @@ public class EpamTalkCardPage extends BasePage{
     public TalkCard parseCard(String targetUrl) {
         TalkCard testCard = new TalkCard();
         Selenide.open(targetUrl);
+        $x("//*[@id='onetrust-accept-btn-handler']").click();
         testCard.setEvent($x(event).getText());
         //testCard.setEvent(Selenide.title());
         testCard.setLocation($x(location).getText());
@@ -36,6 +37,7 @@ public class EpamTalkCardPage extends BasePage{
             topicName += element.getText() + " ";
         }
         testCard.setCategory(topicName);
+        Selenide.clearBrowserCookies();
         return testCard;
     }
 }
