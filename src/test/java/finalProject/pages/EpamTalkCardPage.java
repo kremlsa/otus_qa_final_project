@@ -27,7 +27,6 @@ public class EpamTalkCardPage extends BasePage{
     public TalkCard parseCard(String targetUrl) {
         TalkCard testCard = new TalkCard();
         Selenide.open(targetUrl);
-        $x(event).waitWhile(Condition.exist, 15);
         testCard.setEvent($x(event).getText());
         //testCard.setEvent(Selenide.title());
         testCard.setLocation($x(location).getText());
