@@ -28,7 +28,6 @@ public class EpamTalkCardPage extends BasePage{
         TalkCard testCard = new TalkCard();
         Selenide.open(targetUrl);
         $x("//*[@id='onetrust-accept-btn-handler']").click();
-        $x(event).waitUntil(Condition.visible, 30000);
         testCard.setEvent($x(event).getText());
         //testCard.setEvent(Selenide.title());
         testCard.setLocation($x(location).getText());
