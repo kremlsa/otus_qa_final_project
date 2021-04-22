@@ -128,9 +128,9 @@ public class EpamTalkPage extends BasePage {
             urls.add(element.getAttribute("href"));
         }
         //Проверяем результаты через вспомогательный объект и логируем
-        //for (String url : urls) {
-        for (int i = 0; i < urls.size() - 1; i++) {
-            String url = urls.get(i);
+        for (String url : urls) {
+        //for (int i = 0; i < urls.size() - 1; i++) {
+            //String url = urls.get(i);
             TalkCard testCard = epamTalkCardPage.parseCard(url);
             if (!testCard.getCategory().contains(etalone.getCategory())) {
                 logger.warn(Utils.ANSI_RED + "категория " + testCard.getCategory()
