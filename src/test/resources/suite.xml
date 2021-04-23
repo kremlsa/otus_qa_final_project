@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Component Tests" verbose="2" annotations="JDK">
+    <test name="textExample">
+        <!-- Test suite tests for run. You can delete this or add new tests -->
+        <classes>
+            <class name="finalProject.RunCucumberTest"/>
+        </classes>
+    </test>
+</suite>

@@ -27,6 +27,7 @@ public class EpamTalkCardPage extends BasePage{
     public TalkCard parseCard(String targetUrl) {
         TalkCard testCard = new TalkCard();
         Selenide.open(targetUrl);
+        ////div[@class='evnt-modal evnt-error-modal modal show']/div/div/div[3]/button[@class='evnt-button small'
         $x("//*[@id='onetrust-accept-btn-handler']").click();
         testCard.setEvent($x(event).getText());
         //testCard.setEvent(Selenide.title());
