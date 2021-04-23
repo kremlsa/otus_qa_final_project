@@ -80,11 +80,6 @@ public class EventSteps {
         Assert.assertTrue(epamEventsPage.isFieldFill());
     }
 
-
-    @И("Важно проверить порядок отображаемых блоков с информацией в карточке мероприятия")
-    public void важноПроверитьПорядокОтображаемыхБлоковСИнформациейВКарточкеМероприятия() {
-    }
-
     @Дано("Пользователь переходит на вкладку Talks Library")
     public void openTalksLibrary() {
         epamMainPage.open()
@@ -110,21 +105,6 @@ public class EventSteps {
     @Когда("Пользователь нажимает на любую карточку")
     public void openAnyCard() {
         epamEventsPage.openAnyCard();
-    }
-
-    @То("Происходит переход на страницу с подробной информацией о мероприятии")
-    public void isCardOpen() {
-        
-    }
-
-    @И("На странице с информацией о мероприятии отображается шапка с кнопкой для регистрации")
-    public void isHeaderPresent() {
-        
-    }
-
-    @То("В блоке This week даты проведения мероприятий больше или равны текущей дате и находятся в пределах текущей недели")
-    public void isDateInWeekAfter() {
-
     }
 
     @И("Запускаем сценарий {string}")
