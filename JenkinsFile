@@ -15,7 +15,7 @@ pipeline {
         string(name: 'GIT_BRANCH', defaultValue: 'master', description: 'The target git branch')
         string(name: 'EMAIL_NOTIFICATION', defaultValue: 'kremlsa@yandex.ru', description: 'default email')
         string(name: 'REMOTE_URL', defaultValue: 'http://selenoid:4444/wd/hub', description: 'Selenoid url')
-        string(name: 'BROWSER', choices: ['chrome', 'firefox'], description: 'browser name')
+        choice(name: 'BROWSER', defaultValue: 'chrome', choices: ['chrome', 'firefox'], description: 'browser name')
         string(name: 'BROWSER_SIZE', defaultValue: '1920x1080', description: 'browser size')
     }
 
