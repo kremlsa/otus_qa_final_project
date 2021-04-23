@@ -140,4 +140,8 @@ public class EventSteps {
     public void startScenario(String scenarioName) {
         BaseClass.getLogger().info(Utils.ANSI_PURPLE + "Запускаем сценарий - " + scenarioName);
     }
+
+    @То("Даты проведения мероприятий больше или равны текущей дате или текущая дата находится в диапазоне дат проведения")
+    public void checkUpcomingDate() {
+    }
 }
