@@ -14,11 +14,19 @@ public class Utils {
     public static final String ANSI_CYAN = "\u001B[36m";
     public static final String ANSI_WHITE = "\u001B[37m";
 
-    public static LocalDate parseDate(String date) {
+    public static LocalDate parseEndDate(String date) {
         String[] parseDate = date.split(" ");
         int year = Integer.parseInt(parseDate[parseDate.length - 1]);
         int month = Utils.parseMonth(parseDate[parseDate.length - 2]);
         int day = Integer.parseInt(parseDate[parseDate.length - 3]);
+        return LocalDate.of(year, month, day);
+    }
+
+    public static LocalDate parseStartDate(String date) {
+        String[] parseDate = date.split(" ");
+        int year = Integer.parseInt(parseDate[parseDate.length - 1]);
+        int month = Utils.parseMonth(parseDate[1]);
+        int day = Integer.parseInt(parseDate[0]);
         return LocalDate.of(year, month, day);
     }
 

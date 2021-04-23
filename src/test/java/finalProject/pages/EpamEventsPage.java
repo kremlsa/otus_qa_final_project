@@ -76,6 +76,7 @@ public class EpamEventsPage extends BasePage{
     }
 
     public boolean isCardApperance() {
+        getAllCards();
         return $(cardBody).exists();
     }
 
@@ -215,7 +216,7 @@ public class EpamEventsPage extends BasePage{
         //Просматриваем все карточки
         for (EventCard card : eventCards) {
             //Парсим дату
-            LocalDate date = Utils.parseDate(card.getDate());
+            LocalDate date = Utils.parseEndDate(card.getDate());
             //Проверяем что дата в карточке до текущей
             if (date.isAfter(LocalDate.now())) {
                 //Логируем
@@ -247,23 +248,25 @@ public class EpamEventsPage extends BasePage{
         }
     }
 
-    /*public boolean checkUpcomingDate() {
-        //Просматриваем все карточки
+    public boolean checkDateRange() {
         for (EventCard card : eventCards) {
             //Парсим дату
-            LocalDate date = Utils.parseDate(card.getDate());
-            //Проверяем что дата в карточке после текущей но не более недели
-            if (date.isBefore(LocalDate.now().with(DayOfWeek.SATURDAY).plusDays(1L)) || date.isBefore(LocalDate.now())) {
-                //Логируем
-                logger.warn(Utils.ANSI_RED + "Карточка " + card.getEventName() + " с датой "
-                        + date + " находится вне пределах недели от текущей даты " + LocalDate.now());
-                return false;
-            } else {
-                //Логируем
-                logger.info(Utils.ANSI_GREEN + "Карточка " + card.getEventName() + " с датой " + date
-                        + " в пределах недели от текущей дат " + LocalDate.now());
+            LocalDate startDate = Utils.parseStartDate(card.getDate());
+            LocalDate endDate = Utils.parseEndDate(card.getDate());
+            LocalDate now = LocalDate.now();
+            //Проверяем что дата в карточке в пределах диапазона или позже
+            if (now.isBefore(startDate) || now.isAfter(endDate)) {
+                if (!now.isBefore(endDate) || !now.isBefore(startDate)) {
+                    //Логируем
+                    logger.warn(Utils.ANSI_RED + "Карточка " + card.getEventName() + " с датой "
+                            + card.getDate() + " находится вне пределах текущей даты " + LocalDate.now());
+                    return false;
+                }
             }
+            //Логируем
+            logger.info(Utils.ANSI_GREEN + "Карточка " + card.getEventName() + " с датой "
+                    + card.getDate() + " в пределах от текущей даты " + LocalDate.now());
         }
         return true;
-    }*/
+    }
 }

@@ -76,7 +76,7 @@ public class Hooks {
             capabilities.setCapability("enableVideo", true);
             // применяем желаемые настройки удаленного исполнения автотестов
             Configuration.browserCapabilities = capabilities;
-            //Configuration.headless = true;
+            Configuration.headless = true;
         }
         //Указываем браузер
         Configuration.browser = browserName.getBrowserName();

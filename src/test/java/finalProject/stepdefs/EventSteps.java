@@ -98,7 +98,6 @@ public class EventSteps {
 
     @И("Даты проведенных мероприятий меньше текущей даты")
     public void isDateLessCurrentDate() {
-        epamEventsPage.getAllCards();
         Assert.assertTrue(epamEventsPage.isDateInCardLessCurrentDate());
     }
 
@@ -107,12 +106,8 @@ public class EventSteps {
         epamEventsPage.openAnyCard();
     }
 
-    @И("Запускаем сценарий {string}")
-    public void startScenario(String scenarioName) {
-        BaseClass.getLogger().info(Utils.ANSI_PURPLE + "Запускаем сценарий - " + scenarioName);
-    }
-
     @То("Даты проведения мероприятий больше или равны текущей дате или текущая дата находится в диапазоне дат проведения")
     public void checkUpcomingDate() {
+        Assert.assertTrue(epamEventsPage.checkDateRange());
     }
 }
