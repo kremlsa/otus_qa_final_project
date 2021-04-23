@@ -2,6 +2,13 @@ package finalProject.pages;
 
 import org.openqa.selenium.WebElement;
 
+/**
+ * Класс для представления списка докладчиков в карточках
+ * в качестве объекта
+ *
+ * @author Aleksandr Kremlev
+ * @version 1.0
+ */
 public class Speaker {
 
     private String name = "Not defined";
@@ -23,6 +30,7 @@ public class Speaker {
         this.title = title;
     }
 
+    //метод для парсинга докладчиков из элемента DOM модели сайта
     public static Speaker parseSpeaker(WebElement element) {
         Speaker result = new Speaker();
 

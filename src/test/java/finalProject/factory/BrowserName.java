@@ -1,5 +1,11 @@
 package finalProject.factory;
 
+/**
+ * Enum для парсинга имени браузера из параметров maven
+ *
+ * @author Aleksandr Kremlev
+ * @version 1.0
+ */
 public enum BrowserName {
 
     CHROME("chrome"),

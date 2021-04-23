@@ -9,6 +9,13 @@ import org.springframework.stereotype.Component;
 import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.$x;
 
+/**
+ * Класс для описания страницы с карточкой из раздела - Video
+ * с использованием POM
+ *
+ * @author Aleksandr Kremlev
+ * @version 1.0
+ */
 @Component
 public class EpamTalkCardPage extends BasePage{
 

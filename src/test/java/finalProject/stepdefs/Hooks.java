@@ -18,7 +18,12 @@ import java.util.Collections;
 import java.util.Optional;
 
 
-
+/**
+ * Класс для запуска "Хуков" до и после тестов
+ *
+ * @author Aleksandr Kremlev
+ * @version 1.0
+ */
 public class Hooks {
 
     public WebDriver driver;
@@ -51,7 +56,7 @@ public class Hooks {
     }
 
 
-
+    //метод для настройки селеноида
     public void setBrowserConfiguration() {
         //Настройка ожиданий
         Configuration.timeout = 12000;
@@ -76,7 +81,7 @@ public class Hooks {
             //capabilities.setCapability("enableVideo", true);
             // применяем желаемые настройки удаленного исполнения автотестов
             Configuration.browserCapabilities = capabilities;
-            //Configuration.headless = true;
+            Configuration.headless = true;
         }
         //Указываем браузер
         Configuration.browser = browserName.getBrowserName();

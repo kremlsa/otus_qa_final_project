@@ -3,6 +3,12 @@ package finalProject.common;
 import finalProject.factory.BrowserName;
 import org.openqa.selenium.By;
 
+/**
+ * Enum для универсальных локаторов
+ *
+ * @author Aleksandr Kremlev
+ * @version 1.0
+ */
 public enum UniLoc {
 
     //Label

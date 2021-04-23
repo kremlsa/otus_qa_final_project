@@ -11,6 +11,13 @@ import io.cucumber.java.ru.То;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.Assert;
 
+/**
+ * Класс для описания шагов Cucumber для сценариев
+ * связанных со страницей сайта EPAM - "Events"
+ *
+ * @author Aleksandr Kremlev
+ * @version 1.0
+ */
 public class EventSteps {
 
     @Autowired

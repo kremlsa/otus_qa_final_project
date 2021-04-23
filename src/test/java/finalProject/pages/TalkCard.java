@@ -1,5 +1,12 @@
 package finalProject.pages;
 
+/**
+ * Класс для представления карточек в разделе Video
+ * в качестве объекта
+ *
+ * @author Aleksandr Kremlev
+ * @version 1.0
+ */
 public class TalkCard {
     private String location = "Not defined";
     private String language = "Not defined";

@@ -2,8 +2,15 @@ package finalProject.common;
 
 import java.time.LocalDate;
 
+/**
+ * Класс для вспомогательных методов
+ *
+ * @author Aleksandr Kremlev
+ * @version 1.0
+ */
 public class Utils {
 
+    //Константы для раскраски консоли
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_BLACK = "\u001B[30m";
     public static final String ANSI_RED = "\u001B[31m";
@@ -14,6 +21,7 @@ public class Utils {
     public static final String ANSI_CYAN = "\u001B[36m";
     public static final String ANSI_WHITE = "\u001B[37m";
 
+    //Метод для парсинга даты конца периода
     public static LocalDate parseEndDate(String date) {
         String[] parseDate = date.split(" ");
         int year = Integer.parseInt(parseDate[parseDate.length - 1]);
@@ -22,6 +30,7 @@ public class Utils {
         return LocalDate.of(year, month, day);
     }
 
+    //Метод для парсинга даты начала периода
     public static LocalDate parseStartDate(String date) {
         String[] parseDate = date.split(" ");
         int year = Integer.parseInt(parseDate[parseDate.length - 1]);
@@ -30,6 +39,7 @@ public class Utils {
         return LocalDate.of(year, month, day);
     }
 
+    //Вспомогательный метод для сопоставления месяца из текстового вида в число
     public static int parseMonth(String mon) {
         switch (mon.toLowerCase()) {
             case "jan":

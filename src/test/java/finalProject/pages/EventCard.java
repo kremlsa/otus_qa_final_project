@@ -7,7 +7,13 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Класс для представления карточек в разделе Events
+ * в качестве объекта
+ *
+ * @author Aleksandr Kremlev
+ * @version 1.0
+ */
 @Component
 public class EventCard {
     @Value("${eventCard.XPathCardPlace}")

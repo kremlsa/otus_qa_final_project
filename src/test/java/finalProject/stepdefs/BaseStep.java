@@ -10,6 +10,13 @@ import org.springframework.test.context.ContextConfiguration;
 import finalProject.FinalSpringApplication;
 import finalProject.configuration.Cfg;
 
+/**
+ * Класс для описания базовых шагов Cucumber и для
+ * связывания Cucumber и SpringBoot
+ *
+ * @author Aleksandr Kremlev
+ * @version 1.0
+ */
 @ContextConfiguration(classes = Cfg.class)
 @CucumberContextConfiguration
 @SpringBootTest(classes = FinalSpringApplication.class)

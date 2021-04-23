@@ -27,6 +27,13 @@ import java.util.Locale;
 
 import static com.codeborne.selenide.Selenide.*;
 
+/**
+ * Класс для описания страницы - Events
+ * с использованием POM
+ *
+ * @author Aleksandr Kremlev
+ * @version 1.0
+ */
 @Component
 public class EpamEventsPage extends BasePage{
 
