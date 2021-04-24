@@ -5,6 +5,7 @@ import finalProject.common.Utils;
 import io.cucumber.java.ru.Дано;
 import io.cucumber.java.ru.И;
 import io.cucumber.spring.CucumberContextConfiguration;
+import io.qameta.allure.Step;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import finalProject.FinalSpringApplication;
@@ -21,9 +22,10 @@ import finalProject.configuration.Cfg;
 @CucumberContextConfiguration
 @SpringBootTest(classes = FinalSpringApplication.class)
 public class BaseStep {
+    @Step("Запускаем сценарий {scenarioName}")
     @И("Запускаем сценарий {string}")
     public void startScenario(String scenarioName) {
-        BaseClass.getLogger().info(Utils.ANSI_PURPLE + "**********-- Запускаем сценарий - "
+        BaseClass.getLogger().info("**********-- Запускаем сценарий - "
                 + scenarioName +" --**********");
     }
 }
