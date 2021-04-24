@@ -16,9 +16,12 @@
     </parent>
 
     <properties>
+        <!-- Кодировки проекта -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <!-- Версия Cucumber -->
         <cucumber.version>5.7.0</cucumber.version>
+        <!-- Allure 2 -->
         <allure.version>2.13.6</allure.version>
         <aspectj.version>1.9.5</aspectj.version>
         <!-- Количество параллельных потоков -->
@@ -48,10 +51,9 @@
                             <value>${threadCount}</value>
                         </property>
                     </properties>
-
-
                     <argLine>
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+                        -Dfile.encoding=UTF-8
                     </argLine>
                     <systemPropertyVariables>
                         <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
@@ -95,7 +97,7 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <!-- Web Automation -->
+        <!-- Автоматизация Web тестирования -->
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
@@ -112,12 +114,7 @@
             <artifactId>selenide</artifactId>
             <version>5.12.2</version>
         </dependency>
-        <dependency>
-        <groupId>io.qameta.allure</groupId>
-        <artifactId>allure-selenide</artifactId>
-        <version>${allure.version}</version>
-        </dependency>
-        <!-- Logging -->
+        <!-- Логирование -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
@@ -146,7 +143,12 @@
             <version>${cucumber.version}</version>
             <scope>test</scope>
         </dependency>
-        <!-- Reporting -->
+        <!-- Отчётность Allure -->
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-selenide</artifactId>
+            <version>${allure.version}</version>
+        </dependency>
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-cucumber5-jvm</artifactId>

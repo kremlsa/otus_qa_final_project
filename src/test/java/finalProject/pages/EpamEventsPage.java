@@ -93,10 +93,10 @@ public class EpamEventsPage extends BasePage{
                 .getText().trim());
         //Сравниваем карточки найденные и счётчик
         if (cardsFind == cardsInCounter) {
-            logger.info(Utils.ANSI_GREEN + "Найдено карточек - " + cardsFind + ", карточек в счётчике " + cardsInCounter);
+            logger.info("Найдено карточек - " + cardsFind + ", карточек в счётчике " + cardsInCounter);
             return true;
         } else {
-            logger.warn(Utils.ANSI_RED + "Найдено карточек - " + cardsFind + ", карточек в счётчике " + cardsInCounter);
+            logger.warn("Найдено карточек - " + cardsFind + ", карточек в счётчике " + cardsInCounter);
             return false;
         }
     }
@@ -117,10 +117,10 @@ public class EpamEventsPage extends BasePage{
     public void checkLang() {
         for(EventCard card : eventCards) {
             if (card.getLang().equals("Not defined")) {
-                logger.info(Utils.ANSI_RED + "Язык для карточки " + card.getCardLink()
+                logger.info("Язык для карточки " + card.getCardLink()
                         + " - " + card.getLang());
             } else {
-                logger.info(Utils.ANSI_GREEN + "Язык для карточки  " + card.getCardLink()
+                logger.info("Язык для карточки  " + card.getCardLink()
                         + " - " + card.getLang());
             }
         }
@@ -129,10 +129,10 @@ public class EpamEventsPage extends BasePage{
     public void checkEvent() {
         for(EventCard card : eventCards) {
             if (card.getEventName().equals("Not defined")) {
-                logger.info(Utils.ANSI_RED + "event for card " + card.getCardLink()
+                logger.info("event for card " + card.getCardLink()
                         + " - " + card.getEventName());
             } else {
-                logger.info(Utils.ANSI_GREEN + "event for card " + card.getCardLink()
+                logger.info("event for card " + card.getCardLink()
                         + " - " + card.getEventName());
             }
         }
@@ -141,10 +141,10 @@ public class EpamEventsPage extends BasePage{
     public void checkDate() {
         for(EventCard card : eventCards) {
             if (card.getDate().equals("Not defined")) {
-                logger.info(Utils.ANSI_RED + "Дата для карточки " + card.getCardLink()
+                logger.info("Дата для карточки " + card.getCardLink()
                         + " - " + card.getDate());
             } else {
-                logger.info(Utils.ANSI_GREEN + "Дата для карточки  " + card.getCardLink()
+                logger.info("Дата для карточки  " + card.getCardLink()
                         + " - " + card.getDate());
             }
         }
@@ -154,10 +154,10 @@ public class EpamEventsPage extends BasePage{
         for(EventCard card : eventCards) {
             if (card.getRegistration().equals("Not defined")) {
                 cardErrors.add(card.getCardLink());
-                logger.info(Utils.ANSI_RED + "регистрация для карточки " + card.getCardLink()
+                logger.info("регистрация для карточки " + card.getCardLink()
                         + " - " + card.getRegistration());
             } else {
-                logger.info(Utils.ANSI_GREEN + "регистрация для карточки  " + card.getCardLink()
+                logger.info("регистрация для карточки  " + card.getCardLink()
                         + " - " + card.getRegistration());
             }
         }
@@ -166,10 +166,10 @@ public class EpamEventsPage extends BasePage{
     public void checkSpeakers() {
         for(EventCard card : eventCards) {
             if (card.getSpeakers().equals("Not defined")) {
-                logger.info(Utils.ANSI_RED + "Спикеры для карточки " + card.getCardLink()
+                logger.info("Спикеры для карточки " + card.getCardLink()
                         + " - " + card.getSpeakers());
             } else {
-                logger.info(Utils.ANSI_GREEN + "Спикеры для карточки  " + card.getCardLink()
+                logger.info("Спикеры для карточки  " + card.getCardLink()
                         + " - " + card.getSpeakers());
             }
         }
@@ -214,12 +214,12 @@ public class EpamEventsPage extends BasePage{
             //Проверяем что дата в карточке до текущей
             if (date.isAfter(LocalDate.now())) {
                 //Логируем
-                logger.warn(Utils.ANSI_RED + "Карточка " + card.getEventName() + " с датой "
+                logger.warn("Карточка " + card.getEventName() + " с датой "
                         + date + " после текущей " + LocalDate.now());
                 return false;
             } else {
                 //Логируем
-                logger.info(Utils.ANSI_GREEN + "Карточка " + card.getEventName() + " с датой " + date
+                logger.info("Карточка " + card.getEventName() + " с датой " + date
                 + " до текущей " + LocalDate.now());
             }
         }
@@ -235,7 +235,7 @@ public class EpamEventsPage extends BasePage{
 
     public boolean isFieldFill() {
         if (cardErrors.size() > 0) {
-            logger.info(Utils.ANSI_RED + "Карточки заполнены с ошибками");
+            logger.info("Карточки заполнены с ошибками");
             return false;
         } else {
             return true;
@@ -252,13 +252,13 @@ public class EpamEventsPage extends BasePage{
             if (now.isBefore(startDate) || now.isAfter(endDate)) {
                 if (!now.isBefore(endDate) || !now.isBefore(startDate)) {
                     //Логируем
-                    logger.warn(Utils.ANSI_RED + "Карточка " + card.getEventName() + " с датой "
+                    logger.warn("Карточка " + card.getEventName() + " с датой "
                             + card.getDate() + " находится вне пределах текущей даты " + LocalDate.now());
                     return false;
                 }
             }
             //Логируем
-            logger.info(Utils.ANSI_GREEN + "Карточка " + card.getEventName() + " с датой "
+            logger.info("Карточка " + card.getEventName() + " с датой "
                     + card.getDate() + " в пределах от текущей даты " + LocalDate.now());
         }
         return true;

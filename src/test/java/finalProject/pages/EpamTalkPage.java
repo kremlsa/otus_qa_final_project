@@ -68,12 +68,12 @@ public class EpamTalkPage extends BasePage {
         for (SelenideElement element : $$x(talkTitle)) {
             if (!element.getText().contains(query)) {
                 //Логируем
-                logger.warn(Utils.ANSI_RED + "Доклад - " + element.getText()
+                logger.warn("Доклад - " + element.getText()
                         + " не содержит поисковый запрос - " + query);
                 return false;
             } else {
                 //Логируем
-                logger.info(Utils.ANSI_GREEN + "Доклад - " + element.getText()
+                logger.info("Доклад - " + element.getText()
                         + " содержит поисковый запрос - " + query);
             }
         }
@@ -141,32 +141,32 @@ public class EpamTalkPage extends BasePage {
             //продолжаем тест
             TalkCard testCard = epamTalkCardPage.parseCard(url);
             if (!testCard.getCategory().contains(etalone.getCategory())) {
-                logger.warn(Utils.ANSI_RED + "категория " + testCard.getCategory()
+                logger.warn("категория " + testCard.getCategory()
                         + " в карточке " + testCard.getEvent()
                     + " не совпадает с заданной " + etalone.getCategory());
                 return false;
             } else {
-                logger.info(Utils.ANSI_GREEN + "категория " + testCard.getCategory()
+                logger.info("категория " + testCard.getCategory()
                         + " в карточке " + testCard.getEvent()
                         + " совпадает с заданной " + etalone.getCategory());
             }
             if (!testCard.getLocation().contains(etalone.getLocation())) {
-                logger.warn(Utils.ANSI_RED + "локация " + testCard.getLocation()
+                logger.warn("локация " + testCard.getLocation()
                         + " в карточке " + testCard.getEvent()
                         + " не совпадает с заданной " + etalone.getLocation());
                 return false;
             } else {
-                logger.info(Utils.ANSI_GREEN + "локация " + testCard.getLocation()
+                logger.info("локация " + testCard.getLocation()
                         + " в карточке " + testCard.getEvent()
                         + " совпадает с заданной " + etalone.getLocation());
             }
             if (!testCard.getLanguage().contains(etalone.getLanguage())) {
-                logger.warn(Utils.ANSI_RED + "язык " + testCard.getLanguage()
+                logger.warn("язык " + testCard.getLanguage()
                         + " в карточке " + testCard.getEvent()
                         + " не совпадает с заданной " + etalone.getLanguage());
                 return false;
             } else {
-                logger.info(Utils.ANSI_GREEN + "язык " + testCard.getLanguage()
+                logger.info("язык " + testCard.getLanguage()
                         + " в карточке " + testCard.getEvent()
                         + " совпадает с заданной " + etalone.getLanguage());
             }

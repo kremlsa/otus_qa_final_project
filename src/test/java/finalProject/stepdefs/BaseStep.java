@@ -25,7 +25,7 @@ public class BaseStep {
     @Step("Запускаем сценарий {scenarioName}")
     @И("Запускаем сценарий {string}")
     public void startScenario(String scenarioName) {
-        BaseClass.getLogger().info(Utils.ANSI_PURPLE + "**********-- Запускаем сценарий - "
+        BaseClass.getLogger().info("**********-- Запускаем сценарий - "
                 + scenarioName +" --**********");
     }
 }
