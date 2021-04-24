@@ -22,7 +22,7 @@
         <allure.version>2.13.6</allure.version>
         <aspectj.version>1.9.5</aspectj.version>
         <!-- Количество параллельных потоков -->
-        <threadCount>1</threadCount>
+        <threadCount>2</threadCount>
     </properties>
 
     <build>
