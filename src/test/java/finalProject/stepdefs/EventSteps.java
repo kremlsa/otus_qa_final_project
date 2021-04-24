@@ -8,6 +8,7 @@ import io.cucumber.java.ru.Дано;
 import io.cucumber.java.ru.И;
 import io.cucumber.java.ru.Когда;
 import io.cucumber.java.ru.То;
+import io.qameta.allure.Step;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.Assert;
 
@@ -80,6 +81,7 @@ public class EventSteps {
     public void isFieldFill() {
         Assert.assertTrue(epamEventsPage.isFieldFill());
     }
+
 
     @Дано("Пользователь переходит на вкладку Talks Library")
     public void openTalksLibrary() {
