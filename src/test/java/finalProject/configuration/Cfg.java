@@ -20,7 +20,6 @@ import org.springframework.test.annotation.DirtiesContext;
 @PropertySource("classpath:eventsPage.properties")
 @PropertySource("classpath:talkPage.properties")
 @PropertySource("classpath:talkCardPage.properties")
-@PropertySource("classpath:eventCard.properties")
 @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
 
 public class Cfg {
