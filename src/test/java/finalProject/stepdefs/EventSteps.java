@@ -51,12 +51,6 @@ public class EventSteps {
         epamEventsPage.getAllCards();
     }
 
-
-    @И("город проведения")
-    public void checkPlace() {
-        epamEventsPage.checkPlace();
-    }
-
     @И("язык")
     public void checkLanguage() {
         epamEventsPage.checkLang();
@@ -74,7 +68,7 @@ public class EventSteps {
 
     @И("информация о регистрации")
     public void checkRegistry() {
-        //epamEventsPage.checkReg();
+        epamEventsPage.checkReg();
     }
 
     @И("список спикеров")

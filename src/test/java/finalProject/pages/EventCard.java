@@ -2,9 +2,8 @@ package finalProject.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -14,82 +13,55 @@ import java.util.List;
  * @author Aleksandr Kremlev
  * @version 1.0
  */
-@Component
 public class EventCard {
-    @Value("${eventCard.XPathCardPlace}")
-    private String cardPlace;
-    @Value("${eventCard.XPathCardLang}")
-    private String cardLang;
-    @Value("${eventCard.XPathCardEvent}")
-    private String cardEvent;
-    @Value("${eventCard.XPathCardDate}")
-    private String cardDate;
-    @Value("${eventCard.XPathCardReg}")
-    private String cardReg;
-    @Value("${eventCard.XPathCardSpeakers}")
-    private String cardSpeakers;
-    @Value("${eventCard.XPathCardHref}")
-    private String cardLink;
 
-    private String place = "Not defined";
+    private String cardLang = ".language span";
+    private String cardEvent = ".evnt-event-name h1 span";
+    private String cardDate = ".evnt-dates-cell span";
+    private String cardReg = ".status";
+    private String cardSpeakers = ".evnt-speaker";
+    private String cardLink = ".evnt-event-card a";
+
     private String eventName = "Not defined";
     private String date = "Not defined";
     private String registration = "Not defined";
     private String lang = "Not defined";
     private final ArrayList<Speaker> speakers = new ArrayList<>();
 
-    public EventCard parse(WebElement card) {
-        EventCard eventCard = new EventCard();
+    public void parse(WebElement card) {
         try {
-            eventCard.setCardLink(card.findElement(By.xpath(cardLink)).getAttribute("href"));
+            this.setCardLink(card.findElement(By.cssSelector(cardLink)).getAttribute("href"));
         } catch (Exception e) {
             System.out.println("CardLink not found");
         }
         try {
-            eventCard.setPlace(card.findElement(By.xpath(cardPlace)).getText());
-        } catch (Exception e) {
-            System.out.println("Place not found");
-        }
-        try {
-            eventCard.setEventName(card.findElement(By.xpath(cardEvent)).getText());
+            this.setEventName(card.findElement(By.cssSelector(cardEvent)).getText());
         } catch (Exception e) {
             System.out.println("Name not found");
         }
         try {
-            eventCard.setLang(card.findElement(By.xpath(cardLang)).getText());
+            this.setLang(card.findElement(By.cssSelector(cardLang)).getText());
         } catch (Exception e) {
             System.out.println("Lang not found");
         }
         try {
-            eventCard.setDate(card.findElement(By.xpath(cardDate)).getText());
+            this.setDate(card.findElement(By.cssSelector(cardDate)).getText());
         } catch (Exception e) {
             System.out.println("Date not found");
         }
         try {
-            eventCard.setRegistration(card.findElement(By.xpath(cardReg)).getText());
+            this.setRegistration(card.findElement(By.cssSelector(cardReg)).getText());
         } catch (Exception e) {
             System.out.println("Reg not found");
         }
         try {
-            List<WebElement> speakerElements = card.findElements(By.xpath(cardSpeakers));
+            List<WebElement> speakerElements = card.findElements(By.cssSelector(cardSpeakers));
             for (WebElement el : speakerElements) {
-                eventCard.addSpeakers(Speaker.parseSpeaker(el));
+                this.addSpeakers(Speaker.parseSpeaker(el));
             }
         } catch (Exception e) {
             System.out.println("Speakers not found");
         }
-        System.out.println(eventCard.getDate() + " - " + eventCard.getEventName() + " - " + eventCard.getPlace()
-                + " - " + eventCard.getRegistration() + " - " + eventCard.getSpeakers());
-
-        return eventCard;
-    }
-
-    public String getPlace() {
-        return place;
-    }
-
-    public void setPlace(String place) {
-        this.place = place;
     }
 
     public String getEventName() {
@@ -117,7 +89,7 @@ public class EventCard {
     }
 
     public String getSpeakers() {
-        return speakers.toString();
+        return speakers.size() > 0 ? Arrays.toString(speakers.toArray()) : "Not defined";
     }
 
     public void addSpeakers(Speaker speaker) {

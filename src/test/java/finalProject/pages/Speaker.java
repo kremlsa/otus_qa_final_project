@@ -33,10 +33,13 @@ public class Speaker {
     //метод для парсинга докладчиков из элемента DOM модели сайта
     public static Speaker parseSpeaker(WebElement element) {
         Speaker result = new Speaker();
-
         result.setName(element.getAttribute("data-name"));
         result.setTitle(element.getAttribute("data-job-title"));
-
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return this.name + " - " + this.title + ". ";
     }
 }

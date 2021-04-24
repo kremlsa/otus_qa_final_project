@@ -63,9 +63,6 @@ public class EpamEventsPage extends BasePage{
     private List<EventCard> eventCards = new ArrayList<>();
     private List<String> cardErrors = new ArrayList<>();
 
-    @Autowired
-    EventCard eventCard;
-
     public void openUpcomingEvents() {
         //Запоминаем текущий элемент из списка тем и значение
         SelenideElement element = $x(eventTitle);
@@ -111,19 +108,9 @@ public class EpamEventsPage extends BasePage{
         eventCards = new ArrayList<>();
         //Парсим карточки событий
         for (SelenideElement card : cards) {
-            eventCards.add(eventCard.parse(card.toWebElement()));
-        }
-    }
-
-    public void checkPlace() {
-        for(EventCard card : eventCards) {
-            if (card.getPlace().equals("Not defined")) {
-                logger.info(Utils.ANSI_RED + "Город проведения для карточки " + card.getCardLink()
-                        + " - " + card.getPlace());
-            } else {
-                logger.info(Utils.ANSI_GREEN + "Город проведения для карточки " + card.getCardLink()
-                        + " - " + card.getPlace());
-            }
+            EventCard eventCard = new EventCard();
+            eventCard.parse(card.toWebElement());
+            eventCards.add(eventCard);
         }
     }
 
