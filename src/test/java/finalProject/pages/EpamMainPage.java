@@ -1,9 +1,6 @@
 package finalProject.pages;
 
 import com.codeborne.selenide.Selenide;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-
 import static com.codeborne.selenide.Selenide.$;
 
 /**
@@ -13,17 +10,11 @@ import static com.codeborne.selenide.Selenide.$;
  * @author Aleksandr Kremlev
  * @version 1.0
  */
-@Component
 public class EpamMainPage extends BasePage{
 
-    @Value("${mainPage.CSSNavEvents}")
-    private String navigationEvents;
-
-    @Value("${mainPage.CSSNavTalks}")
-    private String navigationTalks;
-
-    @Value("${mainPage.url}")
-    private String url;
+    private String url = "https://events.epam.com";
+    private String navigationEvents = "a.nav-link[href='/events']";
+    private String navigationTalks = "a.nav-link[href*='/video']";
 
     public EpamMainPage open() {
         Selenide.open(url);

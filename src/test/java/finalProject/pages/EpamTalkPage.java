@@ -2,13 +2,8 @@ package finalProject.pages;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
-import finalProject.common.UniLoc;
-import finalProject.common.Utils;
+import wtf.uniloc.UniLoc;
 import org.openqa.selenium.Keys;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,35 +16,22 @@ import static com.codeborne.selenide.Selenide.*;
  * @author Aleksandr Kremlev
  * @version 1.0
  */
-@Component
+
 public class EpamTalkPage extends BasePage {
 
-    @Autowired
-    private EpamTalkCardPage epamTalkCardPage;
+    //Локаторы
+    private String searchField = "input.evnt-search[type=text]";
+    private String talkTitle = "//div[@class='evnt-talk-name']/h1/span";
+    private String moreFilters = "//span[contains(text(),'More Filters')]";
+    private String spanCategory = "//span[contains(text(),'Category')]";
+    private String spanLocation = "//span[contains(text(),'Location')]";
+    private String spanLanguage = "//span[contains(text(),'Language')]";
+    private String cardLink = "//*[@class='evnt-talk-card']/a";
 
-    @Value("${talkPage.CSSInputSearch}")
-    private String searchField;
-
-    @Value("${talkPage.XPathSpanTalkTitle}")
-    private String talkTitle;
-
-    @Value("${talkPage.XPathSpanFilters}")
-    private String moreFilters;
-
-    @Value("${talkPage.XPathSpanLocation}")
-    private String spanLocation;
-
-    @Value("${talkPage.XPathSpanCategory}")
-    private String spanCategory;
-
-    @Value("${talkPage.XPathSpanLanguage}")
-    private String spanLanguage;
-
-    @Value("${talkPage.HrefCard}")
-    private String cardLink;
+    private EpamTalkCardPage epamTalkCardPage = new EpamTalkCardPage();
+    private final TalkCard etalone = new TalkCard();
 
     private String query = "";
-    private final TalkCard etalone = new TalkCard();
 
     public void fillSearch(String query) {
         this.query = query;

@@ -1,15 +1,11 @@
 package finalProject.stepdefs;
 
-import finalProject.common.BaseClass;
-import finalProject.common.Utils;
 import finalProject.pages.EpamEventsPage;
 import finalProject.pages.EpamMainPage;
 import io.cucumber.java.ru.Дано;
 import io.cucumber.java.ru.И;
 import io.cucumber.java.ru.Когда;
 import io.cucumber.java.ru.То;
-import io.qameta.allure.Step;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.Assert;
 
 /**
@@ -21,10 +17,10 @@ import org.testng.Assert;
  */
 public class EventSteps {
 
-    @Autowired
-    private EpamMainPage epamMainPage;
-    @Autowired
-    private EpamEventsPage epamEventsPage;
+
+    private EpamMainPage epamMainPage = new EpamMainPage();
+
+    private EpamEventsPage epamEventsPage = new EpamEventsPage();
 
     @Дано("Пользователь переходит на вкладку events")
     public void openUpcomingEvents() {

@@ -2,28 +2,11 @@ package finalProject.pages;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.ex.TimeoutException;
-import finalProject.common.UniLoc;
+import wtf.uniloc.UniLoc;
 import finalProject.common.Utils;
-import io.cucumber.java.lv.Un;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.NotFoundException;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-
-import java.beans.PropertyEditorSupport;
-import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import static com.codeborne.selenide.Selenide.*;
 
@@ -34,31 +17,21 @@ import static com.codeborne.selenide.Selenide.*;
  * @author Aleksandr Kremlev
  * @version 1.0
  */
-@Component
 public class EpamEventsPage extends BasePage{
 
-    @Value("${eventsPage.XPathUpcomingEvents}")
-    private String upcomingEvents;
-    @Value("${eventsPage.XPathPastEvents}")
-    private String pastEvents;
-    @Value("${eventsPage.XPathUpcomingEventsCount}")
-    private String upcomingEventsCount;
-    @Value("${eventsPage.CSSCardBody}")
-    private String cardBody;
-    @Value("${eventsPage.XPathCardPlace}")
-    private String cardPlace;
-    @Value("${eventsPage.XPathCardLang}")
-    private String cardLang;
-    @Value("${eventsPage.XPathCardEvent}")
-    private String cardEvent;
-    @Value("${eventsPage.XPathCardDate}")
-    private String cardDate;
-    @Value("${eventsPage.XPathCardReg}")
-    private String cardReg;
-    @Value("${eventsPage.XPathCardSpeakers}")
-    private String cardSpeakers;
-    @Value("${eventsPage.XPathEventTitle}")
-    private String eventTitle;
+    //Локаторы
+    private String upcomingEvents = "//span[contains(text(),'Upcoming events')]";
+    private String pastEvents = "//span[contains(text(),'Past Events')]";
+    private String cardBody = "div.evnt-event-card";
+    private String upcomingEventsCount = "//span[contains(text(),'Upcoming events')]/../span[3]";
+    private String cardPlace = "//*[@class='online' or @class='location']/span";
+    private String cardLang = "//*[@class='evnt-details-cell language-cell']/p/span";
+    private String cardEvent = "//*[@class='evnt-event-name']/h1/span";
+    private String cardDate = "//*[@class='evnt-dates-cell dates']/p/span";
+    private String cardReg = "//*[@class='evnt-dates-cell dates']/p/span[contains(@class, 'status')]";
+    private String cardSpeakers = "//*[@class='evnt-people-cell speakers']/div/div[@class='evnt-speaker']";
+    private String eventTitle = "//div[@class='evnt-event-name']/h1/span";
+
     private List<SelenideElement> cards;
     private List<EventCard> eventCards = new ArrayList<>();
     private List<String> cardErrors = new ArrayList<>();

@@ -11,9 +11,8 @@ import io.qameta.allure.selenide.AllureSelenide;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import finalProject.common.BaseClass;
-import finalProject.factory.BrowserName;
+import wtf.common.BrowserName;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.springframework.beans.factory.annotation.Value;
 import java.util.Collections;
 import java.util.Optional;
 
@@ -29,11 +28,8 @@ public class Hooks {
     public WebDriver driver;
     public Logger logger = BaseClass.getLogger();
 
-    @Value("${selenide.browserSize}")
-    private String browserSize;
-
-    @Value("${selenide.remoteURL}")
-    private String remoteURL;
+    private String browserSize = "1920x1080";
+    private String remoteURL = "";
 
     @Before
     public void setUp() {

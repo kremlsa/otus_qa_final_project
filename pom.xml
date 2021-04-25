@@ -8,13 +8,6 @@
     <artifactId>final_project</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.3.3.RELEASE</version>
-        <relativePath/>
-    </parent>
-
     <properties>
         <!-- Кодировки проекта -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -75,28 +68,11 @@
                     <reportVersion>${allure.version}</reportVersion>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <classifier>exec</classifier>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
 
 
     <dependencies>
-        <!-- SpringBoot -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
         <!-- Автоматизация Web тестирования -->
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
@@ -135,13 +111,6 @@
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-java</artifactId>
             <version>${cucumber.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.cucumber</groupId>
-            <artifactId>cucumber-spring</artifactId>
-            <version>${cucumber.version}</version>
-            <scope>test</scope>
         </dependency>
         <!-- Отчётность Allure -->
         <dependency>

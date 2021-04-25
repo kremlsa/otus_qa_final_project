@@ -1,11 +1,8 @@
 package finalProject.pages;
 
-import com.codeborne.selenide.Condition;
+
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-
 import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.$x;
 
@@ -16,20 +13,13 @@ import static com.codeborne.selenide.Selenide.$x;
  * @author Aleksandr Kremlev
  * @version 1.0
  */
-@Component
 public class EpamTalkCardPage extends BasePage{
 
-    @Value("${talkCardPage.divLocation}")
-    private String location;
-
-    @Value("${talkCardPage.divLanguage}")
-    private String language;
-
-    @Value("${talkCardPage.divTopics}")
-    private String topics;
-
-    @Value("${talkCardPage.hEvent}")
-    private String event;
+    //Локаторы
+    private String location = "//div[contains(@class,'location')]/span";
+    private String language = "//div[contains(@class,'language')]/span";
+    private String topics = "//div[contains(@class,'evnt-topic')]/label";
+    private String event = "//h1[@class='evnt-talk-title']";
 
     public TalkCard parseCard(String targetUrl) {
         TalkCard testCard = new TalkCard();

@@ -4,8 +4,6 @@ import finalProject.pages.EpamTalkPage;
 import io.cucumber.java.ru.И;
 import io.cucumber.java.ru.Когда;
 import io.cucumber.java.ru.То;
-import io.qameta.allure.Step;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.Assert;
 
 /**
@@ -17,8 +15,7 @@ import org.testng.Assert;
  */
 public class TalksStep {
 
-    @Autowired
-    private EpamTalkPage epamTalkPage;
+    private EpamTalkPage epamTalkPage = new EpamTalkPage();
 
     @Когда("Пользователь вводит ключевое слово {string} в поле поиска")
     public void fillSearch(String query) {
