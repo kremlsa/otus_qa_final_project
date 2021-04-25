@@ -1,6 +1,10 @@
 package finalProject.pages;
 
 import com.codeborne.selenide.Selenide;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
+import io.qameta.allure.Step;
+
 import static com.codeborne.selenide.Selenide.$;
 
 /**
@@ -13,24 +17,24 @@ import static com.codeborne.selenide.Selenide.$;
 public class EpamMainPage extends BasePage{
 
     private String url = "https://events.epam.com";
-    private String navigationEvents = "a.nav-link[href='/events']";
-    private String navigationTalks = "a.nav-link[href*='/video']";
+    //Локаторы
+    private String navigationEvents = "//a[@class='nav-link' and @href='/events']";
+    private String navigationTalks = "//a[contains(@href,'video') and @class='nav-link']";
 
     public EpamMainPage open() {
-        Selenide.open(url);
+        action.open(url);
         logger.info("Открываем раздел - " + Selenide.title());
         return this;
     }
 
     public void openEvents() {
-        $(navigationEvents).click();
-        logger.info("Открываем раздел - " + Selenide.title());
+        click.xpathLocator(navigationEvents);
+        action.logTitle();
     }
 
-    public EpamMainPage openTalks() {
-        $(navigationTalks).click();
-        logger.info("Открываем раздел - " + Selenide.title());
-        return this;
+    public void openTalks() {
+        click.xpathLocator(navigationTalks);
+        action.logTitle();
     }
 
 

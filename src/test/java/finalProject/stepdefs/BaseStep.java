@@ -13,6 +13,7 @@ import io.qameta.allure.Step;
  */
 
 public class BaseStep {
+
     @Step("Запускаем сценарий {scenarioName}")
     @И("Запускаем сценарий {string}")
     public void startScenario(String scenarioName) {

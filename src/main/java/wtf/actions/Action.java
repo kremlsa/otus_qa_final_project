@@ -5,7 +5,7 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.qameta.allure.Step;
 
-public class MainAction extends BaseAction{
+public class Action extends Base {
     /**
      * Метод для открытия URL или браузера
      *
@@ -13,8 +13,7 @@ public class MainAction extends BaseAction{
      * @return текущий класс
      */
     @Step("Перейти по URL \"{url}\"")
-    @Given("Перейти по URL {string}")
-    public MainAction open(String url) {
+    public Action open(String url) {
         Selenide.open(url);
         logger.info("Открываем страницу " + url);
         return this;
@@ -26,8 +25,7 @@ public class MainAction extends BaseAction{
      * @return текущий класс
      */
     @Step("Закрыть браузер")
-    @Given("Закрыть браузер")
-    public MainAction closeDriver() {
+    public Action closeDriver() {
         Selenide.closeWebDriver();
         logger.info("Закрыт браузер");
         return this;
@@ -39,11 +37,17 @@ public class MainAction extends BaseAction{
      * @return текущий класс
      */
     @Step("Очистить кэш и cookies браузера")
-    @And("Очистить кэш и cookies браузера")
-    public MainAction clearBrowser() {
+    public Action clearBrowser() {
         Selenide.clearBrowserCookies();
         Selenide.clearBrowserLocalStorage();
         logger.info("Чистим браузер.");
         return this;
+    }
+    /**
+     * Метод для открытия URL или браузера
+     *
+     */
+    public void logTitle() {
+        logger.info("Открываем раздел - " + Selenide.title());
     }
 }

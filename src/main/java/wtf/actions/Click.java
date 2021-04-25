@@ -2,23 +2,22 @@ package wtf.actions;
 
 import io.cucumber.java.en.Given;
 import io.qameta.allure.Step;
-import org.openqa.selenium.By;
 import wtf.uniloc.UniLoc;
 
 import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$x;
 
-public class ClickAction extends BaseAction {
+public class Click extends Base {
     /**
      * Метод для нажатия элемента по локатору
      *
-     * @param locatorBy элемент By
+     * @param locator элемент By
      * @return текущий класс
      */
-    @Step("Нажать на элемент с локатором \"{locatorBy}\"")
-    public ClickAction loc(By locatorBy) {
-        $(locatorBy)
+    @Step("Нажать на элемент с локатором \"{locator}\"")
+    public Click xpathLocator(String locator) {
+        $x(locator)
                 .waitUntil(exist, wait)
                 .hover()
                 .click();
@@ -32,8 +31,7 @@ public class ClickAction extends BaseAction {
      * @return текущий класс
      */
     @Step("Нажать на кнопку с частью текста span \"{spanText}\"")
-    @Given("Нажать на кнопку с частью текста span {string}")
-    public ClickAction buttonSpanTextPart(String spanText) {
+    public Click buttonSpanTextPart(String spanText) {
         $x(UniLoc.xpathString(UniLoc.SPANCONTAINS, spanText))
                 .waitUntil(exist, wait)
                 .click();
