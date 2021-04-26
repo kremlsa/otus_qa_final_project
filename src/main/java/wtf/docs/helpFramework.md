@@ -18,13 +18,6 @@ import wtf.actions.Base;
 
 import static wtf.cfg.Cfg.setBrowserConfiguration;
 
-
-/**
-* Класс для запуска "Хуков" до и после тестов
-*
-* @author Aleksandr Kremlev
-* @version 1.0
-  */
   public class Hooks {
 
   public Logger logger = Base.logger;
