@@ -2,9 +2,14 @@ package finalProject.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import wtf.pom.BasePage;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import static com.codeborne.selenide.Selenide.$;
+import static wtf.actions.Log.logInfo;
+import static wtf.actions.Log.logWarn;
 
 /**
  * Класс для представления карточек в разделе Events
@@ -13,55 +18,65 @@ import java.util.List;
  * @author Aleksandr Kremlev
  * @version 1.0
  */
-public class EventCard {
+public class EventCard extends BasePage {
 
-    private String cardLang = ".language span";
-    private String cardEvent = ".evnt-event-name h1 span";
-    private String cardDate = ".evnt-dates-cell span";
-    private String cardReg = ".status";
-    private String cardSpeakers = ".evnt-speaker";
-    private String cardLink = ".evnt-event-card a";
+    private  static String cardLang = ".language span";
+    private  static String cardEvent = ".evnt-event-name h1 span";
+    private  static String cardDate = ".evnt-dates-cell span";
+    private  static String cardReg = ".status";
+    private  static String cardSpeakers = ".evnt-speaker";
+    private  static String cardLink = ".evnt-event-card a";
 
     private String eventName = "Not defined";
     private String date = "Not defined";
     private String registration = "Not defined";
     private String lang = "Not defined";
+    private String link = "Not defined";
     private final ArrayList<Speaker> speakers = new ArrayList<>();
 
-    public void parse(WebElement card) {
-        try {
-            this.setCardLink(card.findElement(By.cssSelector(cardLink)).getAttribute("href"));
-        } catch (Exception e) {
-            System.out.println("CardLink not found");
+    /**
+     * Метод для парсинга объекта представляющего карточку мероприятия из элемента страницы
+     *
+     * @param card элемент для парсинга WebElement
+     * @return представление карточки в виде объекта EventCard
+     */
+    public static EventCard parse(WebElement card) {
+        EventCard newCard = new EventCard();
+        if ($(By.cssSelector(cardLink)).exists()) {
+            newCard.setLink(card.findElement(By.cssSelector(cardLink)).getAttribute("href"));
+            logInfo("Парсинг карточки " + newCard.getLink());
+        } else {
+            logWarn("ссылка не найдена");
         }
-        try {
-            this.setEventName(card.findElement(By.cssSelector(cardEvent)).getText());
-        } catch (Exception e) {
-            System.out.println("Name not found");
+        if ($(By.cssSelector(cardEvent)).exists()) {
+            newCard.setEventName(card.findElement(By.cssSelector(cardEvent)).getText());
+        } else {
+            logWarn("событие не найдено");
         }
-        try {
-            this.setLang(card.findElement(By.cssSelector(cardLang)).getText());
-        } catch (Exception e) {
-            System.out.println("Lang not found");
+        if ($(By.cssSelector(cardLang)).exists()) {
+            newCard.setLang(card.findElement(By.cssSelector(cardLang)).getText());
+        } else {
+            logWarn("язык не найден");
         }
-        try {
-            this.setDate(card.findElement(By.cssSelector(cardDate)).getText());
-        } catch (Exception e) {
-            System.out.println("Date not found");
+        if ($(By.cssSelector(cardDate)).exists()) {
+            newCard.setDate(card.findElement(By.cssSelector(cardDate)).getText());
+        } else {
+            logWarn("дата не найдена");
         }
-        try {
-            this.setRegistration(card.findElement(By.cssSelector(cardReg)).getText());
-        } catch (Exception e) {
-            System.out.println("Reg not found");
+        if ($(By.cssSelector(cardReg)).exists()) {
+            newCard.setRegistration(card.findElement(By.cssSelector(cardReg)).getText());
+        } else {
+            System.out.println("регистрация не найдена");
         }
-        try {
+        if ($(By.cssSelector(cardSpeakers)).exists()) {
             List<WebElement> speakerElements = card.findElements(By.cssSelector(cardSpeakers));
             for (WebElement el : speakerElements) {
-                this.addSpeakers(Speaker.parseSpeaker(el));
+                newCard.addSpeakers(Speaker.parseSpeaker(el));
             }
-        } catch (Exception e) {
-            System.out.println("Speakers not found");
+        } else {
+            System.out.println("докладчики не найдены");
         }
+        return newCard;
     }
 
     public String getEventName() {
@@ -104,11 +119,11 @@ public class EventCard {
         this.lang = lang;
     }
 
-    public void setCardLink(String cardLink) {
-        this.cardLink = cardLink;
+    public void setLink(String link) {
+        this.link = link;
     }
 
-    public String getCardLink() {
-        return cardLink;
+    public String getLink() {
+        return link;
     }
 }

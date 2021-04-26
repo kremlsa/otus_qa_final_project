@@ -1,31 +1,16 @@
 package finalProject.pages;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.ex.TimeoutException;
-import finalProject.common.UniLoc;
-import finalProject.common.Utils;
-import io.cucumber.java.lv.Un;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.NotFoundException;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
-import java.beans.PropertyEditorSupport;
-import java.time.DayOfWeek;
+import wtf.pom.BasePage;
+import wtf.uniloc.UniLoc;
+import finalProject.common.Utils;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-
-import static com.codeborne.selenide.Selenide.*;
+import java.util.stream.Collectors;
+import static wtf.actions.Log.logInfo;
+import static wtf.actions.Log.logWarn;
 
 /**
  * Класс для описания страницы - Events
@@ -34,178 +19,186 @@ import static com.codeborne.selenide.Selenide.*;
  * @author Aleksandr Kremlev
  * @version 1.0
  */
-@Component
-public class EpamEventsPage extends BasePage{
+public class EpamEventsPage extends BasePage {
 
-    @Value("${eventsPage.XPathUpcomingEvents}")
-    private String upcomingEvents;
-    @Value("${eventsPage.XPathPastEvents}")
-    private String pastEvents;
-    @Value("${eventsPage.XPathUpcomingEventsCount}")
-    private String upcomingEventsCount;
-    @Value("${eventsPage.CSSCardBody}")
-    private String cardBody;
-    @Value("${eventsPage.XPathCardPlace}")
-    private String cardPlace;
-    @Value("${eventsPage.XPathCardLang}")
-    private String cardLang;
-    @Value("${eventsPage.XPathCardEvent}")
-    private String cardEvent;
-    @Value("${eventsPage.XPathCardDate}")
-    private String cardDate;
-    @Value("${eventsPage.XPathCardReg}")
-    private String cardReg;
-    @Value("${eventsPage.XPathCardSpeakers}")
-    private String cardSpeakers;
-    @Value("${eventsPage.XPathEventTitle}")
-    private String eventTitle;
-    private List<SelenideElement> cards;
+    //Локаторы
+    private String upcomingEvents = "//span[contains(text(),'Upcoming events')]";
+    private String pastEvents = "//span[contains(text(),'Past Events')]";
+    private String cardBody = "div.evnt-event-card";
+    private String eventTitle = "//div[@class='evnt-event-name']/h1/span";
     private List<EventCard> eventCards = new ArrayList<>();
     private List<String> cardErrors = new ArrayList<>();
 
+    /**
+     * Метод для открытия раздела upcoming events
+     *
+     */
     public void openUpcomingEvents() {
-        //Запоминаем текущий элемент из списка тем и значение
-        SelenideElement element = $x(eventTitle);
-        String elementText = element.getText();
+        //Запоминаем текст текущего элемента из списка тем и значение
+        String elementText = find.locText(By.xpath(eventTitle));
         //Если раздел не активен, то перейти в него
-        if (!$x(upcomingEvents + "/..")
-                .getAttribute("class")
-                .contains("active")) {
-            $x(upcomingEvents + "/..").click();
+        if (!find.isAtrContains(By.xpath(upcomingEvents + "/.."),"class", "active")) {
+            //Кликнуть элемент
+            click.xpathLocator(upcomingEvents + "/..")
+                    .log("Переход в раздел Upcoming Events");
             //ждём пока прогрузится новый список тем
-            element.waitUntil(Condition.not(Condition.matchesText(elementText)), 5000);
+            wait.disappearText(By.xpath(eventTitle), elementText, 5000);
         }
-        //Логируем
-        logger.info("Переход в раздел Upcoming Events");
     }
 
+    /**
+     * Метод для проверки появления карточек
+     *
+     * @return результат boolean
+     */
     public boolean isCardApperance() {
         getAllCards();
-        return $(cardBody).exists();
+        return find.isElementExists(By.cssSelector(cardBody));
     }
 
-    //Сделать регистронезависимый поиск для локатора
+    /**
+     * Метод для проверки счётчика карточек
+     * @param buttonName имя кнопка для локатора String
+     *
+     * @return результат boolean
+     */
     public boolean isCounterCorrect(String buttonName) {
         //Карточек найдено
-        int cardsFind = $$(cardBody).size();
+        int cardsFind = find.listLoc(By.cssSelector(cardBody)).size();
         //Карточек в счётчике
-        int cardsInCounter = Integer.parseInt($x(UniLoc.xpathString(UniLoc.EVENTCOUNTER, buttonName))
-                .getText().trim());
+        int cardsInCounter = Integer.parseInt(find.locText(UniLoc.xpathLocator(UniLoc.EVENTCOUNTER, buttonName)));
         //Сравниваем карточки найденные и счётчик
         if (cardsFind == cardsInCounter) {
-            logger.info("Найдено карточек - " + cardsFind + ", карточек в счётчике " + cardsInCounter);
+            logInfo("Найдено карточек - " + cardsFind + ", карточек в счётчике " + cardsInCounter);
             return true;
         } else {
-            logger.warn("Найдено карточек - " + cardsFind + ", карточек в счётчике " + cardsInCounter);
+            logWarn("Найдено карточек - " + cardsFind + ", карточек в счётчике " + cardsInCounter);
             return false;
         }
     }
 
+    /**
+     * Метод для составления списка объектов - карточки мероприятий
+     *
+     */
     public void getAllCards() {
-        cards = $$(cardBody);
-        logger.info("Найдено " + cards.size() + " карточек мероприятий");
-        //Чистим карточки от предыдущих тестов
-        eventCards = new ArrayList<>();
-        //Парсим карточки событий
-        for (SelenideElement card : cards) {
-            EventCard eventCard = new EventCard();
-            eventCard.parse(card.toWebElement());
-            eventCards.add(eventCard);
-        }
+        eventCards = find.listLoc(By.cssSelector(cardBody))
+                .stream()
+                .map(EventCard::parse)
+                .collect(Collectors.toList());
+        logInfo("Найдено " + eventCards.size() + " карточек мероприятий");
     }
 
+    /**
+     * Метод для отображения языка карточек мероприятий
+     *
+     */
     public void checkLang() {
-        for(EventCard card : eventCards) {
-            if (card.getLang().equals("Not defined")) {
-                logger.info("Язык для карточки " + card.getCardLink()
-                        + " - " + card.getLang());
-            } else {
-                logger.info("Язык для карточки  " + card.getCardLink()
-                        + " - " + card.getLang());
-            }
-        }
+        eventCards.forEach(card -> {
+                    if (card.getLang().equals("Not defined")) {
+                        logWarn("Язык для карточки " + card.getLink() + " - " + card.getLang());
+                    } else {
+                        logInfo("Язык для карточки  " + card.getLink() + " - " + card.getLang());
+                    }
+                });
     }
 
+    /**
+     * Метод для отображения наименования событий карточек мероприятий
+     *
+     */
     public void checkEvent() {
-        for(EventCard card : eventCards) {
-            if (card.getEventName().equals("Not defined")) {
-                logger.info("event for card " + card.getCardLink()
-                        + " - " + card.getEventName());
-            } else {
-                logger.info("event for card " + card.getCardLink()
-                        + " - " + card.getEventName());
-            }
-        }
+        eventCards.forEach(card -> {
+                    if (card.getEventName().equals("Not defined")) {
+                        logWarn("Мероприятие для карточки " + card.getLink() + " - " + card.getEventName());
+                    } else {
+                        logInfo("Мероприятие для карточки  " + card.getLink() + " - " + card.getEventName());
+                    }
+                });
     }
 
+    /**
+     * Метод для отображения даты карточек мероприятий
+     *
+     */
     public void checkDate() {
-        for(EventCard card : eventCards) {
-            if (card.getDate().equals("Not defined")) {
-                logger.info("Дата для карточки " + card.getCardLink()
-                        + " - " + card.getDate());
-            } else {
-                logger.info("Дата для карточки  " + card.getCardLink()
-                        + " - " + card.getDate());
-            }
-        }
+        eventCards.forEach(card -> {
+                    if (card.getDate().equals("Not defined")) {
+                        logWarn("Дата для карточки " + card.getLink() + " - " + card.getDate());
+                    } else {
+                        logInfo("Дата для карточки  " + card.getLink() + " - " + card.getDate());
+                    }
+                });
     }
 
+    /**
+     * Метод для отображения регистрации карточек мероприятий
+     *
+     */
     public void checkReg() {
-        for(EventCard card : eventCards) {
+        eventCards.forEach(card -> {
             if (card.getRegistration().equals("Not defined")) {
-                cardErrors.add(card.getCardLink());
-                logger.info("регистрация для карточки " + card.getCardLink()
-                        + " - " + card.getRegistration());
+                logWarn("Регистрация для карточки " + card.getLink() + " - " + card.getRegistration());
             } else {
-                logger.info("регистрация для карточки  " + card.getCardLink()
-                        + " - " + card.getRegistration());
+                logInfo("Регистрация для карточки  " + card.getLink() + " - " + card.getRegistration());
             }
-        }
+        });
     }
 
+    /**
+     * Метод для отображения докладчиков карточек мероприятий
+     *
+     */
     public void checkSpeakers() {
-        for(EventCard card : eventCards) {
+        eventCards.forEach(card -> {
             if (card.getSpeakers().equals("Not defined")) {
-                logger.info("Спикеры для карточки " + card.getCardLink()
-                        + " - " + card.getSpeakers());
+                logWarn("Докладчики для карточки " + card.getLink() + " - " + card.getSpeakers());
             } else {
-                logger.info("Спикеры для карточки  " + card.getCardLink()
-                        + " - " + card.getSpeakers());
+                logInfo("Докладчики для карточки  " + card.getLink() + " - " + card.getSpeakers());
             }
-        }
+        });
     }
 
+    /**
+     * Метод для открытия раздела past events
+     *
+     */
     public void openPastEvents() {
-        //Запоминаем текущий элемент из списка тем и значение
-        SelenideElement element = $x(eventTitle);
-        String elementText = element.getText();
+        //Запоминаем текст текущего элемента из списка тем и значение
+        String elementText = find.locText(By.xpath(eventTitle));
         //Если раздел не активен, то перейти в него
-        if (!$x(pastEvents + "/..")
-                .getAttribute("class")
-                .contains("active")) {
-            $x(pastEvents + "/..").click();
+        if (!find.isAtrContains(By.xpath(pastEvents + "/.."),"class", "active")) {
+            //Кликнуть элемент
+            click.xpathLocator(pastEvents + "/..")
+                    .log("Переход в раздел Upcoming Events");
             //ждём пока прогрузится новый список тем
-            element.waitUntil(Condition.not(Condition.matchesText(elementText)), 5000);
+            wait.disappearText(By.xpath(eventTitle), elementText, 5000);
         }
-        //Логируем
-        logger.info("Переход в раздел Past Events");
-
-
     }
 
+    /**
+     * Метод для выбора значений фильтра
+     *
+     * @param filter название фильтра String
+     * @param value название элемента фильтра String
+     */
     public void selectFilterValue(String filter, String value) {
         //Запоминаем текущий элемент из списка тем и значение
-        SelenideElement element = $x(eventTitle);
-        String elementText = element.getText();
+        String elementText = find.locText(By.xpath(eventTitle));
         //Настраиваем элементы фильтра
-        $x(UniLoc.xpathString(UniLoc.SPAN, filter)).click();
-        $x(UniLoc.xpathString(UniLoc.LABELDATA, value)).click();
-        //Логируем
-        logger.info("Настроен фильтр " + filter + " со значением " + value);
+        click.xpathLocator(UniLoc.xpathString(UniLoc.SPAN, filter))
+                .xpathLocator(UniLoc.xpathString(UniLoc.LABELDATA, value))
+                .log("Настроен фильтр " + filter + " со значением " + value);
         //ждём пока прогрузится новый список тем
-        element.waitUntil(Condition.not(Condition.matchesText(elementText)), 5000);
+        wait.disappearText(By.xpath(eventTitle), elementText, 5000);
     }
 
+    /**
+     * Метод для проверки даты проведения мероприятий,
+     * дата должна быть раньше текущей.
+     *
+     * @return дата раньше текущей? boolean
+     */
     public boolean isDateInCardLessCurrentDate() {
         //Просматриваем все карточки
         for (EventCard card : eventCards) {
@@ -214,34 +207,42 @@ public class EpamEventsPage extends BasePage{
             //Проверяем что дата в карточке до текущей
             if (date.isAfter(LocalDate.now())) {
                 //Логируем
-                logger.warn("Карточка " + card.getEventName() + " с датой "
+                logWarn("Карточка " + card.getEventName() + " с датой "
                         + date + " после текущей " + LocalDate.now());
                 return false;
             } else {
                 //Логируем
-                logger.info("Карточка " + card.getEventName() + " с датой " + date
+                logInfo("Карточка " + card.getEventName() + " с датой " + date
                 + " до текущей " + LocalDate.now());
             }
         }
         return true;
     }
 
-    public void openAnyCard() {
-        SelenideElement element = $(cardBody);
-        String elementText = element.$("h1").getText();
-        element.click();
-        logger.info("Открываем карточку " + elementText);
-    }
-
+    /**
+     * Метод для проверки полноты заполнения карточек мероприятий
+     *
+     * @return карточки заполнены полностью? boolean
+     */
     public boolean isFieldFill() {
-        if (cardErrors.size() > 0) {
-            logger.info("Карточки заполнены с ошибками");
-            return false;
-        } else {
-            return true;
+        for (EventCard card : eventCards) {
+            if (card.getSpeakers().equals("Not defined") || card.getRegistration().equals("Not defined")
+                    || card.getDate().equals("Not defined") || card.getLang().equals("Not defined")
+                    || card.getEventName().equals("Not defined")) {
+                logWarn("Карточки заполнены с ошибками");
+                return false;
+            }
         }
+        logInfo(eventCards.size() + " карточек заполнены корректно");
+        return true;
     }
 
+    /**
+     * Метод для проверки даты проведения мероприятий,
+     * больше или равны текущей дате или текущая дата находится в диапазоне дат проведения.
+     *
+     * @return дата карточки в заданных пределах? boolean
+     */
     public boolean checkDateRange() {
         for (EventCard card : eventCards) {
             //Парсим дату
@@ -252,13 +253,13 @@ public class EpamEventsPage extends BasePage{
             if (now.isBefore(startDate) || now.isAfter(endDate)) {
                 if (!now.isBefore(endDate) || !now.isBefore(startDate)) {
                     //Логируем
-                    logger.warn("Карточка " + card.getEventName() + " с датой "
+                    logWarn("Карточка " + card.getEventName() + " с датой "
                             + card.getDate() + " находится вне пределах текущей даты " + LocalDate.now());
                     return false;
                 }
             }
             //Логируем
-            logger.info("Карточка " + card.getEventName() + " с датой "
+            logInfo("Карточка " + card.getEventName() + " с датой "
                     + card.getDate() + " в пределах от текущей даты " + LocalDate.now());
         }
         return true;

@@ -1,4 +1,4 @@
-package finalProject.factory;
+package wtf.common;
 
 /**
  * Enum для парсинга имени браузера из параметров maven

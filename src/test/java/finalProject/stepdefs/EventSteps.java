@@ -1,7 +1,5 @@
 package finalProject.stepdefs;
 
-import finalProject.common.BaseClass;
-import finalProject.common.Utils;
 import finalProject.pages.EpamEventsPage;
 import finalProject.pages.EpamMainPage;
 import io.cucumber.java.ru.Дано;
@@ -9,7 +7,6 @@ import io.cucumber.java.ru.И;
 import io.cucumber.java.ru.Когда;
 import io.cucumber.java.ru.То;
 import io.qameta.allure.Step;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.Assert;
 
 /**
@@ -21,10 +18,10 @@ import org.testng.Assert;
  */
 public class EventSteps {
 
-    @Autowired
-    private EpamMainPage epamMainPage;
-    @Autowired
-    private EpamEventsPage epamEventsPage;
+
+    private EpamMainPage epamMainPage = new EpamMainPage();
+
+    private EpamEventsPage epamEventsPage = new EpamEventsPage();
 
     @Дано("Пользователь переходит на вкладку events")
     public void openUpcomingEvents() {
@@ -49,7 +46,7 @@ public class EventSteps {
 
     @И("В карточке указана информация о мероприятии:")
     public void getAllCards() {
-        epamEventsPage.getAllCards();
+
     }
 
     @И("язык")
@@ -83,6 +80,7 @@ public class EventSteps {
     }
 
 
+    @Step("Пользователь переходит на вкладку Talks Library")
     @Дано("Пользователь переходит на вкладку Talks Library")
     public void openTalksLibrary() {
         epamMainPage.open()
@@ -102,11 +100,6 @@ public class EventSteps {
     @И("Даты проведенных мероприятий меньше текущей даты")
     public void isDateLessCurrentDate() {
         Assert.assertTrue(epamEventsPage.isDateInCardLessCurrentDate());
-    }
-
-    @Когда("Пользователь нажимает на любую карточку")
-    public void openAnyCard() {
-        epamEventsPage.openAnyCard();
     }
 
     @То("Даты проведения мероприятий больше или равны текущей дате или текущая дата находится в диапазоне дат проведения")

@@ -1,6 +1,5 @@
-package finalProject.common;
+package wtf.uniloc;
 
-import finalProject.factory.BrowserName;
 import org.openqa.selenium.By;
 
 /**
@@ -17,6 +16,7 @@ public enum UniLoc {
     DIVCLASS("//div[@class='%s']"),
     //Span
     SPAN("//span[text()='%s']"),
+    SPANCONTAINS("//span[contains(text(), '%s')]"),
     EVENTCOUNTER("//span[contains(text(), '%s')]/../span[3]"),
     //Tag
     TAG("//div[contains(@class,'evnt-tag')]/label[contains(text(),'%s')]"),

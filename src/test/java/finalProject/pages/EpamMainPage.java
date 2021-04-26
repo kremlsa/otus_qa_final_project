@@ -1,10 +1,6 @@
 package finalProject.pages;
 
-import com.codeborne.selenide.Selenide;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-
-import static com.codeborne.selenide.Selenide.$;
+import wtf.pom.BasePage;
 
 /**
  * Класс для описания главной страницы сайта EPAM
@@ -13,34 +9,40 @@ import static com.codeborne.selenide.Selenide.$;
  * @author Aleksandr Kremlev
  * @version 1.0
  */
-@Component
-public class EpamMainPage extends BasePage{
+public class EpamMainPage extends BasePage {
 
-    @Value("${mainPage.CSSNavEvents}")
-    private String navigationEvents;
+    private String url = "https://events.epam.com";
+    //Локаторы
+    private String navigationEvents = "//a[@class='nav-link' and @href='/events']";
+    private String navigationTalks = "//a[contains(@href,'video') and @class='nav-link']";
 
-    @Value("${mainPage.CSSNavTalks}")
-    private String navigationTalks;
-
-    @Value("${mainPage.url}")
-    private String url;
-
+    /**
+     * Метод для открытия главной страницы сайте EPAM
+     *
+     * @return текущий класс
+     */
     public EpamMainPage open() {
-        Selenide.open(url);
-        logger.info("Открываем раздел - " + Selenide.title());
+        action.open(url)
+                .logTitle();
         return this;
     }
 
+    /**
+     * Метод для открытия раздела Events сайте EPAM
+     *
+     */
     public void openEvents() {
-        $(navigationEvents).click();
-        logger.info("Открываем раздел - " + Selenide.title());
+        click.xpathLocator(navigationEvents)
+                .logTitle();
+
     }
 
-    public EpamMainPage openTalks() {
-        $(navigationTalks).click();
-        logger.info("Открываем раздел - " + Selenide.title());
-        return this;
+    /**
+     * Метод для открытия раздела Talks на сайте EPAM
+     *
+     */
+    public void openTalks() {
+        click.xpathLocator(navigationTalks)
+                .logTitle();
     }
-
-
 }

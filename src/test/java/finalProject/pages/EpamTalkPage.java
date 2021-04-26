@@ -1,18 +1,11 @@
 package finalProject.pages;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.SelenideElement;
-import finalProject.common.UniLoc;
-import finalProject.common.Utils;
-import org.openqa.selenium.Keys;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
+import org.openqa.selenium.By;
+import wtf.pom.BasePage;
+import wtf.uniloc.UniLoc;
 import java.util.List;
-
-import static com.codeborne.selenide.Selenide.*;
+import static wtf.actions.Log.logInfo;
+import static wtf.actions.Log.logWarn;
 
 /**
  * Класс для описания страницы - Video
@@ -21,119 +14,108 @@ import static com.codeborne.selenide.Selenide.*;
  * @author Aleksandr Kremlev
  * @version 1.0
  */
-@Component
 public class EpamTalkPage extends BasePage {
 
-    @Autowired
-    private EpamTalkCardPage epamTalkCardPage;
+    //Локаторы
+    private String searchField = "input.evnt-search[type=text]";
+    private String talkTitle = "//div[@class='evnt-talk-name']/h1/span";
+    private String moreFilters = "//span[contains(text(),'More Filters')]";
+    private String spanCategory = "//span[contains(text(),'Category')]";
+    private String spanLocation = "//span[contains(text(),'Location')]";
+    private String spanLanguage = "//span[contains(text(),'Language')]";
+    private String cardLink = "//*[@class='evnt-talk-card']/a";
 
-    @Value("${talkPage.CSSInputSearch}")
-    private String searchField;
-
-    @Value("${talkPage.XPathSpanTalkTitle}")
-    private String talkTitle;
-
-    @Value("${talkPage.XPathSpanFilters}")
-    private String moreFilters;
-
-    @Value("${talkPage.XPathSpanLocation}")
-    private String spanLocation;
-
-    @Value("${talkPage.XPathSpanCategory}")
-    private String spanCategory;
-
-    @Value("${talkPage.XPathSpanLanguage}")
-    private String spanLanguage;
-
-    @Value("${talkPage.HrefCard}")
-    private String cardLink;
-
-    private String query = "";
+    private EpamTalkCardPage epamTalkCardPage = new EpamTalkCardPage();
     private final TalkCard etalone = new TalkCard();
 
+    private String query = "";
+
+    /**
+     * Метод для заполнения формы поиска на странице Video
+     *
+     */
     public void fillSearch(String query) {
         this.query = query;
-        //Запоминаем текущий элемент из списка тем и значение
-        SelenideElement element = $x(talkTitle);
-        String elementText = element.getText();
+        //Запоминаем текст текущего элемента из списка тем и значение
+        String elementText = find.locText(By.xpath(talkTitle));
         //Заполняем поле ввода
-        $(searchField).sendKeys(query, Keys.ENTER);
-        logger.info("Выполняем поисковый запрос с параметром  - " + query);
+        input.locatorEnter(By.cssSelector(searchField), query)
+                .log("Выполняем поисковый запрос с параметром  - " + query);
         //ждём пока прогрузится новый список тем
-        element.waitUntil(Condition.not(Condition.matchesText(elementText)), 5000);
+        wait.disappearText(By.xpath(talkTitle), elementText, 5000);
     }
 
+    /**
+     * Метод для проверки работы фильтра по ключевому слову
+     *
+     *  @return результат проверки boolean
+     */
     public boolean checkTalkTitle() {
         //Проверяем темы докладов
-        for (SelenideElement element : $$x(talkTitle)) {
-            if (!element.getText().contains(query)) {
-                //Логируем
-                logger.warn("Доклад - " + element.getText()
-                        + " не содержит поисковый запрос - " + query);
-                return false;
-            } else {
-                //Логируем
-                logger.info("Доклад - " + element.getText()
-                        + " содержит поисковый запрос - " + query);
-            }
-        }
-        return true;
+        return find.isTextInEachElements(By.xpath(talkTitle), query);
     }
 
+    /**
+     * Метод для открытия списка фильтров
+     *
+     *  @return текущий класс
+     */
     public EpamTalkPage clickMoreFilters() {
-        $x(moreFilters).click();
-        //Логируем
-        logger.info("Выбираем больше вариантов фильтрации - More Filters");
+        click.xpathLocator(moreFilters)
+                .log("Выбираем больше вариантов фильтрации - More Filters");
         return this;
     }
 
-
+    /**
+     * Метод для выбора категории
+     *
+     */
     public void filterCategory(String category) {
-        //Открываем список
-        $x(spanCategory).click();
+        //Открываем список, выбираем категорию
+        click.xpathLocator(spanCategory)
+                .xpathLocator(UniLoc.xpathString(UniLoc.LABELDATA, category))
+                .log("Выбираем значение фильтра Category " + category);
         //Устанавливаем эталонное значение
         etalone.setCategory(category);
-        //Выбираем категорию
-        $x(UniLoc.xpathString(UniLoc.LABELDATA, category)).click();
-        //Логируем
-        logger.info("Выбираем значение фильтра Category " + category);
-
     }
 
+    /**
+     * Метод для выбора локации
+     *
+     */
     public void filterLocation(String location) {
-        //Открываем список
-        $x(spanLocation).click();
+        //Открываем список, выбираем локацию
+        click.xpathLocator(spanLocation)
+                .xpathLocator(UniLoc.xpathString(UniLoc.LABELDATA, location))
+                .log("Выбираем значение фильтра Location " + location);
         //Устанавливаем эталонное значение
         etalone.setLocation(location);
-        //Выбираем локацию
-        $x(UniLoc.xpathString(UniLoc.LABELDATA, location)).click();
-        //Логируем
-        logger.info("Выбираем значение фильтра Location " + location);
     }
 
+    /**
+     * Метод для выбора языка
+     *
+     */
     public void filterLanguage(String language) {
-        //Открываем список
-        $x(spanLanguage).click();
+        //Открываем список, выбираем язык
+        click.xpathLocator(spanLanguage)
+                .xpathLocator(UniLoc.xpathString(UniLoc.LABELDATA, language))
+                .log("Выбираем значение фильтра Language " + language);
         //Устанавливаем эталонное значение
         etalone.setLanguage(language);
-        //Выбираем язык
-        $x(UniLoc.xpathString(UniLoc.LABELDATA, language)).click();
-        //Логируем
-        logger.info("Выбираем значение фильтра Language " + language);
         //ждём пока прогрузится новый список тем (появится тэг)
-        $x(spanLanguage).click();
-        $x(UniLoc.xpathString(UniLoc.TAG, language)).should(Condition.exist);
+        click.xpathLocator(spanLanguage);
+        wait.exist(UniLoc.xpathLocator(UniLoc.TAG, language));
     }
 
+    /**
+     * Метод для проверки работы фильтра
+     *
+     * @return результат проверки boolean
+     */
     public boolean isFilterWorks() {
         //Список ссылок для проверки результатов фильтрации
-        List<String> urls = new ArrayList<>();
-        //Список карточек по результатам фильтрации
-        List<SelenideElement> elements = $$x(cardLink);
-        //Составляем список ссылок
-        for (SelenideElement element : elements) {
-            urls.add(element.getAttribute("href"));
-        }
+        List<String> urls = find.attributesList(By.xpath(cardLink), "href");
         //Проверяем результаты через вспомогательный объект и логируем
         for (String url : urls) {
             //Убираем из тестов страницу вызывающую баг на селеноиде
@@ -141,32 +123,32 @@ public class EpamTalkPage extends BasePage {
             //продолжаем тест
             TalkCard testCard = epamTalkCardPage.parseCard(url);
             if (!testCard.getCategory().contains(etalone.getCategory())) {
-                logger.warn("категория " + testCard.getCategory()
+                logWarn("категория " + testCard.getCategory()
                         + " в карточке " + testCard.getEvent()
                     + " не совпадает с заданной " + etalone.getCategory());
                 return false;
             } else {
-                logger.info("категория " + testCard.getCategory()
+                logInfo("категория " + testCard.getCategory()
                         + " в карточке " + testCard.getEvent()
                         + " совпадает с заданной " + etalone.getCategory());
             }
             if (!testCard.getLocation().contains(etalone.getLocation())) {
-                logger.warn("локация " + testCard.getLocation()
+                logWarn("локация " + testCard.getLocation()
                         + " в карточке " + testCard.getEvent()
                         + " не совпадает с заданной " + etalone.getLocation());
                 return false;
             } else {
-                logger.info("локация " + testCard.getLocation()
+                logInfo("локация " + testCard.getLocation()
                         + " в карточке " + testCard.getEvent()
                         + " совпадает с заданной " + etalone.getLocation());
             }
             if (!testCard.getLanguage().contains(etalone.getLanguage())) {
-                logger.warn("язык " + testCard.getLanguage()
+                logWarn("язык " + testCard.getLanguage()
                         + " в карточке " + testCard.getEvent()
                         + " не совпадает с заданной " + etalone.getLanguage());
                 return false;
             } else {
-                logger.info("язык " + testCard.getLanguage()
+                logInfo("язык " + testCard.getLanguage()
                         + " в карточке " + testCard.getEvent()
                         + " совпадает с заданной " + etalone.getLanguage());
             }
