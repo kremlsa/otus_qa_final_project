@@ -46,7 +46,7 @@ public class EventSteps {
 
     @И("В карточке указана информация о мероприятии:")
     public void getAllCards() {
-        epamEventsPage.getAllCards();
+
     }
 
     @И("язык")
@@ -100,11 +100,6 @@ public class EventSteps {
     @И("Даты проведенных мероприятий меньше текущей даты")
     public void isDateLessCurrentDate() {
         Assert.assertTrue(epamEventsPage.isDateInCardLessCurrentDate());
-    }
-
-    @Когда("Пользователь нажимает на любую карточку")
-    public void openAnyCard() {
-        epamEventsPage.openAnyCard();
     }
 
     @То("Даты проведения мероприятий больше или равны текущей дате или текущая дата находится в диапазоне дат проведения")

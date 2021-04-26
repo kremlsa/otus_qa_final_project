@@ -30,7 +30,12 @@ public class Speaker {
         this.title = title;
     }
 
-    //метод для парсинга докладчиков из элемента DOM модели сайта
+    /**
+     * метод для парсинга докладчиков из элемента DOM модели сайта
+     *
+     * @param element элемент для парсинга WebElement
+     * @return объект Speaker
+     */
     public static Speaker parseSpeaker(WebElement element) {
         Speaker result = new Speaker();
         result.setName(element.getAttribute("data-name"));

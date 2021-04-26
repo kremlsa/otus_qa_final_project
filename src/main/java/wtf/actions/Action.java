@@ -9,7 +9,7 @@ public class Action extends Base {
     /**
      * Метод для открытия URL или браузера
      *
-     * @param url адрес для перехода String
+     * @param url адрес для перехода String*
      * @return текущий класс
      */
     @Step("Перейти по URL \"{url}\"")

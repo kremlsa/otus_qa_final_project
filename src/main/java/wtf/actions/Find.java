@@ -1,6 +1,7 @@
 package wtf.actions;
 
 
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
 
@@ -19,7 +20,7 @@ public class Find extends Base {
      * @param locator локатор элемента By
      * @return текст элемента String
      */
-    public String loc(By locator) {
+    public String locText(By locator) {
         return $(locator)
                 .waitUntil(exist, wait)
                 .getText();
@@ -30,7 +31,7 @@ public class Find extends Base {
      *
      * @param locator локатор элемента By
      * @param query текст запроса String
-     * @return наличие текста запроса во всех элементах списка
+     * @return наличие текста запроса во всех элементах списка boolean
      */
     public boolean isTextInEachElements(By locator, String query) {
         for (SelenideElement element : $$(locator)) {
@@ -53,7 +54,7 @@ public class Find extends Base {
      *
      * @param locator локатор элемента By
      * @param atrName атрибут
-     * @return список значений атрибутов
+     * @return список значений атрибутов List<String>
      */
     public List<String> attributesList(By locator, String atrName) {
 
@@ -64,6 +65,43 @@ public class Find extends Base {
             attributes.add(element.getAttribute(atrName));
         }
         return attributes;
+    }
+
+    /**
+     * Метод проверяющий наличие части текста в атрибуте элемента
+     *
+     * @param locator локатор элемента By
+     * @param atrName имя атрибута
+     * @param query текст запроса String
+     *
+     * @return наличие текста запроса во всех элементах списка boolean
+     */
+    public boolean isAtrContains(By locator, String atrName, String query) {
+        return $(locator)
+                .getAttribute(atrName)
+                .contains(query);
+    }
+
+    /**
+     * Метод проверяющий наличие элемента
+     *
+     * @param locator локатор элемента By
+     *
+     * @return наличие текста элемента boolean
+     */
+    public boolean isElementExists(By locator) {
+        return $(locator).exists();
+    }
+
+    /**
+     * Метод возвращющий список по локатору
+     *
+     * @param locator локатор элемента By
+     *
+     * @return список значений атрибутов ElementsCollection
+     */
+    public ElementsCollection listLoc(By locator) {
+        return $$(locator);
     }
 }
 

@@ -1,14 +1,8 @@
 package finalProject.pages;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
 import wtf.uniloc.UniLoc;
-import org.openqa.selenium.Keys;
-import java.util.ArrayList;
 import java.util.List;
-
-import static com.codeborne.selenide.Selenide.*;
 import static wtf.actions.Log.logInfo;
 import static wtf.actions.Log.logWarn;
 
@@ -19,7 +13,6 @@ import static wtf.actions.Log.logWarn;
  * @author Aleksandr Kremlev
  * @version 1.0
  */
-
 public class EpamTalkPage extends BasePage {
 
     //Локаторы
@@ -43,7 +36,7 @@ public class EpamTalkPage extends BasePage {
     public void fillSearch(String query) {
         this.query = query;
         //Запоминаем текст текущего элемента из списка тем и значение
-        String elementText = find.loc(By.xpath(talkTitle));
+        String elementText = find.locText(By.xpath(talkTitle));
         //Заполняем поле ввода
         input.locatorEnter(By.cssSelector(searchField), query)
                 .log("Выполняем поисковый запрос с параметром  - " + query);

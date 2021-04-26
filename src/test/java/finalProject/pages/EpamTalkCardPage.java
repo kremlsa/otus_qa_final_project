@@ -1,10 +1,7 @@
 package finalProject.pages;
 
-
-import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
-import static com.codeborne.selenide.Selenide.$$x;
-import static com.codeborne.selenide.Selenide.$x;
+import org.openqa.selenium.By;
 
 /**
  * Класс для описания страницы с карточкой из раздела - Video
@@ -21,21 +18,26 @@ public class EpamTalkCardPage extends BasePage{
     private String topics = "//div[contains(@class,'evnt-topic')]/label";
     private String event = "//h1[@class='evnt-talk-title']";
 
+    /**
+     * Метод для парсинга объекта представляющего карточку мероприятия по ссылке
+     *
+     * @param targetUrl ссылка для парсинга карточки
+     * @return представление карточки в виде объекта TalkCard
+     */
     public TalkCard parseCard(String targetUrl) {
         TalkCard testCard = new TalkCard();
-        Selenide.open(targetUrl);
-        ////div[@class='evnt-modal evnt-error-modal modal show']/div/div/div[3]/button[@class='evnt-button small'
-        $x("//*[@id='onetrust-accept-btn-handler']").click();
-        testCard.setEvent($x(event).getText());
-        //testCard.setEvent(Selenide.title());
-        testCard.setLocation($x(location).getText());
-        testCard.setLanguage($x(language).getText());
+        action.open(targetUrl);
+        //Соглашаемся с кукис
+        click.xpathLocator("//*[@id='onetrust-accept-btn-handler']");
+        testCard.setEvent(find.locText(By.xpath(event)));
+        testCard.setLocation(find.locText(By.xpath(location)));
+        testCard.setLanguage(find.locText(By.xpath(language)));
         String topicName = "";
-        for (SelenideElement element : $$x(topics)) {
+        for (SelenideElement element : find.listLoc(By.xpath(topics))) {
             topicName += element.getText() + " ";
         }
         testCard.setCategory(topicName);
-        Selenide.clearBrowserCookies();
+        action.clearBrowser();
         return testCard;
     }
 }
