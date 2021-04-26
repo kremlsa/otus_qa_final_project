@@ -17,14 +17,14 @@ import java.util.Optional;
  * @version 1.0
  */
 public class Cfg {
-    private static String browserSize = "1920x1080";
-    private static String remoteURL = "";
+    private String browserSize = "1920x1080";
+    private String remoteURL = "";
 
     /**
      * Метод для настройки Selenoid
      *
      */
-    public static void setBrowserConfiguration() {
+    public void setBrowserConfiguration() {
         //Настройка ожиданий
         Configuration.timeout = 12000;
         //Настройка размера браузера из параметров maven, по умолчанию из конфиг файла
