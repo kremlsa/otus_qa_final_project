@@ -2,6 +2,7 @@ package finalProject.pages;
 
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
+import wtf.pom.BasePage;
 
 /**
  * Класс для описания страницы с карточкой из раздела - Video
@@ -10,7 +11,7 @@ import org.openqa.selenium.By;
  * @author Aleksandr Kremlev
  * @version 1.0
  */
-public class EpamTalkCardPage extends BasePage{
+public class EpamTalkCardPage extends BasePage {
 
     //Локаторы
     private String location = "//div[contains(@class,'location')]/span";

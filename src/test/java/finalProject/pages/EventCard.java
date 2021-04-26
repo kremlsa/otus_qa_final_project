@@ -2,6 +2,7 @@ package finalProject.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import wtf.pom.BasePage;
 
 import java.util.ArrayList;
 import java.util.Arrays;

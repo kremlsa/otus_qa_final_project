@@ -1,6 +1,7 @@
 package finalProject.pages;
 
 import org.openqa.selenium.By;
+import wtf.pom.BasePage;
 import wtf.uniloc.UniLoc;
 import java.util.List;
 import static wtf.actions.Log.logInfo;

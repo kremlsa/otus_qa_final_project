@@ -10,7 +10,7 @@ import io.cucumber.java.AfterStep;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
-import finalProject.common.BaseClass;
+import wtf.actions.Base;
 import wtf.common.BrowserName;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import java.util.Collections;
@@ -26,7 +26,7 @@ import java.util.Optional;
 public class Hooks {
 
     public WebDriver driver;
-    public Logger logger = BaseClass.getLogger();
+    public Logger logger = Base.logger;
     private String browserSize = "1920x1080";
     private String remoteURL = "";
 

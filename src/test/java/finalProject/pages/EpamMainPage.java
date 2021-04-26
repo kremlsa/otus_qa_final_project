@@ -1,5 +1,7 @@
 package finalProject.pages;
 
+import wtf.pom.BasePage;
+
 /**
  * Класс для описания главной страницы сайта EPAM
  * с использованием POM
@@ -7,7 +9,7 @@ package finalProject.pages;
  * @author Aleksandr Kremlev
  * @version 1.0
  */
-public class EpamMainPage extends BasePage{
+public class EpamMainPage extends BasePage {
 
     private String url = "https://events.epam.com";
     //Локаторы

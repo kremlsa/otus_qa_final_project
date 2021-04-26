@@ -1,6 +1,8 @@
 package finalProject.pages;
 
 import org.openqa.selenium.By;
+
+import wtf.pom.BasePage;
 import wtf.uniloc.UniLoc;
 import finalProject.common.Utils;
 import java.time.LocalDate;
@@ -17,7 +19,7 @@ import static wtf.actions.Log.logWarn;
  * @author Aleksandr Kremlev
  * @version 1.0
  */
-public class EpamEventsPage extends BasePage{
+public class EpamEventsPage extends BasePage {
 
     //Локаторы
     private String upcomingEvents = "//span[contains(text(),'Upcoming events')]";
