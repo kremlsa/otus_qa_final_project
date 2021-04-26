@@ -6,10 +6,5 @@
 
 группа QA - JAVA - 2020-12
 
-Параметры для запуска mvn clean test
-
--DbrowserSize='1920x1080'
--DremoteURL='http://selenoid:4444/wd/hub'
--Dbrowser='chrome'
-
-Для CI/CD использовать JenkinsFile
+[Инструкция к проекту](https://github.com/kremlsa/otus_qa_final_project/blob/master/src/main/java/wtf/docs/helpProject.md)
+[Инструкция к фреймворку](https://github.com/kremlsa/otus_qa_final_project/blob/master/src/main/java/wtf/docs/helpFramework.md)
