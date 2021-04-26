@@ -6,10 +6,7 @@ import io.cucumber.java.Before;
 import io.cucumber.java.AfterStep;
 import org.apache.logging.log4j.Logger;
 import wtf.actions.Base;
-
-
-import static wtf.cfg.Cfg.setBrowserConfiguration;
-
+import wtf.cfg.Cfg;
 
 /**
  * Класс для запуска "Хуков" до и после тестов
@@ -20,10 +17,11 @@ import static wtf.cfg.Cfg.setBrowserConfiguration;
 public class Hooks {
 
     public Logger logger = Base.logger;
+    Cfg cfg = new Cfg();
 
     @Before
     public void setUp() {
-        setBrowserConfiguration();
+        cfg.setBrowserConfiguration();
         logger.info("Открыт браузер");
     }
 
