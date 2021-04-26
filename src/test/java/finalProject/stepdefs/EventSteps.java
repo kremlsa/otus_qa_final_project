@@ -6,6 +6,7 @@ import io.cucumber.java.ru.Дано;
 import io.cucumber.java.ru.И;
 import io.cucumber.java.ru.Когда;
 import io.cucumber.java.ru.То;
+import io.qameta.allure.Step;
 import org.testng.Assert;
 
 /**
@@ -79,6 +80,7 @@ public class EventSteps {
     }
 
 
+    @Step("Пользователь переходит на вкладку Talks Library")
     @Дано("Пользователь переходит на вкладку Talks Library")
     public void openTalksLibrary() {
         epamMainPage.open()

@@ -27,7 +27,6 @@ public class Hooks {
 
     public WebDriver driver;
     public Logger logger = BaseClass.getLogger();
-
     private String browserSize = "1920x1080";
     private String remoteURL = "";
 

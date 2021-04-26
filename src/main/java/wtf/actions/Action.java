@@ -43,11 +43,4 @@ public class Action extends Base {
         logger.info("Чистим браузер.");
         return this;
     }
-    /**
-     * Метод для открытия URL или браузера
-     *
-     */
-    public void logTitle() {
-        logger.info("Открываем раздел - " + Selenide.title());
-    }
 }

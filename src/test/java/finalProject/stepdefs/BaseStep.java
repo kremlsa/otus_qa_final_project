@@ -1,8 +1,8 @@
 package finalProject.stepdefs;
 
-import finalProject.common.BaseClass;
 import io.cucumber.java.ru.И;
 import io.qameta.allure.Step;
+import wtf.actions.Log;
 
 /**
  * Класс для описания базовых шагов Cucumber и для
@@ -11,13 +11,12 @@ import io.qameta.allure.Step;
  * @author Aleksandr Kremlev
  * @version 1.0
  */
-
 public class BaseStep {
 
     @Step("Запускаем сценарий {scenarioName}")
     @И("Запускаем сценарий {string}")
     public void startScenario(String scenarioName) {
-        BaseClass.getLogger().info("**********-- Запускаем сценарий - "
+        Log.logInfo("**********-- Запускаем сценарий - "
                 + scenarioName +" --**********");
     }
 }

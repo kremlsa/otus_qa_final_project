@@ -1,12 +1,5 @@
 package finalProject.pages;
 
-import com.codeborne.selenide.Selenide;
-import io.cucumber.java.en.And;
-import io.cucumber.java.en.Given;
-import io.qameta.allure.Step;
-
-import static com.codeborne.selenide.Selenide.$;
-
 /**
  * Класс для описания главной страницы сайта EPAM
  * с использованием POM
@@ -21,21 +14,33 @@ public class EpamMainPage extends BasePage{
     private String navigationEvents = "//a[@class='nav-link' and @href='/events']";
     private String navigationTalks = "//a[contains(@href,'video') and @class='nav-link']";
 
+    /**
+     * Метод для открытия главной страницы сайте EPAM
+     *
+     * @return текущий класс
+     */
     public EpamMainPage open() {
-        action.open(url);
-        logger.info("Открываем раздел - " + Selenide.title());
+        action.open(url)
+                .logTitle();
         return this;
     }
 
+    /**
+     * Метод для открытия раздела Events сайте EPAM
+     *
+     */
     public void openEvents() {
-        click.xpathLocator(navigationEvents);
-        action.logTitle();
+        click.xpathLocator(navigationEvents)
+                .logTitle();
+
     }
 
+    /**
+     * Метод для открытия раздела Talks на сайте EPAM
+     *
+     */
     public void openTalks() {
-        click.xpathLocator(navigationTalks);
-        action.logTitle();
+        click.xpathLocator(navigationTalks)
+                .logTitle();
     }
-
-
 }

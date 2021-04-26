@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.codeborne.selenide.Selenide.*;
+import static wtf.actions.Log.logInfo;
+import static wtf.actions.Log.logWarn;
 
 /**
  * Класс для описания страницы - Events
@@ -49,7 +51,7 @@ public class EpamEventsPage extends BasePage{
             element.waitUntil(Condition.not(Condition.matchesText(elementText)), 5000);
         }
         //Логируем
-        logger.info("Переход в раздел Upcoming Events");
+        logInfo("Переход в раздел Upcoming Events");
     }
 
     public boolean isCardApperance() {
@@ -66,17 +68,17 @@ public class EpamEventsPage extends BasePage{
                 .getText().trim());
         //Сравниваем карточки найденные и счётчик
         if (cardsFind == cardsInCounter) {
-            logger.info("Найдено карточек - " + cardsFind + ", карточек в счётчике " + cardsInCounter);
+            logInfo("Найдено карточек - " + cardsFind + ", карточек в счётчике " + cardsInCounter);
             return true;
         } else {
-            logger.warn("Найдено карточек - " + cardsFind + ", карточек в счётчике " + cardsInCounter);
+            logWarn("Найдено карточек - " + cardsFind + ", карточек в счётчике " + cardsInCounter);
             return false;
         }
     }
 
     public void getAllCards() {
         cards = $$(cardBody);
-        logger.info("Найдено " + cards.size() + " карточек мероприятий");
+        logInfo("Найдено " + cards.size() + " карточек мероприятий");
         //Чистим карточки от предыдущих тестов
         eventCards = new ArrayList<>();
         //Парсим карточки событий
@@ -90,10 +92,10 @@ public class EpamEventsPage extends BasePage{
     public void checkLang() {
         for(EventCard card : eventCards) {
             if (card.getLang().equals("Not defined")) {
-                logger.info("Язык для карточки " + card.getCardLink()
+                logInfo("Язык для карточки " + card.getCardLink()
                         + " - " + card.getLang());
             } else {
-                logger.info("Язык для карточки  " + card.getCardLink()
+                logInfo("Язык для карточки  " + card.getCardLink()
                         + " - " + card.getLang());
             }
         }
@@ -102,10 +104,10 @@ public class EpamEventsPage extends BasePage{
     public void checkEvent() {
         for(EventCard card : eventCards) {
             if (card.getEventName().equals("Not defined")) {
-                logger.info("event for card " + card.getCardLink()
+                logInfo("event for card " + card.getCardLink()
                         + " - " + card.getEventName());
             } else {
-                logger.info("event for card " + card.getCardLink()
+                logInfo("event for card " + card.getCardLink()
                         + " - " + card.getEventName());
             }
         }
@@ -114,10 +116,10 @@ public class EpamEventsPage extends BasePage{
     public void checkDate() {
         for(EventCard card : eventCards) {
             if (card.getDate().equals("Not defined")) {
-                logger.info("Дата для карточки " + card.getCardLink()
+                logInfo("Дата для карточки " + card.getCardLink()
                         + " - " + card.getDate());
             } else {
-                logger.info("Дата для карточки  " + card.getCardLink()
+                logInfo("Дата для карточки  " + card.getCardLink()
                         + " - " + card.getDate());
             }
         }
@@ -127,10 +129,10 @@ public class EpamEventsPage extends BasePage{
         for(EventCard card : eventCards) {
             if (card.getRegistration().equals("Not defined")) {
                 cardErrors.add(card.getCardLink());
-                logger.info("регистрация для карточки " + card.getCardLink()
+                logInfo("регистрация для карточки " + card.getCardLink()
                         + " - " + card.getRegistration());
             } else {
-                logger.info("регистрация для карточки  " + card.getCardLink()
+                logInfo("регистрация для карточки  " + card.getCardLink()
                         + " - " + card.getRegistration());
             }
         }
@@ -139,10 +141,10 @@ public class EpamEventsPage extends BasePage{
     public void checkSpeakers() {
         for(EventCard card : eventCards) {
             if (card.getSpeakers().equals("Not defined")) {
-                logger.info("Спикеры для карточки " + card.getCardLink()
+                logInfo("Спикеры для карточки " + card.getCardLink()
                         + " - " + card.getSpeakers());
             } else {
-                logger.info("Спикеры для карточки  " + card.getCardLink()
+                logInfo("Спикеры для карточки  " + card.getCardLink()
                         + " - " + card.getSpeakers());
             }
         }
@@ -161,7 +163,7 @@ public class EpamEventsPage extends BasePage{
             element.waitUntil(Condition.not(Condition.matchesText(elementText)), 5000);
         }
         //Логируем
-        logger.info("Переход в раздел Past Events");
+        logInfo("Переход в раздел Past Events");
 
 
     }
@@ -174,7 +176,7 @@ public class EpamEventsPage extends BasePage{
         $x(UniLoc.xpathString(UniLoc.SPAN, filter)).click();
         $x(UniLoc.xpathString(UniLoc.LABELDATA, value)).click();
         //Логируем
-        logger.info("Настроен фильтр " + filter + " со значением " + value);
+        logInfo("Настроен фильтр " + filter + " со значением " + value);
         //ждём пока прогрузится новый список тем
         element.waitUntil(Condition.not(Condition.matchesText(elementText)), 5000);
     }
@@ -187,12 +189,12 @@ public class EpamEventsPage extends BasePage{
             //Проверяем что дата в карточке до текущей
             if (date.isAfter(LocalDate.now())) {
                 //Логируем
-                logger.warn("Карточка " + card.getEventName() + " с датой "
+                logWarn("Карточка " + card.getEventName() + " с датой "
                         + date + " после текущей " + LocalDate.now());
                 return false;
             } else {
                 //Логируем
-                logger.info("Карточка " + card.getEventName() + " с датой " + date
+                logInfo("Карточка " + card.getEventName() + " с датой " + date
                 + " до текущей " + LocalDate.now());
             }
         }
@@ -203,12 +205,12 @@ public class EpamEventsPage extends BasePage{
         SelenideElement element = $(cardBody);
         String elementText = element.$("h1").getText();
         element.click();
-        logger.info("Открываем карточку " + elementText);
+        logInfo("Открываем карточку " + elementText);
     }
 
     public boolean isFieldFill() {
         if (cardErrors.size() > 0) {
-            logger.info("Карточки заполнены с ошибками");
+            logInfo("Карточки заполнены с ошибками");
             return false;
         } else {
             return true;
@@ -225,13 +227,13 @@ public class EpamEventsPage extends BasePage{
             if (now.isBefore(startDate) || now.isAfter(endDate)) {
                 if (!now.isBefore(endDate) || !now.isBefore(startDate)) {
                     //Логируем
-                    logger.warn("Карточка " + card.getEventName() + " с датой "
+                    logWarn("Карточка " + card.getEventName() + " с датой "
                             + card.getDate() + " находится вне пределах текущей даты " + LocalDate.now());
                     return false;
                 }
             }
             //Логируем
-            logger.info("Карточка " + card.getEventName() + " с датой "
+            logInfo("Карточка " + card.getEventName() + " с датой "
                     + card.getDate() + " в пределах от текущей даты " + LocalDate.now());
         }
         return true;

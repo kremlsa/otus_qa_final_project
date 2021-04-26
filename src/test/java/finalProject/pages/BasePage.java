@@ -1,9 +1,6 @@
 package finalProject.pages;
 
-import org.apache.logging.log4j.Logger;
-import finalProject.common.BaseClass;
-import wtf.actions.Click;
-import wtf.actions.Action;
+import wtf.actions.*;
 
 /**
  * Класс для описания базовой страницы
@@ -16,7 +13,8 @@ public class BasePage {
 
     Action action = new Action();
     Click click = new Click();
-
-    public Logger logger = BaseClass.getLogger();
+    Input input = new Input();
+    Find find = new Find();
+    Wait wait = new Wait();
 
 }
