@@ -1,10 +1,14 @@
 package wtf.actions;
 
 import com.codeborne.selenide.Selenide;
-import io.cucumber.java.en.And;
-import io.cucumber.java.en.Given;
 import io.qameta.allure.Step;
 
+/**
+ * Класс для основных действий с драйвером
+ *
+ * @author Aleksandr Kremlev
+ * @version 1.0
+ */
 public class Action extends Base {
     /**
      * Метод для открытия URL или браузера

@@ -4,15 +4,19 @@ package wtf.actions;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Selenide.*;
 import static wtf.actions.Log.logInfo;
 import static wtf.actions.Log.logWarn;
 
+/**
+ * Класс поиска элементов и их значений
+ *
+ * @author Aleksandr Kremlev
+ * @version 1.0
+ */
 public class Find extends Base {
     /**
      * Метод возвращающий текстовое значение элемента

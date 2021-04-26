@@ -4,6 +4,12 @@ import com.codeborne.selenide.Selenide;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * Класс для задания основных параметров и методов
+ *
+ * @author Aleksandr Kremlev
+ * @version 1.0
+ */
 public class Base {
     public static final Logger logger = LogManager.getLogger();
     // Время ожидания элементов

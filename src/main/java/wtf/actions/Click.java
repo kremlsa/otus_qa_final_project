@@ -1,13 +1,17 @@
 package wtf.actions;
 
-import io.cucumber.java.en.Given;
 import io.qameta.allure.Step;
 import wtf.uniloc.UniLoc;
 
 import static com.codeborne.selenide.Condition.exist;
-import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$x;
 
+/**
+ * Класс для реализации различных методов Click
+ *
+ * @author Aleksandr Kremlev
+ * @version 1.0
+ */
 public class Click extends Base {
     /**
      * Метод для нажатия элемента по локатору

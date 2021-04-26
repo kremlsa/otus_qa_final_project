@@ -1,5 +1,11 @@
 package wtf.actions;
 
+/**
+ * Класс для действий связанных с логированием событий
+ *
+ * @author Aleksandr Kremlev
+ * @version 1.0
+ */
 public class Log extends Base {
     /**
      * Метод для записи сообщения с уровнем Info

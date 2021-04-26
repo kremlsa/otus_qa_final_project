@@ -1,15 +1,15 @@
 package wtf.actions;
 
 import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.Selenide;
-import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-import wtf.uniloc.UniLoc;
-
-import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.sleep;
 
+/**
+ * Класс для основных действий связанных с ожиданием элементов
+ *
+ * @author Aleksandr Kremlev
+ * @version 1.0
+ */
 public class Wait {
     /**
      * Метод ожидания исчезновения элемента с текстом
