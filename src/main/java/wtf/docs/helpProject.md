@@ -28,4 +28,4 @@
 4. Для CI/CD возможно настроить задачу в Jenkins через использование JenkinsFile
 
 5. Отчёты Allure размещены в target\allure-results
-   для просмотра Allure отчётов использовать - mvn allure:serve
+   для просмотра Allure отчётов использовать команду - mvn allure:serve
