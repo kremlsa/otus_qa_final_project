@@ -1,5 +1,7 @@
 package wtf.pom;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import wtf.actions.*;
 
 /**
@@ -10,10 +12,12 @@ import wtf.actions.*;
  */
 public class BasePage {
 
-    public Action action = new Action();
-    public Click click = new Click();
-    public Input input = new Input();
-    public Find find = new Find();
-    public Wait wait = new Wait();
+    public static final Logger logger = LogManager.getLogger();
+    protected Action action = new Action();
+    protected Click click = new Click();
+    protected Input input = new Input();
+    protected Find find = new Find();
+    protected Wait wait = new Wait();
+
 
 }

@@ -2,6 +2,7 @@ package finalProject.common;
 
 import java.time.LocalDate;
 
+
 /**
  * Класс для вспомогательных методов
  *
@@ -10,7 +11,12 @@ import java.time.LocalDate;
  */
 public class Utils {
 
-    //Метод для парсинга даты конца периода
+    /**
+     * Метод для парсинга даты конца периода
+     *
+     * @param date дата в текстовом представлении String
+     * @return дата LocalDate
+     */
     public static LocalDate parseEndDate(String date) {
         String[] parseDate = date.split(" ");
         int year = Integer.parseInt(parseDate[parseDate.length - 1]);
@@ -19,7 +25,12 @@ public class Utils {
         return LocalDate.of(year, month, day);
     }
 
-    //Метод для парсинга даты начала периода
+    /**
+     * Метод для парсинга даты начала периода
+     *
+     * @param date дата в текстовом представлении String
+     * @return дата LocalDate
+     */
     public static LocalDate parseStartDate(String date) {
         String[] parseDate = date.split(" ");
         int year = Integer.parseInt(parseDate[parseDate.length - 1]);
@@ -28,7 +39,29 @@ public class Utils {
         return LocalDate.of(year, month, day);
     }
 
-    //Вспомогательный метод для сопоставления месяца из текстового вида в число
+    /**
+     * метод для проверки вхождения диапазона дат в текущий период или после него
+     *
+     * @param date диапазон дат в текстовом представлении String
+     * @return результат проверки boolean
+     */
+    public static boolean dateInRangeOrBefore(String date) {
+        LocalDate startDate = Utils.parseStartDate(date);
+        LocalDate endDate = Utils.parseEndDate(date);
+        LocalDate now = LocalDate.now();
+        //Проверяем что дата в карточке в пределах диапазона или позже
+        if (now.isBefore(startDate) || now.isAfter(endDate)) {
+            return now.isBefore(endDate) && now.isBefore(startDate);
+        }
+        return  true;
+    }
+
+    /**
+     * метод для сопоставления месяца из текстового вида в число
+     *
+     * @param mon месяц в текстовом представлении String
+     * @return цифровое представление месяца int
+     */
     public static int parseMonth(String mon) {
         switch (mon.toLowerCase()) {
             case "jan":

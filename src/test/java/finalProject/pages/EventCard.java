@@ -8,8 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import static com.codeborne.selenide.Selenide.$;
-import static wtf.actions.Log.logInfo;
-import static wtf.actions.Log.logWarn;
+
 
 /**
  * Класс для представления карточек в разделе Events
@@ -44,24 +43,24 @@ public class EventCard extends BasePage {
         EventCard newCard = new EventCard();
         if ($(By.cssSelector(cardLink)).exists()) {
             newCard.setLink(card.findElement(By.cssSelector(cardLink)).getAttribute("href"));
-            logInfo("Парсинг карточки " + newCard.getLink());
+            logger.info("Парсинг карточки " + newCard.getLink());
         } else {
-            logWarn("ссылка не найдена");
+            logger.warn("ссылка не найдена");
         }
         if ($(By.cssSelector(cardEvent)).exists()) {
             newCard.setEventName(card.findElement(By.cssSelector(cardEvent)).getText());
         } else {
-            logWarn("событие не найдено");
+            logger.warn("событие не найдено");
         }
         if ($(By.cssSelector(cardLang)).exists()) {
             newCard.setLang(card.findElement(By.cssSelector(cardLang)).getText());
         } else {
-            logWarn("язык не найден");
+            logger.warn("язык не найден");
         }
         if ($(By.cssSelector(cardDate)).exists()) {
             newCard.setDate(card.findElement(By.cssSelector(cardDate)).getText());
         } else {
-            logWarn("дата не найдена");
+            logger.warn("дата не найдена");
         }
         if ($(By.cssSelector(cardReg)).exists()) {
             newCard.setRegistration(card.findElement(By.cssSelector(cardReg)).getText());
@@ -77,6 +76,12 @@ public class EventCard extends BasePage {
             System.out.println("докладчики не найдены");
         }
         return newCard;
+    }
+
+    public boolean isFieldsFill() {
+        return  !(getSpeakers().equals("Not defined") || registration.equals("Not defined")
+                || date.equals("Not defined") || lang.equals("Not defined")
+                || eventName.equals("Not defined"));
     }
 
     public String getEventName() {

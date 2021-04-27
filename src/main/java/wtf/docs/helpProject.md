@@ -26,3 +26,6 @@
    mvn clean test -DbrowserSize='1920x1080' -DremoteURL='http://selenoid:4444/wd/hub' -Dbrowser='chrome'
 
 4. Для CI/CD возможно настроить задачу в Jenkins через использование JenkinsFile
+
+5. Отчёты Allure размещены в target\allure-results
+   для просмотра Allure отчётов использовать - mvn allure:serve

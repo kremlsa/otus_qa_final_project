@@ -44,4 +44,20 @@ public class TalkCard {
     public void setCategory(String category) {
         this.category = category;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this)
+            return true;
+        if (!(o instanceof TalkCard))
+            return false;
+        TalkCard other = (TalkCard) o;
+        boolean locationEquals = (this.location == null && other.getLocation() == null)
+                || (this.location != null && this.location.contains(other.getLocation()));
+        boolean languageEquals = (this.language == null && other.getLanguage() == null)
+                || (this.language != null && this.language.contains(other.getLanguage()));
+        boolean categoryEquals = (this.category == null && other.getCategory() == null)
+                || (this.category != null && this.category.contains(other.getCategory()));
+        return locationEquals && languageEquals && categoryEquals;
+    }
 }

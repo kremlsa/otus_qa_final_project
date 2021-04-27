@@ -22,7 +22,7 @@ public class Click extends Base {
     @Step("Нажать на элемент с локатором \"{locator}\"")
     public Click xpathLocator(String locator) {
         $x(locator)
-                .waitUntil(exist, wait)
+                .waitUntil(exist, WAIT_TIME)
                 .hover()
                 .click();
         return this;
@@ -37,7 +37,7 @@ public class Click extends Base {
     @Step("Нажать на кнопку с частью текста span \"{spanText}\"")
     public Click buttonSpanTextPart(String spanText) {
         $x(UniLoc.xpathString(UniLoc.SPANCONTAINS, spanText))
-                .waitUntil(exist, wait)
+                .waitUntil(exist, WAIT_TIME)
                 .click();
         return this;
     }
