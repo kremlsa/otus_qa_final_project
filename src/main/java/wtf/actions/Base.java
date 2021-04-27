@@ -21,7 +21,7 @@ public class Base {
      *
      */
     public void logTitle() {
-        logger.info("Открываем раздел - " + Selenide.title());
+        logger.info("Открываем раздел - {}", Selenide.title());
     }
 
     public void log(String message) {
