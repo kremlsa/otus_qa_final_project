@@ -19,7 +19,7 @@ public class Action extends Base {
     @Step("Перейти по URL \"{url}\"")
     public Action open(String url) {
         Selenide.open(url);
-        logger.info("Открываем страницу " + url);
+        logger.info("Открываем страницу {}", url);
         return this;
     }
 

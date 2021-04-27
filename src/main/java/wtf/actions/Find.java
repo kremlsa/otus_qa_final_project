@@ -39,13 +39,11 @@ public class Find extends Base {
         for (SelenideElement element : $$(locator)) {
             if (!element.getText().contains(query)) {
                 //Логируем
-                logger.info("Элемент - " + element.getText()
-                        + " не содержит запрос - " + query);
+                logger.warn("Элемент - {} не содержит запрос - {}", element.getText(), query);
                 return false;
             } else {
                 //Логируем
-                logger.info("Элемент - " + element.getText()
-                        + " содержит запрос - " + query);
+                logger.info("Элемент - {} содержит запрос - {}", element.getText(), query);
             }
         }
         return true;

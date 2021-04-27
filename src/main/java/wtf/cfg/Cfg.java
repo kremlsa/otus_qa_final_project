@@ -17,7 +17,7 @@ import java.util.Optional;
  * @version 1.0
  */
 public class Cfg {
-    private String browserSize = "1920x1080";
+    private final String BROWSER_SIZE = "1920x1080";
     private String remoteURL = "";
 
     /**
@@ -28,7 +28,7 @@ public class Cfg {
         //Настройка ожиданий
         Configuration.timeout = 12000;
         //Настройка размера браузера из параметров maven, по умолчанию из конфиг файла
-        Configuration.browserSize =  Optional.ofNullable(System.getProperty("browserSize")).orElse(browserSize);
+        Configuration.browserSize =  Optional.ofNullable(System.getProperty("browserSize")).orElse(BROWSER_SIZE);
         //Настройка удалённого запуска из параметров maven, по умолчанию из конфиг файла
         if (remoteURL.equals("")) remoteURL = null;
         Configuration.remote =  Optional.ofNullable(System.getProperty("remoteURL")).orElse(remoteURL);
