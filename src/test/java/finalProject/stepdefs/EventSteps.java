@@ -1,5 +1,6 @@
 package finalProject.stepdefs;
 
+import finalProject.common.Utils;
 import finalProject.pages.EpamEventsPage;
 import finalProject.pages.EpamMainPage;
 import io.cucumber.java.ru.Дано;
@@ -8,6 +9,8 @@ import io.cucumber.java.ru.Когда;
 import io.cucumber.java.ru.То;
 import io.qameta.allure.Step;
 import org.testng.Assert;
+
+import java.time.LocalDate;
 
 /**
  * Класс для описания шагов Cucumber для сценариев
@@ -41,7 +44,9 @@ public class EventSteps {
 
     @И("Количество карточек равно счетчику на кнопке {string}")
     public void checkNumberOfCards(String buttonName){
-        Assert.assertTrue(epamEventsPage.isCounterCorrect(buttonName));
+
+        Assert.assertEquals(epamEventsPage.cardExist(), epamEventsPage.cardInCounter(buttonName),
+                "Количество карточек не совпадает со значением в счётчике");
     }
 
     @И("В карточке указана информация о мероприятии:")

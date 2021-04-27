@@ -11,9 +11,10 @@ import org.apache.logging.log4j.Logger;
  * @version 1.0
  */
 public class Base {
+
     public static final Logger logger = LogManager.getLogger();
     // Время ожидания элементов
-    public int wait = 10000;
+    public static final int WAIT_TIME = 10000;
 
     /**
      * Метод для записи в Лог титула текущей страницы

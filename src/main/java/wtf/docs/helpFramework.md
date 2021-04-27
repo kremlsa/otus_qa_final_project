@@ -22,6 +22,8 @@
   выбор браузера:
   -Dbrowser
 
+9. Отчёты Allure размещены в target\allure-results
+   для просмотра использовать - mvn allure:serve
 
 
 

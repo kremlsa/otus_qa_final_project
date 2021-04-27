@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Selenide.*;
-import static wtf.actions.Log.logInfo;
-import static wtf.actions.Log.logWarn;
 
 /**
  * Класс поиска элементов и их значений
@@ -26,7 +24,7 @@ public class Find extends Base {
      */
     public String locText(By locator) {
         return $(locator)
-                .waitUntil(exist, wait)
+                .waitUntil(exist, WAIT_TIME)
                 .getText();
     }
 
@@ -41,12 +39,12 @@ public class Find extends Base {
         for (SelenideElement element : $$(locator)) {
             if (!element.getText().contains(query)) {
                 //Логируем
-                logWarn("Элемент - " + element.getText()
+                logger.info("Элемент - " + element.getText()
                         + " не содержит запрос - " + query);
                 return false;
             } else {
                 //Логируем
-                logInfo("Элемент - " + element.getText()
+                logger.info("Элемент - " + element.getText()
                         + " содержит запрос - " + query);
             }
         }

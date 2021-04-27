@@ -26,7 +26,7 @@ public enum BrowserName {
     //Возвращаем подходящий браузера, поиск регистронезависим
     public static BrowserName findByName(String name) {
         for (BrowserName value: values()) {
-            if (value.browserName.equals(name.replace("'","").toLowerCase())) {
+            if (value.browserName.equalsIgnoreCase(name)) {
                 return value;
             }
         }

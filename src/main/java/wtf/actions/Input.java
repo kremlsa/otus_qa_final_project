@@ -22,7 +22,7 @@ public class Input extends Base {
      */
     public Input locator(By locator, String text) {
         $(locator)
-                .waitUntil(exist, wait)
+                .waitUntil(exist, WAIT_TIME)
                 .sendKeys(text);
         return this;
     }
@@ -37,7 +37,7 @@ public class Input extends Base {
      */
     public Input locatorEnter(By locator, String text) {
         $(locator)
-                .waitUntil(exist, wait)
+                .waitUntil(exist, WAIT_TIME)
                 .sendKeys(text, Keys.ENTER);
         return this;
     }
