@@ -46,7 +46,7 @@ public class EventCard extends BasePage {
      * @return представление карточки в виде объекта EventCard
      */
     public static EventCard parse(WebElement card) {
-        return new EventCard()
+        return EventCard
                     .builder()
                     .date(Utils.textOrNotDefined(card, By.cssSelector(cardDate)))
                     .lang(Utils.textOrNotDefined(card, By.cssSelector(cardLang)))
