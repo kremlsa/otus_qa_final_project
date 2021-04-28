@@ -52,6 +52,7 @@ public class EpamEventsPage extends BasePage {
      */
     public boolean isCardApperance() {
         getAllCards();
+        eventCards.forEach(EventCard::loggingCard);
         return find.isElementExists(By.cssSelector(CARD_BODY));
     }
 
@@ -93,7 +94,7 @@ public class EpamEventsPage extends BasePage {
      */
     public void checkLang() {
         eventCards.forEach(card -> 
-                logger.info("Язык для карточки {} - {}", card.getLink(), card.getLang()));
+                logger.info("Язык для карточки {} - {}", card.getEventName(), card.getLang()));
     }
 
     /**
@@ -102,7 +103,7 @@ public class EpamEventsPage extends BasePage {
      */
     public void checkEvent() {
         eventCards.forEach(card -> 
-                logger.info("Мероприятие для карточки {} - {}", card.getLink(), card.getEventName()));
+                logger.info("Мероприятие для карточки {} - {}", card.getEventName(), card.getEventName()));
     }
 
     /**
@@ -111,7 +112,7 @@ public class EpamEventsPage extends BasePage {
      */
     public void checkDate() {
         eventCards.forEach(card ->
-                logger.info("Дата для карточки {} - {}", card.getLink(), card.getDate()));
+                logger.info("Дата для карточки {} - {}", card.getEventName(), card.getDate()));
     }
 
     /**
@@ -120,7 +121,7 @@ public class EpamEventsPage extends BasePage {
      */
     public void checkReg() {
         eventCards.forEach(card ->
-                logger.info("Регистрация для карточки {} - {}", card.getLink(), card.getRegistration()));
+                logger.info("Регистрация для карточки {} - {}", card.getEventName(), card.getRegistration()));
     }
 
     /**
@@ -129,7 +130,7 @@ public class EpamEventsPage extends BasePage {
      */
     public void checkSpeakers() {
         eventCards.forEach(card ->
-                logger.info("Докладчики для карточки {} - {}", card.getLink(), card.getSpeakers()));
+                logger.info("Докладчики для карточки {} - {}", card.getEventName(), card.getSpeakerFromList()));
     }
 
     /**

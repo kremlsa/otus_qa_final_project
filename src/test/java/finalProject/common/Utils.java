@@ -1,6 +1,14 @@
 package finalProject.common;
 
+import finalProject.pages.Speaker;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.codeborne.selenide.Selenide.$;
 
 
 /**
@@ -90,5 +98,41 @@ public class Utils {
                 return 12;
         }
         return 0;
+    }
+
+    /**
+     * Метод возвращающий текстовое значение элемента
+     * с указанным локатором в элементе или Not defined
+     *
+     * @param element элемент WebElement
+     * @param locator локатор элемента By
+     * @return текст элемента String
+     */
+    public static String textOrNotDefined(WebElement element, By locator) {
+        if ($(locator).exists()) {
+            return element.findElement(locator).getText();
+        } else {
+            return "Not defined";
+        }
+    }
+
+    /**
+     * Метод возвращающий текстовое значение элементов
+     * из списка с указанным локатором в элементе или Not defined
+     *
+     * @param element элемент WebElement
+     * @param locator локатор элемента By
+     * @return текст элемента String
+     */
+    public static List<Speaker> speakersOrNotDefined(WebElement element, By locator) {
+        List<Speaker> results = new ArrayList<>();
+        if ($(locator).exists()) {
+            List<WebElement> elements = element.findElements(locator);
+            for (WebElement el : elements) {
+                results.add(Speaker.parseSpeaker(el));
+            }
+
+        }
+        return results;
     }
 }
