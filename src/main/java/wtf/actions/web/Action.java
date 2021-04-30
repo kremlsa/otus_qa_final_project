@@ -1,7 +1,8 @@
-package wtf.actions;
+package wtf.actions.web;
 
 import com.codeborne.selenide.Selenide;
 import io.qameta.allure.Step;
+import wtf.actions.Base;
 
 /**
  * Класс для основных действий с драйвером

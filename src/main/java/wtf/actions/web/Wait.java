@@ -1,4 +1,4 @@
-package wtf.actions;
+package wtf.actions.web;
 
 import com.codeborne.selenide.Condition;
 import org.openqa.selenium.By;
