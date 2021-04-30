@@ -1,7 +1,9 @@
-package wtf.actions;
+package wtf.actions.web;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import wtf.actions.Base;
+
 import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Selenide.$;
 

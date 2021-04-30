@@ -1,6 +1,7 @@
-package wtf.actions;
+package wtf.actions.web;
 
 import io.qameta.allure.Step;
+import wtf.actions.Base;
 import wtf.uniloc.UniLoc;
 
 import static com.codeborne.selenide.Condition.exist;

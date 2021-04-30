@@ -117,6 +117,7 @@ public class EpamTalkPage extends BasePage {
                 .map(x -> epamTalkCardPage.parseCard(x))
                 .forEach(x -> Assert.assertTrue(x.equals(etalone),
                         "Карточка " + x.getEvent() + " не отвечает критериям фильтра"));
+        logger.info("Карточки отвечают критериям фильтра");
         return true;
     }
 }

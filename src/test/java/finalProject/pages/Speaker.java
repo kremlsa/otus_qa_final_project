@@ -1,5 +1,6 @@
 package finalProject.pages;
 
+import lombok.*;
 import org.openqa.selenium.WebElement;
 
 /**
@@ -9,26 +10,15 @@ import org.openqa.selenium.WebElement;
  * @author Aleksandr Kremlev
  * @version 1.0
  */
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Speaker {
 
     private String name = "Not defined";
     private String title = "Not defined";
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
 
     /**
      * метод для парсинга докладчиков из элемента DOM модели сайта
@@ -37,10 +27,12 @@ public class Speaker {
      * @return объект Speaker
      */
     public static Speaker parseSpeaker(WebElement element) {
-        Speaker result = new Speaker();
-        result.setName(element.getAttribute("data-name"));
-        result.setTitle(element.getAttribute("data-job-title"));
-        return result;
+
+         return new Speaker()
+                .builder()
+                .name(element.getAttribute("data-name"))
+                .title(element.getAttribute("data-job-title"))
+                .build();
     }
 
     @Override

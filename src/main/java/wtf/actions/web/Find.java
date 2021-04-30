@@ -1,9 +1,11 @@
-package wtf.actions;
+package wtf.actions.web;
 
 
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
+import wtf.actions.Base;
+
 import java.util.ArrayList;
 import java.util.List;
 import static com.codeborne.selenide.Condition.exist;

@@ -26,18 +26,20 @@ public class EpamTalkCardPage extends BasePage {
      * @return представление карточки в виде объекта TalkCard
      */
     public TalkCard parseCard(String targetUrl) {
-        TalkCard testCard = new TalkCard();
         action.open(targetUrl);
         //Соглашаемся с кукис
         click.xpathLocator("//*[@id='onetrust-accept-btn-handler']");
-        testCard.setEvent(find.locText(By.xpath(event)));
-        testCard.setLocation(find.locText(By.xpath(location)));
-        testCard.setLanguage(find.locText(By.xpath(language)));
+        //Составляем топики
         String topicName = "";
         for (SelenideElement element : find.listLoc(By.xpath(topics))) {
             topicName += element.getText() + " ";
         }
-        testCard.setCategory(topicName);
+        TalkCard testCard = TalkCard.builder()
+                .event(find.locText(By.xpath(event)))
+                .location(find.locText(By.xpath(location)))
+                .language(find.locText(By.xpath(language)))
+                .category(topicName)
+                .build();
         action.clearBrowser();
         return testCard;
     }

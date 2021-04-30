@@ -1,13 +1,14 @@
 package finalProject.pages;
 
+import finalProject.common.Utils;
+import lombok.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import wtf.pom.BasePage;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import static com.codeborne.selenide.Selenide.$;
+
 
 
 /**
@@ -17,6 +18,11 @@ import static com.codeborne.selenide.Selenide.$;
  * @author Aleksandr Kremlev
  * @version 1.0
  */
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class EventCard extends BasePage {
 
     private  static String cardLang = ".language span";
@@ -31,7 +37,7 @@ public class EventCard extends BasePage {
     private String registration = "Not defined";
     private String lang = "Not defined";
     private String link = "Not defined";
-    private final ArrayList<Speaker> speakers = new ArrayList<>();
+    private List<Speaker> speakers = new ArrayList<>();
 
     /**
      * Метод для парсинга объекта представляющего карточку мероприятия из элемента страницы
@@ -40,95 +46,34 @@ public class EventCard extends BasePage {
      * @return представление карточки в виде объекта EventCard
      */
     public static EventCard parse(WebElement card) {
-        EventCard newCard = new EventCard();
-        if ($(By.cssSelector(cardLink)).exists()) {
-            newCard.setLink(card.findElement(By.cssSelector(cardLink)).getAttribute("href"));
-            logger.info("Парсинг карточки " + newCard.getLink());
-        } else {
-            logger.warn("ссылка не найдена");
-        }
-        if ($(By.cssSelector(cardEvent)).exists()) {
-            newCard.setEventName(card.findElement(By.cssSelector(cardEvent)).getText());
-        } else {
-            logger.warn("событие не найдено");
-        }
-        if ($(By.cssSelector(cardLang)).exists()) {
-            newCard.setLang(card.findElement(By.cssSelector(cardLang)).getText());
-        } else {
-            logger.warn("язык не найден");
-        }
-        if ($(By.cssSelector(cardDate)).exists()) {
-            newCard.setDate(card.findElement(By.cssSelector(cardDate)).getText());
-        } else {
-            logger.warn("дата не найдена");
-        }
-        if ($(By.cssSelector(cardReg)).exists()) {
-            newCard.setRegistration(card.findElement(By.cssSelector(cardReg)).getText());
-        } else {
-            System.out.println("регистрация не найдена");
-        }
-        if ($(By.cssSelector(cardSpeakers)).exists()) {
-            List<WebElement> speakerElements = card.findElements(By.cssSelector(cardSpeakers));
-            for (WebElement el : speakerElements) {
-                newCard.addSpeakers(Speaker.parseSpeaker(el));
-            }
-        } else {
-            System.out.println("докладчики не найдены");
-        }
-        return newCard;
+        return EventCard
+                    .builder()
+                    .date(Utils.textOrNotDefined(card, By.cssSelector(cardDate)))
+                    .lang(Utils.textOrNotDefined(card, By.cssSelector(cardLang)))
+                    .eventName(Utils.textOrNotDefined(card, By.cssSelector(cardEvent)))
+                    .registration(Utils.textOrNotDefined(card, By.cssSelector(cardReg)))
+                    .speakers(Utils.speakersOrNotDefined(card, By.cssSelector(cardSpeakers)))
+                    .build();
     }
 
     public boolean isFieldsFill() {
-        return  !(getSpeakers().equals("Not defined") || registration.equals("Not defined")
+        return  !(getSpeakerFromList().equals("Not defined") || registration.equals("Not defined")
                 || date.equals("Not defined") || lang.equals("Not defined")
                 || eventName.equals("Not defined"));
     }
 
-    public String getEventName() {
-        return eventName;
-    }
-
-    public void setEventName(String eventName) {
-        this.eventName = eventName;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public String getRegistration() {
-        return registration;
-    }
-
-    public void setRegistration(String registration) {
-        this.registration = registration;
-    }
-
-    public String getSpeakers() {
+    public String getSpeakerFromList() {
         return speakers.size() > 0 ? Arrays.toString(speakers.toArray()) : "Not defined";
     }
 
-    public void addSpeakers(Speaker speaker) {
+    public void addSpeakerToList(Speaker speaker) {
         this.speakers.add(speaker);
     }
 
-    public String getLang() {
-        return lang;
-    }
-
-    public void setLang(String lang) {
-        this.lang = lang;
-    }
-
-    public void setLink(String link) {
-        this.link = link;
-    }
-
-    public String getLink() {
-        return link;
+    public void loggingCard() {
+        logger.info("Карточка {} поле event - {}", eventName, eventName);
+        logger.info("Карточка {} поле date - {}", eventName, date);
+        logger.info("Карточка {} поле reg - {}", eventName, registration);
+        logger.info("Карточка {} поле lang - {}", eventName, lang);
     }
 }
