@@ -25,15 +25,18 @@ public enum CTname {
         return contentType;
     }
 
-    //Возвращаем подходящий тип содержимого, поиск регистронезависим
+    /**
+     * Метод для нахождения объекта ContentType по его названию
+     *
+     * @param name наименование содержимого String
+     * @return объект представляющий тип содержимого ContentType
+     */
     public static ContentType getCT(String name) {
         for (CTname value: values()) {
             if (value.toString().equalsIgnoreCase(name)) {
                 return value.getContentType();
             }
         }
-
-        // Возвращаем браузер по умолчанию Chrome если не нашлось подходящего кандидата
         return DEFAULT.getContentType();
     }
 }

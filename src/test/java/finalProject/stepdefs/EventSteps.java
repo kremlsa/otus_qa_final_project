@@ -1,6 +1,5 @@
 package finalProject.stepdefs;
 
-import finalProject.common.Utils;
 import finalProject.pages.EpamEventsPage;
 import finalProject.pages.EpamMainPage;
 import io.cucumber.java.ru.Дано;
@@ -9,8 +8,6 @@ import io.cucumber.java.ru.Когда;
 import io.cucumber.java.ru.То;
 import io.qameta.allure.Step;
 import org.testng.Assert;
-
-import java.time.LocalDate;
 
 /**
  * Класс для описания шагов Cucumber для сценариев

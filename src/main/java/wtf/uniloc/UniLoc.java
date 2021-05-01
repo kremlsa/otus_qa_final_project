@@ -33,7 +33,13 @@ public enum UniLoc {
         return locator;
     }
 
-    //Возвращаем локатор XPath
+    /**
+     * Метод для формирования xpath локаторов
+     *
+     * @param parameter параметр для подстановки String
+     * @param name имя универсального локатора String
+     * @return локатор By.xpathLocator
+     */
     public static By xpathLocator(UniLoc name, String parameter) {
         for (UniLoc value: values()) {
             if (value.equals(name)) {
@@ -43,7 +49,13 @@ public enum UniLoc {
         return By.xpath(DEFAULT.locator);
     }
 
-    //Возвращаем параметризированную строку XPath
+    /**
+     * Метод для формирования xpath локатора в виде строки
+     *
+     * @param parameter параметр для подстановки String
+     * @param name имя универсального локатора String
+     * @return локатор в строковом представлении String
+     */
     public static String xpathString(UniLoc name, String parameter) {
         for (UniLoc value: values()) {
             if (value.equals(name)) {
