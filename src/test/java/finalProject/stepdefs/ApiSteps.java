@@ -48,7 +48,6 @@ public class ApiSteps {
 
     @Когда("Отправляется запрос Get")
     public void sendGetRequest() {
-        restApi.createContext(url, contentType);
         this.response = restApi.sendGetRequest(api, "");
     }
 
@@ -71,5 +70,20 @@ public class ApiSteps {
     @И("В объекте есть ключ {string} со значением {string}")
     public void findPair(String key, String value) {
         Assert.assertTrue(parser.isStringPairFind(json, key, value));
+    }
+
+    @И("параметр Get запроса {string} со значением {string}")
+    public void setGetParameter(String parameter, String value) {
+        restApi.setGetParameters(parameter, value);
+    }
+
+    @И("Устанавливается контекст")
+    public void setContext() {
+        restApi.createContext(url, contentType);
+    }
+
+    @Когда("Отправляется запрос Get с параметрами")
+    public void sendParametrizedGet() {
+        this.response = restApi.sendGetRequestWithParams(api);
     }
 }
