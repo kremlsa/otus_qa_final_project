@@ -23,7 +23,12 @@ public enum BrowserName {
         return browserName;
     }
 
-    //Возвращаем подходящий браузера, поиск регистронезависим
+    /**
+     * Метод для нахождения объекта BrowserName по его названию
+     *
+     * @param name наименование браузера String
+     * @return объект представляющий имя браузера BrowserName
+     */
     public static BrowserName findByName(String name) {
         for (BrowserName value: values()) {
             if (value.browserName.equalsIgnoreCase(name)) {

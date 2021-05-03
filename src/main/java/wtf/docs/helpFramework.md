@@ -24,6 +24,10 @@
 
 9. Отчёты Allure размещены в target\allure-results
    для просмотра использовать - mvn allure:serve
+   
+10. Классы для автоматизации WEB находятся в wtf.actions.web
+11. Классы для работы с REST API находятся в wtf.actions.rest
+12. Классы для обработки данных находятся в wtf.parser
 
 
 

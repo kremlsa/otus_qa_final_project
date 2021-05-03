@@ -10,8 +10,7 @@ import org.openqa.selenium.WebElement;
  * @author Aleksandr Kremlev
  * @version 1.0
  */
-@Getter
-@Setter
+@Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -28,7 +27,7 @@ public class Speaker {
      */
     public static Speaker parseSpeaker(WebElement element) {
 
-         return new Speaker()
+         return Speaker
                 .builder()
                 .name(element.getAttribute("data-name"))
                 .title(element.getAttribute("data-job-title"))

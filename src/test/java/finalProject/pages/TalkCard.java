@@ -12,8 +12,7 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
+@Data
 public class TalkCard {
     private String location = "Not defined";
     private String language = "Not defined";

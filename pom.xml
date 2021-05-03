@@ -141,6 +141,12 @@
             <artifactId>rest-assured</artifactId>
             <version>4.3.0</version>
         </dependency>
+        <!-- JSON -->
+        <dependency>
+            <groupId>com.vaadin.external.google</groupId>
+            <artifactId>android-json</artifactId>
+            <version>0.0.20131108.vaadin1</version>
+        </dependency>
     </dependencies>
 
 </project>
