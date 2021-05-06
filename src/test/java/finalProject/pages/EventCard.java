@@ -21,7 +21,8 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Setter
+@Getter
 public class EventCard extends BasePage {
 
     private  static String cardLang = ".language span";

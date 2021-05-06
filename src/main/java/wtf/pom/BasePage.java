@@ -18,6 +18,7 @@ public class BasePage {
     protected Input input = new Input();
     protected Find find = new Find();
     protected Wait wait = new Wait();
+    protected Menus menus = new Menus();
 
 
 }

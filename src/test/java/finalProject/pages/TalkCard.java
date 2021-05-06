@@ -12,11 +12,12 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Setter
+@Getter
 public class TalkCard {
+    private String category = "Not defined";
     private String location = "Not defined";
     private String language = "Not defined";
-    private String category = "Not defined";
     private String event = "Not defined";
 
     @Override
