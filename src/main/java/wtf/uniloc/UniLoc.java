@@ -20,6 +20,8 @@ public enum UniLoc {
     EVENTCOUNTER("//span[contains(text(), '%s')]/../span[3]"),
     //Tag
     TAG("//div[contains(@class,'evnt-tag')]/label[contains(text(),'%s')]"),
+    //Text value
+    TEXTSPAN("//span[text()='%s']"),
     //Default
     DEFAULT("Not Found!!!");
 

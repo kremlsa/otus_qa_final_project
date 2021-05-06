@@ -1,6 +1,9 @@
 package finalProject.stepdefs;
 
 import finalProject.pages.EpamTalkPage;
+import finalProject.pages.TalkCard;
+import io.cucumber.datatable.DataTable;
+import io.cucumber.java.DataTableType;
 import io.cucumber.java.ru.И;
 import io.cucumber.java.ru.Когда;
 import io.cucumber.java.ru.То;
@@ -32,23 +35,8 @@ public class TalksStep {
         epamTalkPage.clickMoreFilters();
     }
 
-    @Когда("Пользователь выбирает: Category – {string}")
-    public void selectCategoryTesting(String category) {
-        epamTalkPage.filterCategory(category);
-    }
-
-    @И("Location – {string}")
-    public void selectlocationBelarus(String location) {
-        epamTalkPage.filterLocation(location);
-    }
-
-    @И("Language – {string} На вкладке фильтров")
-    public void selectLanguageEnglish(String language) {
-        epamTalkPage.filterLanguage(language);
-    }
-
     @То("На странице отображаются карточки соответствующие правилам выбранных фильтров")
-    public void isFilterWorks() {
-        Assert.assertTrue(epamTalkPage.isFilterWorks());
+    public void isFilterWorks(DataTable table) {
+        Assert.assertTrue(epamTalkPage.isFilterWorks(table));
     }
 }

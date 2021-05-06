@@ -157,14 +157,11 @@ public class EpamEventsPage extends BasePage {
      * @param value название элемента фильтра String
      */
     public void selectFilterValue(String filter, String value) {
-        //Запоминаем текущий элемент из списка тем и значение
-        String elementText = find.locText(By.xpath(EVENT_TITLE));
         //Настраиваем элементы фильтра
-        click.xpathLocator(UniLoc.xpathString(UniLoc.SPAN, filter))
-                .xpathLocator(UniLoc.xpathString(UniLoc.LABELDATA, value))
+        menus.elementInMenu(UniLoc.xpathLocator(UniLoc.TEXTSPAN, filter), UniLoc.xpathLocator(UniLoc.LABELDATA, value))
                 .log("Настроен фильтр " + filter + " со значением " + value);
-        //ждём пока прогрузится новый список тем
-        wait.disappearText(By.xpath(EVENT_TITLE), elementText, 5000);
+        //Ждём пока появится тэг
+        wait.exist(UniLoc.xpathLocator(UniLoc.TAG, value));
     }
 
     /**

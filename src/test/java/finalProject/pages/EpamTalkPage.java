@@ -1,9 +1,12 @@
 package finalProject.pages;
 
+import io.cucumber.datatable.DataTable;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import wtf.pom.BasePage;
 import wtf.uniloc.UniLoc;
+
+import java.util.stream.Collectors;
 
 /**
  * Класс для описания страницы - Video
@@ -24,7 +27,6 @@ public class EpamTalkPage extends BasePage {
     private final String CARD_LINK = "//*[@class='evnt-talk-card']/a";
 
     private EpamTalkCardPage epamTalkCardPage = new EpamTalkCardPage();
-    private final TalkCard etalone = new TalkCard();
 
     private String query = "";
 
@@ -65,53 +67,18 @@ public class EpamTalkPage extends BasePage {
     }
 
     /**
-     * Метод для выбора категории
-     *
-     */
-    public void filterCategory(String category) {
-        //Открываем список, выбираем категорию
-        click.xpathLocator(SPAN_CATEGORY)
-                .xpathLocator(UniLoc.xpathString(UniLoc.LABELDATA, category))
-                .log("Выбираем значение фильтра Category " + category);
-        //Устанавливаем эталонное значение
-        etalone.setCategory(category);
-    }
-
-    /**
-     * Метод для выбора локации
-     *
-     */
-    public void filterLocation(String location) {
-        //Открываем список, выбираем локацию
-        click.xpathLocator(SPAN_LOCATION)
-                .xpathLocator(UniLoc.xpathString(UniLoc.LABELDATA, location))
-                .log("Выбираем значение фильтра Location " + location);
-        //Устанавливаем эталонное значение
-        etalone.setLocation(location);
-    }
-
-    /**
-     * Метод для выбора языка
-     *
-     */
-    public void filterLanguage(String language) {
-        //Открываем список, выбираем язык
-        click.xpathLocator(SPAN_LANGUAGE)
-                .xpathLocator(UniLoc.xpathString(UniLoc.LABELDATA, language))
-                .log("Выбираем значение фильтра Language " + language);
-        //Устанавливаем эталонное значение
-        etalone.setLanguage(language);
-        //ждём пока прогрузится новый список тем (появится тэг)
-        click.xpathLocator(SPAN_LANGUAGE);
-        wait.exist(UniLoc.xpathLocator(UniLoc.TAG, language));
-    }
-
-    /**
      * Метод для проверки работы фильтра
      *
+     * @param table таблица значений параметров фильтра DataTable
      * @return результат проверки boolean
      */
-    public boolean isFilterWorks() {
+    public boolean isFilterWorks(DataTable table) {
+        //Задаём эталонную карточку
+        TalkCard etalone = table.cells()
+                .stream()
+                .map(fields -> new TalkCard(fields.get(0), fields.get(1), fields.get(2), fields.get(3)))
+                .collect(Collectors.toList()).get(0);
+        //Проверяем совпадение с заданными параметрами фильтрации
         find.attributesList(By.xpath(CARD_LINK), "href").stream()
                 .filter(x -> !x.contains("1621"))//Баг на селеноиде исключаем страницу из проверки
                 .map(x -> epamTalkCardPage.parseCard(x))
