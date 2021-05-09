@@ -1,8 +1,10 @@
 package finalProject.pages;
 
+import finalProject.stepdefs.BaseStep;
 import org.openqa.selenium.By;
 
 import org.testng.Assert;
+import wtf.data.JsonParse;
 import wtf.pom.BasePage;
 import wtf.uniloc.UniLoc;
 import finalProject.common.Utils;
@@ -10,6 +12,7 @@ import finalProject.common.Utils;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -192,6 +195,13 @@ public class EpamEventsPage extends BasePage {
                 .collect(Collectors.toList())
                 .forEach(x -> Assert.assertTrue(x.isFieldsFill(),"Карточка " + x.getLink() + " не заполнена"));
         logger.info("{} карточек заполнены корректно", eventCards.size());
+
+        //Добавляем к отчёту карточки
+        String jsonResult = eventCards.stream()
+                .map(JsonParse::objectToJson).filter(Objects::nonNull)
+                .map(Object::toString)
+                .collect(Collectors.joining("\n"));
+        BaseStep.setJsonResult(jsonResult);
         return true;
     }
 
@@ -206,6 +216,13 @@ public class EpamEventsPage extends BasePage {
                 .collect(Collectors.toList())
                 .forEach(x -> Assert.assertTrue(Utils.dateInRangeOrBefore(x.getDate()),
                         "Дата в карточке " + x.getLink() + " вне пределов текущей даты"));
+
+        //Добавляем к отчёту карточки
+        String jsonResult = eventCards.stream()
+                .map(JsonParse::objectToJson).filter(Objects::nonNull)
+                .map(Object::toString)
+                .collect(Collectors.joining("\n"));
+        BaseStep.setJsonResult(jsonResult);
         return true;
     }
 }

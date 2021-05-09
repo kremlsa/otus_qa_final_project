@@ -1,5 +1,8 @@
 package finalProject.pages;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import finalProject.common.Utils;
 import lombok.*;
 import org.openqa.selenium.By;
@@ -23,20 +26,33 @@ import java.util.List;
 @NoArgsConstructor
 @Setter
 @Getter
+@JsonSerialize
 public class EventCard extends BasePage {
 
+    @JsonIgnore
     private  static String cardLang = ".language span";
+    @JsonIgnore
     private  static String cardEvent = ".evnt-event-name h1 span";
+    @JsonIgnore
     private  static String cardDate = ".evnt-dates-cell span";
+    @JsonIgnore
     private  static String cardReg = ".status";
+    @JsonIgnore
     private  static String cardSpeakers = ".evnt-speaker";
+    @JsonIgnore
     private  static String cardLink = ".evnt-event-card a";
 
+    @JsonInclude
     private String eventName = "Not defined";
+    @JsonInclude
     private String date = "Not defined";
+    @JsonInclude
     private String registration = "Not defined";
+    @JsonInclude
     private String lang = "Not defined";
+    @JsonInclude
     private String link = "Not defined";
+    @JsonInclude
     private List<Speaker> speakers = new ArrayList<>();
 
     /**

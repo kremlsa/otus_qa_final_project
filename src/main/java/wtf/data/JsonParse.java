@@ -11,7 +11,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Класс для обработки JSON элементов
@@ -22,17 +21,29 @@ import java.util.Map;
 public class JsonParse {
     public static final Logger logger = LogManager.getLogger();
 
+    /**
+     * Метод для преобразования POJO в JSON
+     *
+     * @param object POJO Object
+     * @return JSON представление объекта String
+     */
     public static String objectToJson(Object object) {
         ObjectMapper mapper = new ObjectMapper();
         try {
             return mapper
                     .writeValueAsString(object);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             return null;
         }
     }
 
+    /**
+     * Метод для преобразования Cucumber DataTable в JSON
+     *
+     * @param data таблица данных DataTable
+     * @return JSON представление таблицы String
+     */
     public static String dataTableToJson(DataTable data) {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode objectNode = mapper.createObjectNode();
@@ -54,7 +65,7 @@ public class JsonParse {
         try {
             return mapper.writeValueAsString(objectNode);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             return null;
         }
     }
@@ -73,7 +84,7 @@ public class JsonParse {
                 results.add((JSONObject) array.get(i));
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         return results;
     }
@@ -90,6 +101,7 @@ public class JsonParse {
         try {
             return json.getString(key).equals(value);
         } catch (JSONException e) {
+            logger.error(e.getMessage());
             return false;
         }
     }
@@ -111,6 +123,7 @@ public class JsonParse {
                 }
             }
         } catch (JSONException e) {
+            logger.error(e.getMessage());
             return null;
         }
         return null;

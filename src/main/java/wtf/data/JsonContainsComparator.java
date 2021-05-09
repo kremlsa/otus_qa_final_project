@@ -5,6 +5,12 @@ import com.fasterxml.jackson.databind.node.TextNode;
 
 import java.util.Comparator;
 
+/**
+ * Компаратор для сравнения частичного совпадения полей json
+ *
+ * @author Aleksandr Kremlev
+ * @version 1.0
+ */
 public class JsonContainsComparator implements Comparator<JsonNode>
 {
     @Override
