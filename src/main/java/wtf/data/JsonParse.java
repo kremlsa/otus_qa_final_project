@@ -1,5 +1,9 @@
-package wtf.parser;
+package wtf.data;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import io.cucumber.datatable.DataTable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
@@ -7,6 +11,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Класс для обработки JSON элементов
@@ -16,6 +21,43 @@ import java.util.List;
  */
 public class JsonParse {
     public static final Logger logger = LogManager.getLogger();
+
+    public static String objectToJson(Object object) {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            return mapper
+                    .writeValueAsString(object);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static String dataTableToJson(DataTable data) {
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode objectNode = mapper.createObjectNode();
+
+        List<List<String>> rows = data.asLists(String.class);
+        for (List<String> columns : rows) {
+            switch (columns.get(2)) {
+                case "string":
+                    objectNode.put(columns.get(0), columns.get(1));
+                    break;
+                case "integer":
+                    objectNode.put(columns.get(0), Integer.valueOf(columns.get(1)));
+                    break;
+                case "boolean":
+                    objectNode.put(columns.get(0), Boolean.valueOf(columns.get(1)));
+                    break;
+            }
+        }
+        try {
+            return mapper.writeValueAsString(objectNode);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     /**
      * Метод нахождения json объектов в массиве

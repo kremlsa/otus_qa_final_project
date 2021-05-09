@@ -10,8 +10,9 @@ import org.json.JSONObject;
 import org.testng.Assert;
 import wtf.actions.rest.RestApi;
 import wtf.common.CTname;
-import wtf.parser.JsonParse;
+import wtf.data.JsonParse;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Класс для описания шагов Cucumber для сценариев
@@ -60,6 +61,8 @@ public class ApiSteps {
     @И("В ответе присутствует объект Json с ключом {string} и значением {string}")
     public void findPairInJson(String key, String value) {
         json = parser.isObjectWithStringPairInList(jsons, key, value);
+        System.out.println(json);
+        BaseStep.setJsonResult(json.toString());
     }
 
     @И("В ответе присутствует объект Json с ключом {string} и числовым значением {string}")

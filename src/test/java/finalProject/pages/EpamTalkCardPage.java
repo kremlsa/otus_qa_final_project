@@ -27,8 +27,7 @@ public class EpamTalkCardPage extends BasePage {
      */
     public TalkCard parseCard(String targetUrl) {
         action.open(targetUrl);
-        //Соглашаемся с кукис
-        click.xpathLocator("//*[@id='onetrust-accept-btn-handler']");
+
         //Составляем топики
         String topicName = "";
         for (SelenideElement element : find.listLoc(By.xpath(topics))) {
@@ -40,7 +39,6 @@ public class EpamTalkCardPage extends BasePage {
                 .language(find.locText(By.xpath(language)))
                 .category(topicName)
                 .build();
-        action.clearBrowser();
         return testCard;
     }
 }

@@ -24,6 +24,8 @@ public class EpamMainPage extends BasePage {
     public EpamMainPage open() {
         action.open(url)
                 .logTitle();
+        //Соглашаемся с кукис
+        click.xpathLocator("//*[@id='onetrust-accept-btn-handler']");
         return this;
     }
 

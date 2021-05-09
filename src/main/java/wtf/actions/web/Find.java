@@ -103,6 +103,7 @@ public class Find extends Base {
      * @return список значений атрибутов ElementsCollection
      */
     public ElementsCollection listLoc(By locator) {
+        $(locator).waitUntil(exist, WAIT_TIME);
         return $$(locator);
     }
 }

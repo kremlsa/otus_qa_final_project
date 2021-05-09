@@ -1,5 +1,8 @@
 package finalProject.pages;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.*;
 
 /**
@@ -14,10 +17,15 @@ import lombok.*;
 @NoArgsConstructor
 @Setter
 @Getter
+@JsonSerialize
 public class TalkCard {
+    @JsonInclude
     private String category = "Not defined";
+    @JsonInclude
     private String location = "Not defined";
+    @JsonInclude
     private String language = "Not defined";
+    @JsonIgnore
     private String event = "Not defined";
 
     @Override

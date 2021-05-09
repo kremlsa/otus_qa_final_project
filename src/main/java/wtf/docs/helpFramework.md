@@ -71,7 +71,7 @@ import static wtf.cfg.Cfg.setBrowserConfiguration;
    
 10. Классы для автоматизации WEB находятся в wtf.actions.web
 11. Классы для работы с REST API находятся в wtf.actions.rest
-12. Классы для обработки данных находятся в wtf.parser
+12. Классы для обработки данных находятся в wtf.data
 
 
 

@@ -1,11 +1,18 @@
 package finalProject.pages;
 
+import finalProject.stepdefs.BaseStep;
 import io.cucumber.datatable.DataTable;
 import org.openqa.selenium.By;
 import org.testng.Assert;
+import wtf.data.JsonCompare;
+import wtf.data.JsonParse;
 import wtf.pom.BasePage;
 import wtf.uniloc.UniLoc;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -69,22 +76,29 @@ public class EpamTalkPage extends BasePage {
     /**
      * Метод для проверки работы фильтра
      *
-     * @param table таблица значений параметров фильтра DataTable
      * @return результат проверки boolean
      */
-    public boolean isFilterWorks(DataTable table) {
+    public boolean isFilterWorks() {
         //Задаём эталонную карточку
-        TalkCard etalone = table.cells()
-                .stream()
-                .map(fields -> new TalkCard(fields.get(0), fields.get(1), fields.get(2), fields.get(3)))
-                .collect(Collectors.toList()).get(0);
-        //Проверяем совпадение с заданными параметрами фильтрации
-        find.attributesList(By.xpath(CARD_LINK), "href").stream()
+        String etalone = BaseStep.getEtalone();
+
+        //Создаём список из json представлений карточек
+        List<String> jsons = find.attributesList(By.xpath(CARD_LINK), "href").stream()
                 .filter(x -> !x.contains("1621"))//Баг на селеноиде исключаем страницу из проверки
                 .map(x -> epamTalkCardPage.parseCard(x))
-                .forEach(x -> Assert.assertTrue(x.equals(etalone),
-                        "Карточка " + x.getEvent() + " не отвечает критериям фильтра"));
+                .map(JsonParse::objectToJson)
+                .collect(Collectors.toList());
+
+        //Проверяем совпадение с заданными параметрами фильтрации
+        jsons.forEach(x -> JsonCompare.jsonContainsCompare(x, etalone));
         logger.info("Карточки отвечают критериям фильтра");
+
+        //Добавляем к отчёту карточки
+        String jsonResult = jsons.stream()
+                .map(Object::toString)
+                .collect(Collectors.joining("\n"));
+        BaseStep.setJsonResult(jsonResult);
+
         return true;
     }
 }
