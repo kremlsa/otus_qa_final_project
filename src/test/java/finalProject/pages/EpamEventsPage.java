@@ -200,7 +200,8 @@ public class EpamEventsPage extends BasePage {
         String jsonResult = eventCards.stream()
                 .map(JsonParse::objectToJson).filter(Objects::nonNull)
                 .map(Object::toString)
-                .collect(Collectors.joining("\n"));
+                .collect(Collectors.joining(",\n"));
+        jsonResult = "[" + jsonResult + "]";
         BaseStep.setJsonResult(jsonResult);
         return true;
     }
@@ -221,7 +222,8 @@ public class EpamEventsPage extends BasePage {
         String jsonResult = eventCards.stream()
                 .map(JsonParse::objectToJson).filter(Objects::nonNull)
                 .map(Object::toString)
-                .collect(Collectors.joining("\n"));
+                .collect(Collectors.joining(",\n"));
+        jsonResult = "[" + jsonResult + "]";
         BaseStep.setJsonResult(jsonResult);
         return true;
     }

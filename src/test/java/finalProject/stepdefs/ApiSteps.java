@@ -61,7 +61,6 @@ public class ApiSteps {
     @И("В ответе присутствует объект Json с ключом {string} и значением {string}")
     public void findPairInJson(String key, String value) {
         json = parser.isObjectWithStringPairInList(jsons, key, value);
-        System.out.println(json);
         BaseStep.setJsonResult(json.toString());
     }
 

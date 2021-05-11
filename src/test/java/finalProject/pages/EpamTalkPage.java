@@ -96,7 +96,8 @@ public class EpamTalkPage extends BasePage {
         //Добавляем к отчёту карточки
         String jsonResult = jsons.stream()
                 .map(Object::toString)
-                .collect(Collectors.joining("\n"));
+                .collect(Collectors.joining(",\n"));
+        jsonResult = "[" + jsonResult + "]";
         BaseStep.setJsonResult(jsonResult);
 
         return true;
